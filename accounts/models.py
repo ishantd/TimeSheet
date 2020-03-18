@@ -34,5 +34,17 @@ class Department(models.Model):
     project_assigned = models.ForeignKey(Project, on_delete=models.CASCADE)
     manager_name = models.ForeignKey(Employee, on_delete=models.CASCADE)
     time_allocated = models.IntegerField(null=True)
+    time_left = models.IntegerField(null=True)
+    def __str__(self):
+        return (str(self.manager_name) + " - "+str(self.project_assigned))
     # department = models.ForeignKey(Employee, null=True, on_delete=models.SET_NULL)
-    
+
+class Report(models.Model):
+    employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    activity = models.CharField(max_length=200, null=True)
+    department_name = models.ForeignKey(Department, on_delete=models.CASCADE)
+    date_time = models.DateTimeField(null=True)
+    hours_reported = models.IntegerField(null=True)
+    def __str__(self):
+        return (str(self.employee.name) + " - "+str(self.project.name)+ " - "+str(self.hours_reported) + " Hours")
