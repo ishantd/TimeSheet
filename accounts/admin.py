@@ -7,4 +7,4 @@ from .models import *
 admin.site.register(Employee)
 admin.site.register(Tasks)
 admin.site.register(Tasks_Assignment)
-admin.site.register(employeeTasks)
+# admin.site.register(employeeTasks)

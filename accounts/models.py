@@ -33,6 +33,3 @@ class Tasks_Assignment(models.Model):
         return self.task
     # department = models.ForeignKey(Employee, null=True, on_delete=models.SET_NULL)
     
-class employeeTasks(models.Model):
-    # task = models.ForeignKey(Tasks, on_delete=models.CASCADE)
-    employee_task = models.ManyToManyField(Tasks_Assignment)
