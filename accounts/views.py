@@ -3,9 +3,9 @@ from django.http import HttpResponse
 from .models import *
 
 def home(request):
-    tasks = Tasks.objects.all()
-    assigned_to = Tasks_Assignment.objects.all()
-    return render(request, 'accounts/dashboard.html', {'tasks':tasks, "assigned_to":assigned_to})
+    projects = Project.objects.all()
+    department_time = Department.objects.all()
+    return render(request, 'accounts/dashboard.html', {'projects':Project, "department":Department, "employee": Employee} )
 
 def contact(request):
     return render(request, 'accounts/products.html')
