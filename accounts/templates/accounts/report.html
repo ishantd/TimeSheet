@@ -1,0 +1,25 @@
+{% extends 'accounts/main.html' %}
+
+{% block content %}
+
+{%  include 'accounts/status.html' %}
+
+<h3>Welcome: {{employee.name}}  </h3>
+
+<h3>Your Department Is: {{employee.department_name}} </h3>
+
+<h1>Input your report here:</h1>
+
+<h3>Choose the project here: </h3>
+
+<div class="form-group">
+    <label for="sel1">Select list:</label>
+    <select class="form-control" id="sel1">
+    {% for project in projects %}
+    <option value=" {{project.project_assigned}} ">{{project.project_assigned}} - {{project.name}}</option>
+    {% endfor %}
+    </select>
+</div>
+
+
+{% endblock %}

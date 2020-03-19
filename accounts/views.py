@@ -10,6 +10,12 @@ def home(request):
 def contact(request):
     return render(request, 'accounts/products.html')
 
-def users(request):
-    return render(request, 'accounts/customer.html')
+def timesheet(request, emp_id):
+    employee = Employee.objects.get(id=emp_id)
+    dep_projects = Department.objects.all()
+    projects = dep_projects.filter(department_name=employee.department_name)
+    # dep_info = Department.objects.all()
+    # projects = dep_info.manager_name
+    information = {'employee':employee, 'projects':projects}
+    return render(request, 'accounts/report.html', information)
 # Create your views here.
