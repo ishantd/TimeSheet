@@ -36,4 +36,14 @@ var lastday = new Date(curr.setDate(last)).toUTCString();
 
 x = document.getElementById("week").innerHTML = firstday + "-" + lastday
 }
+
+days = ["saturday", "sunday", "monday", "tuesday", "wednesday", "thursday", "friday" ]
+console.log(days)
+for (var i = 0; i<days.length; i++) {
+  x = document.getElementById(days[i])
+  console.log(x)
+  y = firstday + i
+  x.innerHTML = y
+  console.log(firstday+i)
+}
 // console.log(x)

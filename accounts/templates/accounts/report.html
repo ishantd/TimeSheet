@@ -1,4 +1,5 @@
 {% extends 'accounts/main.html' %}
+
 {% load static %}
 {% block content %}
 
@@ -25,10 +26,35 @@
     <div class="col-md-2">
         <strong>Select Project</strong>
     </div>
-    <div class="col-md-2">
+    <div class="col-md-3">
         Input your activity here:
     </div>
+    <div class="week-dates">
+        <div class="col-md-1" id="saturday">
+
+        </div>
+        <div class="col-md-1" id="sunday">
+
+        </div>
+        <div class="col-md-1" id="monday">
+
+        </div>
+        <div class="col-md-1" id="tuesday">
+
+        </div>
+        <div class="col-md-1" id="wednesday">
+
+        </div>
+        <div class="col-md-1" id="thursday">
+
+        </div>
+        <div class="col-md-1" id="friday">
+
+        </div>
+        
+    </div>
 </div>
+
 <div class="form-group">
     <div class="row">
         <div class="col-md-2">
@@ -47,6 +73,6 @@
 </div>
 
 
-<script src="{% static '/js/date.js' %}"></script>
+<script src="{% static '/js/date1.js' %}"></script>
 
 {% endblock %}
