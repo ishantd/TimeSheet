@@ -7,18 +7,16 @@
 
 <h3>Welcome: {{employee.name}}  </h3>
 
-<h3>Your Department Is: {{employee.department_name}} </h3>
+<h3>Department: {{employee.department_name}} </h3>
 
-<h1>Input your report here:</h1>
-
-<h3>Choose the project here: </h3>
+<button type="button" class="btn btn-primary" onclick=create()>Add Field</button>
 
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-5 text-center">
         Your Project Details Here:
     </div>
-    <div class="col-md-8">
-        Your Week Here: <p id="week"></p>
+    <div class="col-md-7 text-center">
+        Your Week Here: <strong><p id="week"></p></strong>
     </div>
 </div>
 
@@ -29,7 +27,7 @@
     <div class="col-md-3">
         Input your activity here:
     </div>
-    <div class="week-dates">
+    <!-- <div class="week-dates"> -->
         <div class="col-md-1" id="saturday">
 
         </div>
@@ -52,10 +50,10 @@
 
         </div>
         
-    </div>
+    <!-- </div> -->
 </div>
 
-<div class="form-group">
+<div class="form-group" id="input0">
     <div class="row">
         <div class="col-md-2">
             <!-- <label for="sel1"></label> -->
@@ -65,14 +63,35 @@
             {% endfor %}
             </select>
         </div>
-        <div class="col-md-2">
-            <input class="form-control" type="text" placeholder="Activity">
+        <div class="col-md-3">
+            <input class="form-control" type="text" placeholder="Hours">
         </div>
-
+        <div class="col-md-1" id="saturday-input">
+            <input class="form-control" type="text" placeholder="Hours">
+        </div>
+        <div class="col-md-1" id="sunday-input">
+            <input class="form-control" type="text" placeholder="Hours">
+        </div>
+        <div class="col-md-1" id="monday-input">
+            <input class="form-control" type="text" placeholder="Hours">
+        </div>
+        <div class="col-md-1" id="tuesday-input">
+            <input class="form-control" type="text" placeholder="Hours">
+        </div>
+        <div class="col-md-1" id="wednesday-input">
+            <input class="form-control" type="text" placeholder="Hours">
+        </div>
+        <div class="col-md-1" id="thursday-input">
+            <input class="form-control" type="text" placeholder="Hours">
+        </div>
+        <div class="col-md-1" id="friday-input">
+            <input class="form-control" type="text" placeholder="Hours">
+        </div>
     </div>
 </div>
 
 
-<script src="{% static '/js/date1.js' %}"></script>
+<script src="{% static '/js/weeks.js' %}"></script>
+<script src="{% static '/js/new_field.js' %}"></script>
 
 {% endblock %}
