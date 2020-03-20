@@ -1,5 +1,5 @@
 {% extends 'accounts/main.html' %}
-
+{% load static %}
 {% block content %}
 
 {%  include 'accounts/status.html' %}
@@ -12,14 +12,41 @@
 
 <h3>Choose the project here: </h3>
 
-<div class="form-group">
-    <label for="sel1">Select list:</label>
-    <select class="form-control" id="sel1">
-    {% for project in projects %}
-    <option value=" {{project.project_assigned}} ">{{project.project_assigned}} - {{project.name}}</option>
-    {% endfor %}
-    </select>
+<div class="row">
+    <div class="col-md-4">
+        Your Project Details Here:
+    </div>
+    <div class="col-md-8">
+        Your Week Here: <p id="week"></p>
+    </div>
 </div>
 
+<div class="row">
+    <div class="col-md-2">
+        <strong>Select Project</strong>
+    </div>
+    <div class="col-md-2">
+        Input your activity here:
+    </div>
+</div>
+<div class="form-group">
+    <div class="row">
+        <div class="col-md-2">
+            <!-- <label for="sel1"></label> -->
+            <select class="form-control" id="sel1">
+            {% for project in projects %}
+            <option value=" {{project.project_assigned}} ">{{project.project_assigned}} - {{project.name}}</option>
+            {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-2">
+            <input class="form-control" type="text" placeholder="Activity">
+        </div>
+
+    </div>
+</div>
+
+
+<script src="{% static '/js/date.js' %}"></script>
 
 {% endblock %}
