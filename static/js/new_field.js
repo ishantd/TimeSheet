@@ -1,6 +1,3 @@
-function create() {
-    console.log("TEST CLIKC")
-    // clonedInput = $('input0').clone();
-    // $(clonedDiv).attr('id', '')
-
-}
+$("#create").click(function(){
+    $("#input0").clone().appendTo("#append");
+})

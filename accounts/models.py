@@ -25,7 +25,7 @@ class Project(models.Model):
     priority = models.CharField(max_length = 200, null = True, choices=priority_level)
     project_manager = models.ForeignKey(Employee, on_delete=models.CASCADE)
     def __str__(self):
-        return self.name
+        return str(self.name +  " - " + str(self.project_id))
 
 class Department(models.Model):
     department_level = (('Process', 'Process'), ('Structure', 'Structure'), ('Piping', 'Piping'), ('Instrumentation', 'Instrumentation'), 
