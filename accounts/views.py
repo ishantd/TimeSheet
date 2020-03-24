@@ -18,4 +18,11 @@ def timesheet(request, emp_id):
     # projects = dep_info.manager_name
     information = {'employee':employee, 'projects':projects}
     return render(request, 'accounts/report.html', information)
+
+def create(request):
+    return render(request, 'accounts/create.html')
+
+def createEmployee(request):
+    context = {}
+    return render(request, 'accounts/create_employee.html', context)
 # Create your views here.

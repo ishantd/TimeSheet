@@ -4,5 +4,8 @@ body {
 
 #append div {
     margin-top: 10px;
-    /* background-color: red; */
+}
+
+.create-all li {
+    margin: 10px;
 }
