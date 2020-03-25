@@ -2,12 +2,27 @@
 
 {% block content %}
 
-<div class="create-all">
-    <ul>
-        <li><a name="" id="" class="btn btn-primary" href=" {% url 'create_employee' %} " role="button">Create Employee</a></li>
-        <li><a name="" id="" class="btn btn-primary" href="#" role="button">Create Project</a></li>
-        <li><a name="" id="" class="btn btn-primary" href="#" role="button">Assign Project to Department</a></li>
-    </ul>
+<div class="data-all">
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="create-all">
+                <ul>
+                    <li><a name="" id="" class="btn btn-primary" href=" {% url 'create_employee' %} " role="button">Create Employee</a></li>
+                    <li><a name="" id="" class="btn btn-primary" href="#" role="button">Create Project</a></li>
+                    <li><a name="" id="" class="btn btn-primary" href="#" role="button">Assign Project to Department</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="view-all">
+                <ul>
+                    <li><a name="" id="" class="btn btn-info" href=" {% url 'view_employees' %} " role="button">View Employees</a></li>
+                    <li><a name="" id="" class="btn btn-info" href="#" role="button">View Projects</a></li>
+                    <li><a name="" id="" class="btn btn-info" href="#" role="button">View Department wise Projects</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </div>
 
 

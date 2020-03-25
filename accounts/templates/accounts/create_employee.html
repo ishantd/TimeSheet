@@ -5,10 +5,19 @@
 {% load static %}
 
 
-<form action="" method="POST">
+<div id="create_emp">
 
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{form}}
+        <button type="submit" class="btn btn-primary">Submit</button>
+    
+    </form>
 
-</form>
+</div>
+
+<div class="all-employees">
+    
+</div>
 
 {% endblock %}

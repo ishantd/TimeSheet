@@ -1,0 +1,41 @@
+{% extends 'accounts/main.html' %}
+
+{% block content %}
+
+{% load static %}
+
+
+
+<table id="myTable" class="table table-striped" >  
+    <thead>  
+      <tr>  
+        <th>Employee ID</th>  
+        <th>Name</th>  
+        <th>Email</th>  
+        <th>Department</th> 
+        <th>Update</th> 
+      </tr>  
+    </thead>  
+    <tbody>
+    {% for employee in employees %}
+      <tr>  
+        <td>{{employee.employee_id}}</td>  
+        <td>{{employee.name}}</td>  
+        <td>{{employee.email}}</td>  
+        <td>{{employee.department_name}}</td>  
+        <td><a name="" id="" class="btn btn-primary" href="#" role="button">Update</a></td>
+      </tr> 
+    {% endfor %}  
+    </tbody>  
+  </table>  
+  </div>
+
+<script>
+    $(document).ready(function(){
+        $('#myTable').dataTable();
+    });
+</script>
+
+
+
+{% endblock %}

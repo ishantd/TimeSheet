@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import *
+from .forms import *
 
 def home(request):
     projects = Project.objects.all()
@@ -23,6 +24,18 @@ def create(request):
     return render(request, 'accounts/create.html')
 
 def createEmployee(request):
-    context = {}
+    form = EmployeeForm()
+    context = {'form': form}
+    if request.method == 'POST':
+        # print("PRINT DATA:", request.POST)
+        form = EmployeeForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/')
     return render(request, 'accounts/create_employee.html', context)
+
+def viewEmployees(request):
+    employees = Employee.objects.all()
+    data = {'employees': employees}
+    return render(request, 'accounts/view_employees.html', data)
 # Create your views here.
