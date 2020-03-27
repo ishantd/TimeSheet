@@ -10,3 +10,7 @@ body {
     margin: 10px;
     list-style-type: none;
 }
+
+#table-body tr {
+    margin-top: 10px;
+}

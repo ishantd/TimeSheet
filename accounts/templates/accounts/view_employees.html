@@ -13,7 +13,8 @@
         <th>Name</th>  
         <th>Email</th>  
         <th>Department</th> 
-        <th>Update</th> 
+        <th>Update</th>
+        <th>View</th> 
       </tr>  
     </thead>  
     <tbody>
@@ -23,7 +24,8 @@
         <td>{{employee.name}}</td>  
         <td>{{employee.email}}</td>  
         <td>{{employee.department_name}}</td>  
-        <td><a name="" id="" class="btn btn-primary" href="#" role="button">Update</a></td>
+        <td><a name="" id="" class="btn btn-primary" href=" {%url 'update_employee' employee.employee_id%} " role="button">Update</a></td>
+        <td><a name="" id="" class="btn btn-success" href="#" role="button">View</a></td>
       </tr> 
     {% endfor %}  
     </tbody>  

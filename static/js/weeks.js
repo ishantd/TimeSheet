@@ -32,8 +32,8 @@ var first = curr.getDate() - curr.getDay(); // First day is the day of the month
 // console.log(first)
 var last = first + 6; // last day is the first day + 6
 
-var firstday = new Date(curr.setDate(first)).toUTCString();
-var lastday = new Date(curr.setDate(last)).toUTCString();
+var firstday = new Date(curr.setDate(first)).toUTCString().split('2020')[0];
+var lastday = new Date(curr.setDate(last)).toUTCString().split('2020')[0];
 
 x = document.getElementById("week").innerHTML = firstday + "-" + lastday
 }
@@ -43,12 +43,16 @@ days = ["saturday", "sunday", "monday", "tuesday", "wednesday", "thursday", "fri
 for (var i = 0; i<days.length; i++) {
   
   var x = document.getElementById(days[i])
-  console.log(x)
+  // console.log(x)
   // console.log(x)
   var now = new Date; // get current date
+  // console.log(toString(now.getFullYear))
   var day = now.getDate() - now.getDay(); 
   var y = day + i
-  x.innerHTML = new Date(now.setDate(y)).toUTCString();
+  temp = new Date(now.setDate(y));
+  y = temp.toUTCString().split('2020')[0]
+  // console.log(y)
+  x.innerHTML = y
   // console.log(firstday+i)
 }
 // console.log(x)

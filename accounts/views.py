@@ -38,4 +38,10 @@ def viewEmployees(request):
     employees = Employee.objects.all()
     data = {'employees': employees}
     return render(request, 'accounts/view_employees.html', data)
+
+def updateEmployee(request, pk):
+    employee = Employee.objects.get(employee_id=pk)
+    form = EmployeeForm(instance=employee)
+    context = {'form': form}
+    return render(request, 'accounts/create_employee.html', context)
 # Create your views here.
