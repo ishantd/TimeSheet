@@ -1,3 +1,5 @@
 accounts/querydemos.py
 *.svg
 accounts/templates/accounts/copy_temp.html
+*.zip
+Easy-Week-Picker-Widget-For-jQuery-UI-weekPicker-js

@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import int_list_validator
 
 class Employee(models.Model):
     employee_id = models.IntegerField(null=True)
@@ -25,7 +26,7 @@ class Project(models.Model):
     priority = models.CharField(max_length = 200, null = True, choices=priority_level)
     project_manager = models.ForeignKey(Employee, on_delete=models.CASCADE)
     def __str__(self):
-        return str(self.name +  " - " + str(self.project_id))
+        return str(self.project_id)
 
 class Department(models.Model):
     department_level = (('Process', 'Process'), ('Structure', 'Structure'), ('Piping', 'Piping'), ('Instrumentation', 'Instrumentation'), 
@@ -45,6 +46,11 @@ class Report(models.Model):
     activity = models.CharField(max_length=200, null=True)
     department_name = models.ForeignKey(Department, on_delete=models.CASCADE)
     date_time = models.DateTimeField(null=True)
+    everyday_hours = models.CharField(validators=[int_list_validator], max_length=100)
     hours_reported = models.IntegerField(null=True)
+    week = models.IntegerField(null=True)
     def __str__(self):
         return (str(self.employee.name) + " - "+str(self.project.name)+ " - "+str(self.hours_reported) + " Hours")
+
+ 
+    

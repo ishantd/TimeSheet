@@ -5,9 +5,10 @@
 
 {%  include 'accounts/status.html' %}
 
-<h3>Welcome: {{employee.name}}  </h3>
+<h3 id="emp_name">Welcome: {{employee.name}}  </h3>
+<h3 id="emp_id">ID: {{employee.employee_id}} </h3>
 
-<h3>Department: {{employee.department_name}} </h3>
+<h3 id="emp_dep">Department: {{employee.department_name}} </h3>
 
 <button type="button" id="create" class="btn btn-primary">Add Field</button>
 
@@ -24,66 +25,104 @@
 
 
 <div class="container-fluid all-input">
+    {% csrf_token %}
+    <form>
+    <input type="week" id="weekPicker">
     <table class="input-table">
         <thead>
           <tr class="d-flex">
-            <th>DEL </th>
-            <th scope="col" class="col-2">Select Project</th>
-            <th scope="col" class="col-3">Activity</th>
-            <th scope="col" id="saturday" class="col-1"></th>
-            <th scope="col" id="sunday" class="col-1"></th>
-            <th scope="col" id="monday" class="col-1"></th>
-            <th scope="col" id="tuesday" class="col-1"></th>
-            <th scope="col" id="wednesday" class="col-1"></th>
-            <th scope="col" id="thursday" class="col-1"></th>
-            <th scope="col" id="friday" class="col-1"></th>
+            <th style="width: 5%;">DEL </th>
+            <th scope="col" style="width: 16.67%;">Select Project</th>
+            <th scope="col" style="width: 20%;">Activity</th>
+            <th scope="col" id="saturday" style="width: 8.33%;"></th>
+            <th scope="col" id="sunday" style="width: 8.33%;"></th>
+            <th scope="col" id="monday" style="width: 8.33%;"></th>
+            <th scope="col" id="tuesday" style="width: 8.33%;"></th>
+            <th scope="col" id="wednesday" style="width: 8.33%;"></th>
+            <th scope="col" id="thursday" style="width: 8.33%;"></th>
+            <th scope="col" id="friday" style="width: 8.33%;"></th>
           </tr>
         </thead>
-        <tbody id="table-body">
-          <tr class="d-flex" id="input-row0">
-              <td><a name="" id="delete0" class="btn btn-danger" onclick=remove(this.id) href="#" role="button"><i class="fa fa-minus-square"></i></a></td>
-        <td class="col-2">
-                <select class="form-control" id="sel1">
-                <option value="none" selected disabled hidden> 
-                    Select a project 
-                </option> 
-            {% for project in projects %}
-            <option value=" {{project.project_assigned}} ">{{project.project_assigned}} - {{project.name}}</option>
-            {% endfor %}
-            </select>
-        </td>
-            <td class="col-3">
-                <input class="form-control" type="text" placeholder="Activity">
+
+            <button type="submit" id="submitTS" class="btn btn-success">Submit Timesheet</button>
+            <tbody id="table-body">
+              <tr class="d-flex" id="input-row0">
+                  <td style="width: 5%;"><a name="" id="delete0" class="btn btn-danger" onclick=remove(this.id) href="#" role="button"><i class="fa fa-minus-square"></i></a></td>
+            <td style="width: 16.67%;">
+                    <select name="project" class="form-control" id="sel0">
+                    <option value="none" selected disabled hidden> 
+                        Select a project 
+                    </option> 
+                {% for project in projects %}
+                <option value=" {{project.project_assigned}} ">{{project.project_assigned}} - {{project.name}}</option>
+                {% endfor %}
+                </select>
             </td>
-            <td class="col-1">
-                <input class="form-control" type="text" placeholder="Hours">
-            </td>
-            <td class="col-1">
-                <input class="form-control" type="text" placeholder="Hours">
-            </td>
-            <td class="col-1">
-                <input class="form-control" type="text" placeholder="Hours">
-            </td>
-            <td class="col-1">
-                <input class="form-control" type="text" placeholder="Hours">
-            </td>
-            <td class="col-1">
-                <input class="form-control" type="text" placeholder="Hours">
-            </td>
-            <td class="col-1">
-                <input class="form-control" type="text" placeholder="Hours">
-            </td>
-            <td class="col-1">
-                <input class="form-control" type="text" placeholder="Hours">
-            </td>
-          </tr>
-          
-        </tbody>
+                <td style="width: 20%;">
+                    <input class="form-control" name="activity" type="text" placeholder="Activity">
+                </td>
+                <td style="width: 8.33%;">
+                    <input class="form-control" name="sundayHours" type="text" value=0 placeholder="Hours">
+                </td>
+                <td style="width: 8.33%;">
+                    <input class="form-control" name="mondayHours" type="text" value=0 placeholder="Hours">
+                </td>
+                <td style="width: 8.33%;">
+                    <input class="form-control" name="tuesdayHours" type="text" value=0 placeholder="Hours">
+                </td>
+                <td style="width: 8.33%;">
+                    <input class="form-control" name="wednesdayHours" type="text" value=0 placeholder="Hours">
+                </td>
+                <td style="width: 8.33%;">
+                    <input class="form-control" name="thursdayHours" type="text" value=0 placeholder="Hours">
+                </td>
+                <td style="width: 8.33%;">
+                    <input class="form-control" name="fridayHours" type="text" value=0 placeholder="Hours">
+                </td>
+                <td style="width: 8.33%;">
+                    <input class="form-control" name="saturdayHours" type="text" value=0 placeholder="Hours">
+                </td>
+              </tr>
+              <tr class="d-flex" id="holiday">
+                <td style="width: 5%;"></td>
+                <td style="width: 16.67%;">
+                    <input class="form-control"  type="text" name="project" id="hl" value="Holiday/Leave" disabled>
+                </td>
+                    <td style="width: 20%;">
+                        <input class="form-control" name="activity" type="text" value="Holiday" placeholder="Activity" disabled>
+                    </td>
+                    <td style="width: 8.33%;">
+                        <input class="form-control" name="sundayHours" type="text" value=0 placeholder="Hours">
+                    </td>
+                    <td style="width: 8.33%;">
+                        <input class="form-control" name="mondayHours" type="text" value=0 placeholder="Hours">
+                    </td>
+                    <td style="width: 8.33%;">
+                        <input class="form-control" name="tuesdayHours" type="text" value=0 placeholder="Hours">
+                    </td>
+                    <td style="width: 8.33%;">
+                        <input class="form-control" name="wednesdayHours" type="text" value=0 placeholder="Hours">
+                    </td>
+                    <td style="width: 8.33%;">
+                        <input class="form-control" name="thursdayHours" type="text" value=0 placeholder="Hours">
+                    </td>
+                    <td style="width: 8.33%;">
+                        <input class="form-control" name="fridayHours" type="text" value=0 placeholder="Hours">
+                    </td>
+                    <td style="width: 8.33%;">
+                        <input class="form-control" name="saturdayHours" type="text" value=0 placeholder="Hours">
+                    </td>
+              </tr>
+            </tbody>
+            
+
       </table>
+    </form>
 </div>
 
 
 <script src="{% static '/js/weeks.js' %}"></script>
 <script src="{% static '/js/add_del_fields.js' %}"></script>
+<script src="{% static '/js/timesheet.js' %}"></script>
 
 {% endblock %}
