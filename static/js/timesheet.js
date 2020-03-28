@@ -48,7 +48,8 @@ $('#submitTS').click(function(){
             Project_id: p_id,
             Activity: activity,
             Everyday_Hours: hours,
-            t_hours: hour_sum(hours)
+            t_hours: hour_sum(hours),
+            time_stamp: Date().toString()
         }
         ReportData.push(dataObject)
     }

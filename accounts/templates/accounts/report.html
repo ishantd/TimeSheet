@@ -12,6 +12,12 @@
 
 <button type="button" id="create" class="btn btn-primary">Add Field</button>
 
+<div id="selectWeek">
+    <label for="week">Select a week:</label>
+    <input type="week" id="week" name="week">
+    <button type="button" id="weekButton">Submit Week</button>
+</div>
+
 <div class="row">
     <div class="col-md-5 text-center">
         Your Project Details Here:
@@ -27,7 +33,6 @@
 <div class="container-fluid all-input">
     {% csrf_token %}
     <form>
-    <input type="week" id="weekPicker">
     <table class="input-table">
         <thead>
           <tr class="d-flex">
