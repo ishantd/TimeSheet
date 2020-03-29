@@ -5,9 +5,6 @@ $('#submitTS').click(function(){
     var data = myform.serializeArray();
     disabled.attr('disabled','disabled');
     var employee_id = $('#emp_id').text()
-    if (data[0].name == "project") {
-        console.log(data[0].value)
-    }
     hour_sum = (hours) => {
         var sum=0;
         for (var i=0 ; i<hours.length; i++) {
@@ -15,7 +12,7 @@ $('#submitTS').click(function(){
         }
         return sum;
     }
-    console.log(data)
+    // console.log(data)
     employee_id = parseInt(employee_id.replace('ID: ', ''))
     var ReportData = [];
     for (var i = 0; i < (data.length+1)/9; i++) {
@@ -52,5 +49,5 @@ $('#submitTS').click(function(){
         }
         ReportData.push(dataObject)
     }
-    console.log(ReportData)
+    // console.log(ReportData)
 })

@@ -26,11 +26,8 @@ $("#weekButton").click(function(){
   var y = day + i
   temp = new Date(now.setDate(y));
   y = temp.toUTCString().split(year.toString())[0]
-  console.log(y)
+  // console.log(y)
   x.innerHTML = y
 }
 });
 
-var test = "TEST3"
-
-console.log(test)
