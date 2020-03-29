@@ -16,4 +16,7 @@ function remove(delID) {
     if (sr!='0') {
         $(deleteThis).remove()
     }
+    else {
+        alert("Not allowed to delete all rows")
+    }
 }
