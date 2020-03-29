@@ -15,22 +15,22 @@
 <div id="selectWeek">
     <label for="week">Select a week:</label>
     <input type="week" id="week" name="week">
-    <button type="button" id="weekButton">Submit Week</button>
+    <button type="button" class="btn btn-primary" id="weekButton">Submit Week</button>
 </div>
 
 <div class="row">
     <div class="col-md-5 text-center">
         Your Project Details Here:
     </div>
-    <div class="col-md-7 text-center">
-        Your Week Here: <strong><p id="week"></p></strong>
-    </div>
+</div>
+
+<div class="check-info">
+    <br>
+    <h4 class="text-center" id="info-ts">Please select week to input Timesheet</h4>
 </div>
 
 
-
-
-<div class="container-fluid all-input">
+<div class="container-fluid all-input" id="overlay">
     {% csrf_token %}
     <form>
     <table class="input-table">
@@ -124,6 +124,8 @@
       </table>
     </form>
 </div>
+
+<div class="test"></div>
 
 
 <script src="{% static '/js/weeks.js' %}"></script>

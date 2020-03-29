@@ -14,3 +14,13 @@ body {
 #table-body tr {
     margin-top: 10px;
 }
+
+#info-ts {
+    color: rgb(110, 2, 2);
+}
+
+.test {
+    width: 10px;
+    height: 10px;
+    background-color: red;
+}
