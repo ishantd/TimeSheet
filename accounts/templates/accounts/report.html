@@ -12,10 +12,15 @@
 
 <button type="button" id="create" class="btn btn-primary">Add Field</button>
 
-<div id="selectWeek">
+<div id="chooseWeek">
     <label for="week">Select a week:</label>
     <input type="week" id="week" name="week">
     <button type="button" class="btn btn-primary" id="weekButton">Submit Week</button>
+</div>
+
+<div id="selectedWeek">
+    <h3>Your Selected Week is:<strong id="sWeek"></strong></h3>
+    <button type="button" class="btn btn-info" onClick="window.location.reload();" id="weekButton">Change Week</button>
 </div>
 
 <div class="row">
@@ -32,7 +37,7 @@
 
 <div class="container-fluid all-input" id="overlay">
     {% csrf_token %}
-    <form>
+    <form id="ts_form">
     <table class="input-table">
         <thead>
           <tr class="d-flex">
@@ -67,25 +72,25 @@
                     <input class="form-control" name="activity" type="text" placeholder="Activity">
                 </td>
                 <td style="width: 8.33%;">
-                    <input class="form-control saturdayHours" name="saturdayHours" type="text" value=0 placeholder="Hours">
+                    <input class="form-control saturdayHours" name="hours" type="text" value=0 placeholder="Hours">
                 </td>
                 <td style="width: 8.33%;">
-                    <input class="form-control sundayHours" name="sundayHours" type="text" value=0 placeholder="Hours">
+                    <input class="form-control sundayHours" name="hours" type="text" value=0 placeholder="Hours">
                 </td>
                 <td style="width: 8.33%;">
-                    <input class="form-control mondayHours" name="mondayHours" type="text" value=0 placeholder="Hours">
+                    <input class="form-control mondayHours" name="hours" type="text" value=0 placeholder="Hours">
                 </td>
                 <td style="width: 8.33%;">
-                    <input class="form-control tuesdayHours" name="tuesdayHours" type="text" value=0 placeholder="Hours">
+                    <input class="form-control tuesdayHours" name="hours" type="text" value=0 placeholder="Hours">
                 </td>
                 <td style="width: 8.33%;">
-                    <input class="form-control wednesdayHours" name="wednesdayHours" type="text" value=0 placeholder="Hours">
+                    <input class="form-control wednesdayHours" name="hours" type="text" value=0 placeholder="Hours">
                 </td>
                 <td style="width: 8.33%;">
-                    <input class="form-control thursdayHours" name="thursdayHours" type="text" value=0 placeholder="Hours">
+                    <input class="form-control thursdayHours" name="hours" type="text" value=0 placeholder="Hours">
                 </td>
                 <td style="width: 8.33%;">
-                    <input class="form-control fridayHours" name="fridayHours" type="text" value=0 placeholder="Hours">
+                    <input class="form-control fridayHours" name="hours" type="text" value=0 placeholder="Hours">
                 </td>
               </tr>
               <tr class="d-flex" id="holiday">
@@ -97,50 +102,50 @@
                         <input class="form-control" name="activity" type="text" value="Holiday" placeholder="Activity" disabled>
                     </td>
                     <td style="width: 8.33%;">
-                        <input class="form-control saturdayHours" name="saturdayHours" type="text" value=0 placeholder="Hours">
+                        <input class="form-control saturdayHours" name="hours" type="text" value=0 placeholder="Hours">
                     </td>
                     <td style="width: 8.33%;">
-                        <input class="form-control sundayHours" name="sundayHours" type="text" value=0 placeholder="Hours">
+                        <input class="form-control sundayHours" name="hours" type="text" value=0 placeholder="Hours">
                     </td>
                     <td style="width: 8.33%;">
-                        <input class="form-control mondayHours" name="mondayHours" type="text" value=0 placeholder="Hours">
+                        <input class="form-control mondayHours" name="hours" type="text" value=0 placeholder="Hours">
                     </td>
                     <td style="width: 8.33%;">
-                        <input class="form-control tuesdayHours" name="tuesdayHours" type="text" value=0 placeholder="Hours">
+                        <input class="form-control tuesdayHours" name="hours" type="text" value=0 placeholder="Hours">
                     </td>
                     <td style="width: 8.33%;">
-                        <input class="form-control wednesdayHours" name="wednesdayHours" type="text" value=0 placeholder="Hours">
+                        <input class="form-control wednesdayHours" name="hours" type="text" value=0 placeholder="Hours">
                     </td>
                     <td style="width: 8.33%;">
-                        <input class="form-control thursdayHours" name="thursdayHours" type="text" value=0 placeholder="Hours">
+                        <input class="form-control thursdayHours" name="hours" type="text" value=0 placeholder="Hours">
                     </td>
                     <td style="width: 8.33%;">
-                        <input class="form-control friHours" name="fridayHours" type="text" value=0 placeholder="Hours">
+                        <input class="form-control fridayHours" name="hours" type="text" value=0 placeholder="Hours">
                     </td>
               </tr>
               <tr class="d-flex" id="holiday">
                 <td style="width: 36.67%;" class="text-right font-weight-bold">Total Hour(s)</td>
                 
                     <td style="width: 8.33%;">
-                        <input class="form-control" name="fridayHours" id="saturdayTotal" type="text" disabled placeholder="Hours">
+                        <input class="form-control" name="total" id="saturdayTotal" type="text" disabled placeholder="Hours">
                     </td>
                     <td style="width: 8.33%;">
-                        <input class="form-control" name="fridayHours" id="sundayTotal" type="text" disabled placeholder="Hours">
+                        <input class="form-control" name="total" id="sundayTotal" type="text" disabled placeholder="Hours">
                     </td>
                     <td style="width: 8.33%;">
-                        <input class="form-control" name="fridayHours" id="mondayTotal" type="text" disabled placeholder="Hours">
+                        <input class="form-control" name="total" id="mondayTotal" type="text" disabled placeholder="Hours">
                     </td>
                     <td style="width: 8.33%;">
-                        <input class="form-control" name="fridayHours" id="tuesdayTotal" type="text" disabled placeholder="Hours">
+                        <input class="form-control" name="total" id="tuesdayTotal" type="text" disabled placeholder="Hours">
                     </td>
                     <td style="width: 8.33%;">
-                        <input class="form-control" name="fridayHours" id="wednesdayTotal" type="text" disabled placeholder="Hours">
+                        <input class="form-control" name="total" id="wednesdayTotal" type="text" disabled placeholder="Hours">
                     </td>
                     <td style="width: 8.33%;">
-                        <input class="form-control" name="fridayTotal" id="thursdayTotal" type="text" disabled placeholder="Hours">
+                        <input class="form-control" name="total" id="thursdayTotal" type="text" disabled placeholder="Hours">
                     </td>
                     <td style="width: 8.33%;">
-                        <input class="form-control" name="fridayTotal" id="fridayTotal" type="text" disabled placeholder="Hours">
+                        <input class="form-control" name="total" id="fridayTotal" type="text" disabled placeholder="Hours">
                     </td>
               </tr>
             </tbody>
@@ -155,5 +160,6 @@
 <script src="{% static '/js/add_del_fields.js' %}"></script>
 <script src="{% static '/js/timesheet.js' %}"></script>
 <script src="{% static '/js/calc_hours.js' %}"></script>
+<script src="{% static '/js/ts_validation.js' %}"></script>
 
 {% endblock %}
