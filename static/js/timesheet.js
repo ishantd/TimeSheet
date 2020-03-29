@@ -18,7 +18,6 @@ $('#submitTS').click(function(){
     console.log(data)
     employee_id = parseInt(employee_id.replace('ID: ', ''))
     var ReportData = [];
-    var days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']
     for (var i = 0; i < (data.length+1)/9; i++) {
         var dataObject = {};
         var p_id;
