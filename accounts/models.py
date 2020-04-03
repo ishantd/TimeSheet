@@ -42,13 +42,14 @@ class Department(models.Model):
 
 class Report(models.Model):
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
-    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, null=True)
     activity = models.CharField(max_length=200, null=True)
     department_name = models.ForeignKey(Department, on_delete=models.CASCADE)
-    date_time = models.DateTimeField(null=True)
-    everyday_hours = models.CharField(validators=[int_list_validator], max_length=100)
+    date_created = models.DateTimeField(auto_now_add=True, null=True)
+    everyday_hours = models.CharField(validators=[int_list_validator], max_length=100, null=True)
     hours_reported = models.IntegerField(null=True)
     week = models.IntegerField(null=True)
+    year = models.IntegerField(null=True)
     def __str__(self):
         return (str(self.employee.name) + " - "+str(self.project.name)+ " - "+str(self.hours_reported) + " Hours")
 

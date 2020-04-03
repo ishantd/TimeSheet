@@ -5,10 +5,11 @@
 
 {%  include 'accounts/status.html' %}
 
+
 <h3 id="emp_name">Welcome: {{employee.name}}  </h3>
 <h3 id="emp_id">ID: {{employee.employee_id}} </h3>
 
-<h3 id="emp_dep">Department: {{employee.department_name}} </h3>
+<h3>Department: <span id = "emp_dep">{{employee.department_name}}</span id> </h3>
 
 <button type="button" id="create" class="btn btn-primary">Add Field</button>
 
@@ -34,10 +35,9 @@
     <h4 class="text-center" id="info-ts">Please select week to input Timesheet</h4>
 </div>
 
-
 <div class="container-fluid all-input" id="overlay">
     {% csrf_token %}
-    <form id="ts_form">
+    <form id="ts_form" onsubmit="return confirm('Do you really want to submit the form?');">
     <table class="input-table">
         <thead>
           <tr class="d-flex">
@@ -59,7 +59,7 @@
               <tr class="d-flex" id="input-row0">
                   <td style="width: 5%;"><a name="" id="delete0" class="btn btn-danger" onclick=remove(this.id) href="#" role="button"><i class="fa fa-minus-square"></i></a></td>
             <td style="width: 16.67%;">
-                    <select name="project" class="form-control" id="sel0">
+                    <select name="project" class="form-control has-error" id="sel0">
                     <option value="none" selected disabled hidden> 
                         Select a project 
                     </option> 
@@ -123,29 +123,29 @@
                         <input class="form-control fridayHours" name="hours" type="text" value=0 placeholder="Hours">
                     </td>
               </tr>
-              <tr class="d-flex" id="holiday">
+              <tr class="d-flex" id="totalHours">
                 <td style="width: 36.67%;" class="text-right font-weight-bold">Total Hour(s)</td>
                 
                     <td style="width: 8.33%;">
-                        <input class="form-control" name="total" id="saturdayTotal" type="text" disabled placeholder="Hours">
+                        <input class="form-control" name="total" id="saturdayTotal" type="text" readonly="readonly" placeholder="Hours">
                     </td>
                     <td style="width: 8.33%;">
-                        <input class="form-control" name="total" id="sundayTotal" type="text" disabled placeholder="Hours">
+                        <input class="form-control" name="total" id="sundayTotal" type="text" readonly="readonly" placeholder="Hours">
                     </td>
                     <td style="width: 8.33%;">
-                        <input class="form-control" name="total" id="mondayTotal" type="text" disabled placeholder="Hours">
+                        <input class="form-control" name="total" id="mondayTotal" type="text" readonly="readonly" placeholder="Hours">
                     </td>
                     <td style="width: 8.33%;">
-                        <input class="form-control" name="total" id="tuesdayTotal" type="text" disabled placeholder="Hours">
+                        <input class="form-control" name="total" id="tuesdayTotal" type="text" readonly="readonly" placeholder="Hours">
                     </td>
                     <td style="width: 8.33%;">
-                        <input class="form-control" name="total" id="wednesdayTotal" type="text" disabled placeholder="Hours">
+                        <input class="form-control" name="total" id="wednesdayTotal" type="text" readonly="readonly" placeholder="Hours">
                     </td>
                     <td style="width: 8.33%;">
-                        <input class="form-control" name="total" id="thursdayTotal" type="text" disabled placeholder="Hours">
+                        <input class="form-control" name="total" id="thursdayTotal" type="text" readonly="readonly" placeholder="Hours">
                     </td>
                     <td style="width: 8.33%;">
-                        <input class="form-control" name="total" id="fridayTotal" type="text" disabled placeholder="Hours">
+                        <input class="form-control" name="total" id="fridayTotal" type="text" readonly="readonly" placeholder="Hours">
                     </td>
               </tr>
             </tbody>
@@ -153,13 +153,12 @@
     </form>
 </div>
 
-<div class="test"></div>
-
 
 <script src="{% static '/js/weeks.js' %}"></script>
 <script src="{% static '/js/add_del_fields.js' %}"></script>
+<script src="{% static '/js/ts_validation.js' %}"></script>
 <script src="{% static '/js/timesheet.js' %}"></script>
 <script src="{% static '/js/calc_hours.js' %}"></script>
-<script src="{% static '/js/ts_validation.js' %}"></script>
+
 
 {% endblock %}

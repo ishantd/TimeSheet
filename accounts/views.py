@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 from .models import *
 from .forms import *
@@ -27,8 +28,9 @@ def createEmployee(request):
     form = EmployeeForm()
     context = {'form': form}
     if request.method == 'POST':
-        # print("PRINT DATA:", request.POST)
+        print("PRINT DATA:", request.POST)
         form = EmployeeForm(request.POST)
+        print(form)
         if form.is_valid():
             form.save()
             return redirect('/')
@@ -44,4 +46,32 @@ def updateEmployee(request, pk):
     form = EmployeeForm(instance=employee)
     context = {'form': form}
     return render(request, 'accounts/create_employee.html', context)
+
+
+@csrf_exempt
+def timesheetEntry(request):
+    # form = ReportForm()
+    ProjectObject = ''
+    if request.method == 'POST':
+        data = request.POST
+        EmployeeObject = Employee.objects.get(employee_id=data['employee'])
+        ProjectObject = Project.objects.get(project_id=data['project']) 
+        DepartmentObject = Department.objects.get(department_name=data['department_name'])
+
+        create_report = Report(employee=EmployeeObject,
+                               project=ProjectObject,
+                               activity=data['activity'],
+                               department_name=DepartmentObject,
+                               everyday_hours=data['everyday_hours'],
+                               hours_reported=data['hours_reported'],
+                               week=data['week'],
+                               year=data['year'])
+        create_report.save()
+        
+        if (data['project']!='0'):
+            total_time = DepartmentObject.time_left
+            DepartmentObject.time_left = total_time - int(data['hours_reported'])
+            DepartmentObject.save()
+            
+    return HttpResponse("YESY")
 # Create your views here.

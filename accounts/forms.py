@@ -6,3 +6,8 @@ class EmployeeForm(ModelForm):
         model = Employee
         fields = '__all__'
         
+class ReportForm(ModelForm):
+    class Meta:
+        model = Report
+        fields = '__all__'
+        

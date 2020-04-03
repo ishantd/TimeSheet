@@ -1,10 +1,18 @@
-$('#submitTS').click(function(){
-    event.preventDefault();
+// console.log("HELLo")
+var weekString;
+var y;
+var w;
+$('#ts_form').submit(function(e){
+    e.preventDefault();
     var myform = $("form");
     var disabled = myform.find(':input:disabled').removeAttr('disabled'); // Ser array only takes enabled fields, this is why
     var data = myform.serializeArray();
     disabled.attr('disabled','disabled');
     var employee_id = $('#emp_id').text()
+    var dept = $("#emp_dep").text();
+    weekString = $("#week").val();
+    y = parseInt(weekString.substring(0, 4))
+    w = parseInt(weekString.replace(year.toString()+'-W', ''))
     hour_sum = (hours) => {
         var sum=0;
         for (var i=0 ; i<hours.length; i++) {
@@ -33,21 +41,33 @@ $('#submitTS').click(function(){
             if(data[j].name == "activity"){
                 activity = data[j].value
             }
-            if (j > (i*9)+1 && data[j].name.includes("Hours")) {
+            if (j > (i*9)+1 && data[j].name.includes("hours")) {
                 hours.push(parseInt(data[j].value)) 
             }
         }
-           
         }
-        dataObject = {
-            Employee_id: employee_id,
-            Project_id: p_id,
-            Activity: activity,
-            Everyday_Hours: hours,
-            t_hours: hour_sum(hours),
-            time_stamp: Date().toString()
+        if (hours.length == 7) {
+            dataObject = {
+                employee: employee_id,
+                project: p_id,
+                activity: activity,
+                department_name: dept,
+                everyday_hours: hours.join(),
+                hours_reported: hour_sum(hours),
+                week : w,
+                year : y
+            }
         }
+        
         ReportData.push(dataObject)
     }
     // console.log(ReportData)
+    ReportData.pop()
+    for (var i=0; i<ReportData.length; i++){
+        $.post("/timesheetEntry/", ReportData[i], function(){
+            console.log("Data successfully sent")
+        });
+    }
+    
+    return false
 })

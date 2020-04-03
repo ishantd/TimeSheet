@@ -1,6 +1,5 @@
 var table = 1
 
-
 $("#create").click(function(){
     markup = $('#input-row0').prop('outerHTML');
     markup = markup.replace('input-row0', 'input-row' + table.toString())
@@ -8,6 +7,8 @@ $("#create").click(function(){
     markup = markup.replace('sel0', 'sel' + table.toString())
     $("#table-body tr:first").after(markup)
     table++;
+    console.log(table)
+    console.log("TEST2")
 })
 
 function remove(delID) {

@@ -1,5 +1,26 @@
+console.log("TEST")
 $(function(){
-    $("#ts_form").validate({
+    $.validator.setDefaults({
+        errorClass: "invalid-feedback",
+        highlight: function(element) {
+            $(element)
+            .closest('.form-control')
+            .addClass('is-invalid')
+            .removeClass('is-valid');
+        },
+        unhighlight: function(element) {
+            $(element)
+            .closest('.form-control')
+            .removeClass('is-invalid')
+            .addClass('is-valid');
+        }
+    }),
+    
+    $.validator.addMethod('totalHours', function(value, element) {
+        return parseInt(value)==8;
+    },'The total number of working should be equal to 8');
+
+    $("#ts_form").validate({  
         rules: {
             activity: {
                required: true
@@ -9,10 +30,9 @@ $(function(){
             },
             total: {
                 required: true,
-                equalTo: 8
+                totalHours: true
             },
             hours: {
-                required: true,
                 digits: true,
                 max: 8
             }
@@ -24,13 +44,41 @@ $(function(){
             project: {
                 required: 'Please select a project'
             },
-            total: {
-                equalTo: 'Total daily working hours should be 8'
-            },
             hours: {
                 digits: 'You can only enter digits',
                 max: 'Number of working hours cannot exceed 8'
             }
-        }
+        },
+        invalidHandler: function(event, validator) {
+            // 'this' refers to the form
+            var errors = validator.numberOfInvalids();
+            if (errors) {
+              alert(
+                "Please Correct the errors and try again."
+              )
+            } else {
+              $("div.error").hide();
+            }
+          },
+        //   submitHandler: function(form) {
+        //     $(form).ajaxSubmit();
+        //  }
     });
 });
+
+$("#create").click(function() {
+    $('input[name="hours"]').rules('add', {
+        digits: true,
+        max: 8,
+        messages: {
+            digits: "You can only enter digits",
+            max: 'Number of working hours cannot exceed 8'
+        }
+    });
+    $('input[name="activity"]').rules('add', {
+        required: true,
+        messages: {
+            required: "This field is required"
+        }
+    });
+})
