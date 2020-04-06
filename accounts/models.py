@@ -2,7 +2,7 @@ from django.db import models
 from django.core.validators import int_list_validator
 
 class Employee(models.Model):
-    employee_id = models.IntegerField(null=True)
+    employee_id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=200, null=True)
     phone = models.CharField(max_length=200, null=True)
     email = models.CharField(max_length=200, null=True)
@@ -10,14 +10,13 @@ class Employee(models.Model):
     department_level = (('Process', 'Process'), ('Structure', 'Structure'), ('Piping', 'Piping'), ('Instrumentation', 'Instrumentation'), 
                         ('Electrical', 'Electrical'), ('Projects', 'Projects'), ('Mechanical', 'Mechanical'), ('Quality', 'Quality'), ('Documentation', 'Documentation'))
     department_name = models.CharField(max_length = 200, null = True, choices=department_level)
-    # tasks_assignted = models.ForeignKey(Tasks_Assignment, null=True, on_delete=models.SET_NULL)
     def __str__(self):
         return self.name
     
 class Project(models.Model):
     type_level = (('OH', 'OH'), ('PA', 'PA'))
     project_type = models.CharField(max_length = 200, null = True, choices=type_level)
-    project_id = models.IntegerField(null=True)
+    project_id = models.IntegerField(primary_key=True)
     priority_level = (('High', 'High'), ('Medium', 'Medium'), ('Low', 'Low'))
     name = models.CharField(max_length=200, null=True)
     date_created =  models.DateTimeField(auto_now_add=True, null=True)
@@ -50,6 +49,7 @@ class Report(models.Model):
     hours_reported = models.IntegerField(null=True)
     week = models.IntegerField(null=True)
     year = models.IntegerField(null=True)
+    approved = models.BooleanField(default=False)
     def __str__(self):
         return (str(self.employee.name) + " - "+str(self.project.name)+ " - "+str(self.hours_reported) + " Hours")
 

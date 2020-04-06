@@ -6,7 +6,7 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" href="/">Dashboard </a>
+          <a class="nav-link" href=" {% url 'dashboard' %} ">Dashboard </a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/timesheet">My Timesheet</a>
@@ -14,7 +14,9 @@
         <li class="nav-item">
           <a class="nav-link" href="/create">Create</a>
         </li>
-        
       </ul>
+      
     </div>
+    <span> <a name="" id="" class="btn btn-info" href="#" role="button">Hello, {{request.user}} </a> </span>
+    <span> <a name="" id="" class="btn btn-danger" href=" {% url 'logout' %} " role="button">Logout</a> </span>
   </nav>
