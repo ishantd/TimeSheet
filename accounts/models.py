@@ -1,17 +1,21 @@
 from django.db import models
 from django.core.validators import int_list_validator
+from django.contrib.auth.models import User
+
 
 class Employee(models.Model):
+    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
     employee_id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=200, null=True)
     phone = models.CharField(max_length=200, null=True)
     email = models.CharField(max_length=200, null=True)
-    date_created = models.DateTimeField(auto_now_add=True, null=True)
+    manager = models.ForeignKey('self', on_delete=models.CASCADE, null=True)
+    date_created = models.DateTimeField(null=True)
     department_level = (('Process', 'Process'), ('Structure', 'Structure'), ('Piping', 'Piping'), ('Instrumentation', 'Instrumentation'), 
-                        ('Electrical', 'Electrical'), ('Projects', 'Projects'), ('Mechanical', 'Mechanical'), ('Quality', 'Quality'), ('Documentation', 'Documentation'))
+                        ('Electrical', 'Electrical'), ('Projects', 'Projects'), ('Mechanical', 'Mechanical'), ('Quality', 'Quality'), ('Documentation', 'Documentation'), ('Planning', 'Planning'))
     department_name = models.CharField(max_length = 200, null = True, choices=department_level)
     def __str__(self):
-        return self.name
+        return str(self.employee_id)
     
 class Project(models.Model):
     type_level = (('OH', 'OH'), ('PA', 'PA'))
@@ -24,19 +28,19 @@ class Project(models.Model):
     due_date = models.DateTimeField(null=True)
     priority = models.CharField(max_length = 200, null = True, choices=priority_level)
     project_manager = models.ForeignKey(Employee, on_delete=models.CASCADE)
+    department_assigned = models.BooleanField(null=False, default=False)
     def __str__(self):
         return str(self.project_id)
 
 class Department(models.Model):
     department_level = (('Process', 'Process'), ('Structure', 'Structure'), ('Piping', 'Piping'), ('Instrumentation', 'Instrumentation'), 
-                        ('Electrical', 'Electrical'), ('Projects', 'Projects'), ('Mechanical', 'Mechanical'), ('Quality', 'Quality'), ('Documentation', 'Documentation'))
+                        ('Electrical', 'Electrical'), ('Projects', 'Projects'), ('Mechanical', 'Mechanical'), ('Quality', 'Quality'), ('Documentation', 'Documentation'),('Planning', 'Planning'))
     department_name = models.CharField(max_length = 200, null = True, choices=department_level)
     project_assigned = models.ForeignKey(Project, on_delete=models.CASCADE)
-    manager_name = models.ForeignKey(Employee, on_delete=models.CASCADE)
     time_allocated = models.IntegerField(null=True)
     time_left = models.IntegerField(null=True)
     def __str__(self):
-        return (str(self.manager_name) + " - "+str(self.project_assigned))
+        return (str(self.department_name) + " - "+str(self.project_assigned))
     # department = models.ForeignKey(Employee, null=True, on_delete=models.SET_NULL)
 
 class Report(models.Model):

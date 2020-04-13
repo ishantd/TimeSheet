@@ -1,0 +1,18 @@
+{% extends 'accounts/main.html' %}
+
+{% block content %}
+{% include 'accounts/_navbar.html' %}
+
+
+<form action="" method="post">
+    {% csrf_token %}
+
+    {{form}}
+
+
+    <input type="submit" value="Submit" name="submit" class="btn btn-primary">
+</form>
+
+
+
+{% endblock %}

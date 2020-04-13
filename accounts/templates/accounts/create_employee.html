@@ -2,6 +2,7 @@
 
 {% block content %}
 {% include 'accounts/_navbar.html' %}
+
 {% load static %}
 
 
@@ -9,7 +10,8 @@
 
     <form action="" method="POST">
         {% csrf_token %}
-        {{form}}
+        {{user_form}}
+        {{emp_form}}
         <button type="submit" class="btn btn-primary">Submit</button>
     
     </form>

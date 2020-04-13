@@ -1,0 +1,24 @@
+{% extends 'accounts/main.html' %}
+
+{% block content %}
+{% include 'accounts/_navbar.html' %}
+
+<div class="container">
+    <h2>Select Project</h2>
+    <select name="project" class="form-control has-error" id="sel0">
+        <option value="none" selected disabled hidden> 
+            Select a project 
+        </option> 
+    {% for project in projects %}
+    {% if project.department_assigned == False %}
+    <option value=" {{project.project_id}} ">{{project.project_id}} - {{project.name}}</option>
+    {% endif %}
+    {% endfor %}
+    </select>
+</div>
+
+
+
+
+
+{% endblock %}

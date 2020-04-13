@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from datetime import datetime
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 from .models import *
@@ -6,6 +7,9 @@ from .forms import *
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from .decorators import *
+from django.contrib.auth.models import User, Group
+from django.forms import inlineformset_factory
 
 
 @login_required(login_url='/')
@@ -23,26 +27,37 @@ def timesheet(request, emp_id):
     employee = Employee.objects.get(employee_id=emp_id)
     dep_projects = Department.objects.all()
     projects = dep_projects.filter(department_name=employee.department_name)
-    # dep_info = Department.objects.all()
-    # projects = dep_info.manager_name
     information = {'employee':employee, 'projects':projects}
     return render(request, 'accounts/report.html', information)
 
 @login_required(login_url='/')
+@allowed_users(allowed_roles=['planning_dept'])
 def create(request):
     return render(request, 'accounts/create.html')
 
 @login_required(login_url='/')
 def createEmployee(request):
-    form = EmployeeForm()
-    context = {'form': form}
+    context = {'form': SignupForm}
     if request.method == 'POST':
-        print("PRINT DATA:", request.POST)
-        form = EmployeeForm(request.POST)
-        print(form)
+        form = SignupForm(request.POST)
+        print(form.errors)
         if form.is_valid():
-            form.save()
-            return redirect('/')
+            user = form.save()
+            user.refresh_from_db()
+            user.employee.employee_id = form.cleaned_data.get('employee_id')
+            user.employee.name = form.cleaned_data.get('name')
+            user.employee.phone = form.cleaned_data.get('phone')
+            user.employee.email = form.cleaned_data.get('email')
+            user.employee.date_created = datetime.now()
+            user.employee.department_name = form.cleaned_data.get('department_name')
+            user.employee.manager = Employee.objects.get(employee_id =form.cleaned_data.get('manager'))
+            password = form.cleaned_data.get('password1')
+            user = authenticate(username=user.username, password=password)
+            login(request, user)
+            return redirect('dashboard')
+        else:
+            print("FORM DATA NOT VALID")      
+            # user.employee.employee_id = form.cleaned_data.get('employee_id')
     return render(request, 'accounts/create_employee.html', context)
 
 @login_required(login_url='/')
@@ -54,8 +69,7 @@ def viewEmployees(request):
 @login_required(login_url='/')
 def updateEmployee(request, pk):
     employee = Employee.objects.get(employee_id=pk)
-    form = EmployeeForm(instance=employee)
-    context = {'form': form}
+    context = {}
     return render(request, 'accounts/create_employee.html', context)
 
 @login_required(login_url='/')
@@ -86,24 +100,22 @@ def timesheetEntry(request):
             
     return HttpResponse("YESY")
 
+@unauthenticated_user
 def Login(request):
     context = {}
-    if request.user.is_authenticated:
-        return redirect('dashboard')
-    else:
-        if request.method == 'POST':
-            username = request.POST.get('username')
-            password = request.POST.get('password')
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
             
-            user = authenticate(request, username=username, password=password)
+        user = authenticate(request, username=username, password=password)
             
-            if user is not None:
-                login(request, user)
-                return redirect('dashboard')
-            else:
-                messages.info(request, 'Username or password is incorrect.')
+        if user is not None:
+            login(request, user)
+            return redirect('dashboard')
+        else:
+            messages.info(request, 'Username or password is incorrect.')
             
-        return render(request, 'accounts/login.html', context)
+    return render(request, 'accounts/login.html', context)
             
     context = {}
     return render (request, 'accounts/login.html', context)
@@ -111,4 +123,28 @@ def Login(request):
 def logoutUser(request):
     logout(request)
     return redirect('login')
+
+def newProject(request):
+    form = ProjectForm()
+    context = {'form': form}
+    
+    if request.method == 'POST':
+        print(request.POST)
+        form = ProjectForm(request.POST)
+        if form.is_valid():
+            form.save()
+            print("SUCCESS")
+        else:
+            print("ERROR")
+    return render (request, 'accounts/newProject.html', context)
+
+def department_assignment(request):
+    employee = request.user.employee
+    projects = Project.objects.filter(project_manager=employee)
+     
+    # print(projects)   
+    context = {'projects': projects}
+    
+    
+    return render (request, 'accounts/department_assignment.html', context)
 # Create your views here.
