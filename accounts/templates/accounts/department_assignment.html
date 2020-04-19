@@ -1,11 +1,11 @@
 {% extends 'accounts/main.html' %}
-
+{% load static %}
 {% block content %}
 {% include 'accounts/_navbar.html' %}
 
 <div class="container">
     <h2>Select Project</h2>
-    <select name="project" class="form-control has-error" id="sel0">
+    <select name="project" id="project" class="form-control has-error" id="sel0">
         <option value="none" selected disabled hidden> 
             Select a project 
         </option> 
@@ -15,10 +15,107 @@
     {% endif %}
     {% endfor %}
     </select>
+    {% for project in projects %}
+    <div class="project-info" id="{{project.project_id}}">
+        <h1>Selected project details:</h1>
+        <h5 class="project_id">Project ID: {{project.project_id}} </h5>
+        <h5 class="priority">Priority: {{project.priority}} </h5>
+        <h5 class="name">Name: {{project.name}} </h5>
+        <h5 class="date_created">Date Created: {{project.date_created}} </h5>
+        <h5 class="totaltime">Total Time Assigned: {{project.time_assigned}} hours </h5>
+        <h5 class="project_manager">Project Manager: Mr. {{project.project_manager.name}} </h5>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="container" id="hour-assign">
+    <form action="" onsubmit="return confirm('Do you really want to submit the form?');">
+        <table class="dep-table">
+            <thead>
+                <tr>
+                    <th scope="col" style="width: 50%;">Department</th>
+                    <th scope="col" style="width: 50%;">Assign hours</th>
+                </tr>
+            </thead>
+            <tbody id="table-body">
+                <tr id="process">
+                    <td style="width: 50%;">Process</td>
+                    <td style="width: 50%;"><input type="number" class="hour-input" name="process" id="process-input"></td>
+                </tr>
+                <tr id="structure">
+                    <td style="width: 50%;">structure</td>
+                    <td style="width: 50%;"><input type="number" class="hour-input" name="structure" id="structure-input"></td>
+                </tr>
+                <tr id="piping">
+                    <td style="width: 50%;">Piping</td>
+                    <td style="width: 50%;"><input type="number" class="hour-input" name="piping" id="piping-input"></td>
+                </tr>
+                <tr id="instrumentation">
+                    <td style="width: 50%;">instrumentation</td>
+                    <td style="width: 50%;"><input type="number" class="hour-input" name="instrumentation" id="instrumentation-input"></td>
+                </tr>
+                <tr id="electrical">
+                    <td style="width: 50%;">electrical</td>
+                    <td style="width: 50%;"><input type="number" class="hour-input" name="electrical" id="electrical-input"></td>
+                </tr>
+                <tr id="projects">
+                    <td style="width: 50%;">Projects</td>
+                    <td style="width: 50%;"><input type="number" class="hour-input" name="projects" id="projects-input"></td>
+                </tr>
+                <tr id="mechanical">
+                    <td style="width: 50%;">mechanical</td>
+                    <td style="width: 50%;"><input type="number" class="hour-input" name="mechanical" id="mechanical-input"></td>
+                </tr>
+                <tr id="quality">
+                    <td style="width: 50%;">quality</td>
+                    <td style="width: 50%;"><input type="number" class="hour-input"  name="quality" id="quality-input"></td>
+                </tr>
+                <tr id="documentation">
+                    <td style="width: 50%;">documentation</td>
+                    <td style="width: 50%;"><input type="number" class="hour-input" name="documentation" id="documentation-input"></td>
+                </tr>
+                <tr id="planning">
+                    <td style="width: 50%;">Planning</td>
+                    <td style="width: 50%;"><input type="number" class="hour-input"  name="planning" id="planning-input"></td>
+                </tr>
+            </tbody>
+        </table>
+        <input type="submit" value="Submit" class="btn btn-primary mt-5">
+    </form>
+    <br>
+    <div class="container">
+        <div class="row">
+            <div class="col-4">
+                Hours Total:
+            </div>
+            <div class="col-4">
+                Hours Entered:
+            </div>
+            
+            <div class="col-4">
+                Hours Left:
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4">
+                <input type="text" name="total-hours" id="total-hours" value="" disabled>
+            </div>
+            <div class="col-4">
+                <input type="text" name="entered-hours" id="entered-hours" disabled>
+            </div>
+            
+            <div class="col-4">
+                <input type="text" name="left-hours" id="left-hours" disabled>
+            </div>
+        </div>
+    </div>
 </div>
 
 
 
+
+
+<script src="{% static '/js/dep_assignment.js' %}"></script>
 
 
 {% endblock %}
