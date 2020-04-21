@@ -10,6 +10,7 @@ from django.contrib.auth.decorators import login_required
 from .decorators import *
 from django.contrib.auth.models import User, Group
 from django.forms import inlineformset_factory
+from django.http import QueryDict
 
 
 @login_required(login_url='/')
@@ -145,10 +146,17 @@ def department(request):
     return render (request, 'accounts/department_assignment.html', context)
 
 def approveTimesheet(request):
-    
     reports = Report.objects.filter(employee__manager__employee_id=request.user.employee.employee_id)
-    
-    context = {'reports': reports}
+    current_employee = ''
+    employeeReports = []
+    print("EmpRep: ", type(employeeReports))
+    for i in range(0, reports.count()):
+        if (reports[i].employee == current_employee):
+            continue
+        else:
+            current_employee = reports[i].employee
+            employeeReports.append(reports[i])
+    context = {'reports': employeeReports}
     
     return render(request, 'accounts/approve_ts.html', context)
 
