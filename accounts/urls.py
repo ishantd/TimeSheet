@@ -15,8 +15,8 @@ urlpatterns = [
     path('logout/', views.logoutUser, name='logout'),
     path('new_project/', views.newProject, name='new_project'),
     path('assign_time/', views.department, name='department'),
-    path('approve_ts/', views.approveTimesheet, name='approveTS'),
+    path('view_ts/', views.viewTimesheet, name='viewTS'),
     path('department_assignment/', views.department_assignment),
     path('bool_change/',  views.bool_department),
-    
+    path('approve_ts/<str:pk>/<str:week>/<str:year>/', views.approveTimesheet, name='approveTS'),
 ]

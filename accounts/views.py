@@ -145,11 +145,10 @@ def department(request):
     
     return render (request, 'accounts/department_assignment.html', context)
 
-def approveTimesheet(request):
+def viewTimesheet(request):
     reports = Report.objects.filter(employee__manager__employee_id=request.user.employee.employee_id)
     current_employee = ''
     employeeReports = []
-    print("EmpRep: ", type(employeeReports))
     for i in range(0, reports.count()):
         if (reports[i].employee == current_employee):
             continue
@@ -158,7 +157,7 @@ def approveTimesheet(request):
             employeeReports.append(reports[i])
     context = {'reports': employeeReports}
     
-    return render(request, 'accounts/approve_ts.html', context)
+    return render(request, 'accounts/view_ts.html', context)
 
 
 @login_required(login_url='/')
@@ -190,5 +189,13 @@ def bool_department(request):
         ProjectObject.save()        
         print("SUCCESS02")
     return HttpResponse('BoolChanged')
+
+@login_required(login_url='/')
+def approveTimesheet(request, pk, week, year):
+    employee = Employee.objects.get(employee_id=pk)
+    reports = Report.objects.filter(employee=employee, week=week, year=year)
+    context = {}
+    return render(request, 'accounts/approve_ts.html', context)
+    
 
 # Create your views here.
