@@ -1,4 +1,3 @@
-console.log("TEST")
 $(function(){
     $.validator.setDefaults({
         errorClass: "invalid-feedback",

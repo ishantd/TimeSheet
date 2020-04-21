@@ -23,10 +23,10 @@ def contact(request):
     return render(request, 'accounts/products.html')
 
 @login_required(login_url='/')
-def timesheet(request, emp_id):
-    employee = Employee.objects.get(employee_id=emp_id)
+def timesheet(request):
+    employee = Employee.objects.get(employee_id=request.user.employee.employee_id)
     dep_projects = Department.objects.all()
-    projects = dep_projects.filter(department_name=employee.department_name)
+    projects = dep_projects.filter(department_name=request.user.employee.department_name)
     information = {'employee':employee, 'projects':projects}
     return render(request, 'accounts/report.html', information)
 
@@ -79,6 +79,7 @@ def timesheetEntry(request):
     ProjectObject = ''
     if request.method == 'POST':
         data = request.POST
+        print(data['project'])
         EmployeeObject = Employee.objects.get(employee_id=data['employee'])
         ProjectObject = Project.objects.get(project_id=data['project']) 
         DepartmentObject = Department.objects.get(department_name=data['department_name'])
@@ -92,12 +93,7 @@ def timesheetEntry(request):
                                week=data['week'],
                                year=data['year'])
         create_report.save()
-        
-        if (data['project']!='0'):
-            total_time = DepartmentObject.time_left
-            DepartmentObject.time_left = total_time - int(data['hours_reported'])
-            DepartmentObject.save()
-            
+                    
     return HttpResponse("YESY")
 
 @unauthenticated_user
@@ -138,7 +134,7 @@ def newProject(request):
             print("ERROR")
     return render (request, 'accounts/newProject.html', context)
 
-def department_assignment(request):
+def department(request):
     employee = request.user.employee
     projects = Project.objects.filter(project_manager=employee)
      
@@ -147,4 +143,42 @@ def department_assignment(request):
     
     
     return render (request, 'accounts/department_assignment.html', context)
+
+def approveTimesheet(request):
+    reports = Report.objects.all()
+    context = {'reports': reports}
+    
+    return render(request, 'accounts/approve_ts.html', context)
+
+
+@login_required(login_url='/')
+@csrf_exempt
+def department_assignment(request):
+    if request.method == 'POST':
+        data = request.POST
+        ProjectObject = Project.objects.get(project_id=data['project_assigned'])
+        assign_dep = Department(
+            department_name=data['department_name'],
+            project_assigned=ProjectObject,
+            time_allocated=data['time_allocated'],
+            time_left=data['time_left']
+        )
+        
+        assign_dep.save()
+        print("SUCCESS01")
+        
+        
+    return HttpResponse("YESS")
+
+@login_required(login_url='/')
+@csrf_exempt
+def bool_department(request):
+    if request.method == 'POST':
+        data = request.POST
+        ProjectObject = Project.objects.get(project_id=data['project'])
+        ProjectObject.department_assigned = True
+        ProjectObject.save()        
+        print("SUCCESS02")
+    return HttpResponse('BoolChanged')
+
 # Create your views here.

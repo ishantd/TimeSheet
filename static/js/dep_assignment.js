@@ -30,6 +30,7 @@ $('#dep_form').submit(function(e){
   var myform = $("form")
   var data = myform.serializeArray();
   var dept_data = [];
+  var boolProject = {'project': project}
   for (var i=0; i<data.length; i++) {
     var dataObject = {};
     var department_name = data[i].name;
@@ -42,7 +43,20 @@ $('#dep_form').submit(function(e){
     }
     dept_data.push(dataObject)
   }
-  console.log(dept_data)
+  if ($("#left-hours").val() == '0') {
+    for (var i = 0; i < dept_data.length; i++) {
+      $.post("/department_assignment/", dept_data[i], function(){
+        console.log("Data successfully sent")
+    });
+    }
+    $.post("/bool_change/", boolProject, function(){
+      console.log("Bool")
+  });
+  }
+  else {
+    $("#left-hours").addClass("is-invalid")
+    alert("Please make sure you have assigned all hours.")
+  }
 });
 
 
