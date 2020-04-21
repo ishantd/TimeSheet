@@ -145,7 +145,9 @@ def department(request):
     return render (request, 'accounts/department_assignment.html', context)
 
 def approveTimesheet(request):
-    reports = Report.objects.all()
+    
+    reports = Report.objects.filter(employee__manager__employee_id=request.user.employee.employee_id)
+    
     context = {'reports': reports}
     
     return render(request, 'accounts/approve_ts.html', context)

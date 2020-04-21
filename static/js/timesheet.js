@@ -25,24 +25,18 @@ $('#ts_form').submit(function(e){
     employee_id = parseInt(employee_id.replace('ID: ', ''))
     var ReportData = [];
     for (var i = 0; i < (data.length+1)/9; i++) {
-        console.log("From Loop 1 - i", i)
         var dataObject = {};
         var p_id;
         var activity;
         var hours = [];
         for (var j = i * 9; j < (i+1)*9 ; j++) {
-            console.log("From Loop 2 - i", i)
-            console.log("From Loop 2 - j", j)
            if(data[j] != undefined) {
             if((j==0 || j%9==0) && data[j].name == "project") {
                 if (data[j].value == "Holiday/Leave") {
                     p_id = 0;
                 }
                 else {
-                    console.log("main test", data[j].value, j)
                     p_id = parseInt(data[j].value);
-                    console.log(data[j].value);
-                    console.log(p_id);
                 }
             }
             if(data[j].name == "activity"){
