@@ -193,6 +193,8 @@ def bool_department(request):
 @login_required(login_url='/')
 def approveTimesheet(request, pk, week, year):
     employee = Employee.objects.get(employee_id=pk)
+    if (request.user != employee.manager.user):
+        return render(request, '')
     reports = Report.objects.filter(employee=employee, week=week, year=year)
     report_info = reports[0]
     for report in reports:
