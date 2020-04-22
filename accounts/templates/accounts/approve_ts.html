@@ -3,7 +3,58 @@
 {% block content %}
 {% include 'accounts/_navbar.html' %}
 
+<div class="timesheet">
+    <h3>Timesheet</h3>
+    <h4>Employee ID: {{employee.employee_id}}</h4>
+    <h4>Employee Name: {{employee.name}}</h4>
+    <h4>Timesheet Submitted: {{report_info.date_created}} </h4>
+    <h5><strong>Week - Year:</strong> {{report_info.week}} - {{report_info.year}}</h5>
+</div>
 
+<div class="view-ts">
+    <table id="myTable" class="table table-striped">  
+        <thead>  
+          <tr> 
+            <th>Project</th>  
+            <th>Activity</th>
+            <th>Saturday</th>
+            <th>Sunday</th>
+            <th>Monday</th>  
+            <th>Tuesday</th> 
+            <th>Wednesday</th>
+            <th>Thursday</th>
+            <th>Friday</th>
+            <th>Total Hours</th> 
+          </tr>  
+        </thead>  
+        <tbody>
+        {% for report in reports %}
+          <tr id=" {{report.id}} ">
+            <td> <strong> {{report.project.project_id}} - {{report.project.name}} </strong> </td>
+            <td> {{report.activity}} </td>
+            <td class="saturday">  </td>
+            <td class="sunday">  </td>
+            <td class="monday">  </td>
+            <td class="tuesday">  </td>
+            <td class="wednesday">  </td>
+            <td class="thursday">  </td>
+            <td class="friday">  </td>
+            
+          </tr> 
+        {% endfor %}  
+        </tbody>  
+      </table>  
+</div>
+
+<script>
+    $(document).ready(function(){
+        $('#myTable').dataTable();
+    });
+</script>
+
+<script>
+    
+</script>
 
 
 {% endblock %}

@@ -194,7 +194,10 @@ def bool_department(request):
 def approveTimesheet(request, pk, week, year):
     employee = Employee.objects.get(employee_id=pk)
     reports = Report.objects.filter(employee=employee, week=week, year=year)
-    context = {}
+    report_info = reports[0]
+    for report in reports:
+        print(report.everyday_hours)
+    context = {'reports': reports, 'employee': employee, 'report_info': report_info}
     return render(request, 'accounts/approve_ts.html', context)
     
 
