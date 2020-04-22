@@ -28,8 +28,8 @@
             <td> {{report.year}} </td>            
             <td> {{report.employee.department_name}} </td>
             <td> <a type="button" class="btn btn-primary" href=" {% url 'approveTS' report.employee.employee_id report.week report.year %} ">View and approve timesheet</a> </td>
-            <td> <a type="button" class="btn btn-success">Approve</a> </td>
-            <td> <a type="button" class="btn btn-danger">Reject</a> </td>        
+            <td> <a type="button" class="btn btn-success" href="#">Approve</a> </td>
+            <td> <a type="button" class="btn btn-danger" href="#">Reject</a> </td>        
           </tr> 
         {% endfor %}  
         </tbody>  

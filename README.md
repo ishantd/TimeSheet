@@ -1,1 +1,3 @@
-BULMA - CSS Framework
+Javascript
+Django
+Bootstrap

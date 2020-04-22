@@ -196,7 +196,7 @@ def approveTimesheet(request, pk, week, year):
     reports = Report.objects.filter(employee=employee, week=week, year=year)
     report_info = reports[0]
     for report in reports:
-        print(report.everyday_hours)
+        report.everyday_hours = report.everyday_hours.split(",") 
     context = {'reports': reports, 'employee': employee, 'report_info': report_info}
     return render(request, 'accounts/approve_ts.html', context)
     

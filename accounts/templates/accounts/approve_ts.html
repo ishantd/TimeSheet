@@ -32,14 +32,10 @@
           <tr id=" {{report.id}} ">
             <td> <strong> {{report.project.project_id}} - {{report.project.name}} </strong> </td>
             <td> {{report.activity}} </td>
-            <td class="saturday">  </td>
-            <td class="sunday">  </td>
-            <td class="monday">  </td>
-            <td class="tuesday">  </td>
-            <td class="wednesday">  </td>
-            <td class="thursday">  </td>
-            <td class="friday">  </td>
-            
+            {% for hour in report.everyday_hours %}
+            <td> {{hour}} </td>
+            {% endfor %}
+            <td> {{report.hours_reported}} </td>            
           </tr> 
         {% endfor %}  
         </tbody>  
