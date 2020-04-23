@@ -54,6 +54,7 @@ class Report(models.Model):
     week = models.IntegerField(null=True)
     year = models.IntegerField(null=True)
     approved = models.BooleanField(default=False)
+    rejected = models.BooleanField(default=False)
     def __str__(self):
         return (str(self.employee.name) + " - "+str(self.project.name)+ " - "+str(self.hours_reported) + " Hours")
 

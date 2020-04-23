@@ -194,7 +194,7 @@ def bool_department(request):
 def approveTimesheet(request, pk, week, year):
     employee = Employee.objects.get(employee_id=pk)
     if (request.user != employee.manager.user):
-        return render(request, '')
+        return HttpResponse('Unauthorized', status=401)
     reports = Report.objects.filter(employee=employee, week=week, year=year)
     report_info = reports[0]
     for report in reports:
@@ -202,5 +202,7 @@ def approveTimesheet(request, pk, week, year):
     context = {'reports': reports, 'employee': employee, 'report_info': report_info}
     return render(request, 'accounts/approve_ts.html', context)
     
-
+def confirmTS(request):
+    
+    return HttpResponse("Success", status=200)
 # Create your views here.
