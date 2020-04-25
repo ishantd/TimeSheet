@@ -194,15 +194,22 @@ def bool_department(request):
 def approveTimesheet(request, pk, week, year):
     employee = Employee.objects.get(employee_id=pk)
     if (request.user != employee.manager.user):
-        return HttpResponse('Unauthorized', status=401)
+        return render(request, 'accounts/error.html', status=401)
     reports = Report.objects.filter(employee=employee, week=week, year=year)
     report_info = reports[0]
     for report in reports:
         report.everyday_hours = report.everyday_hours.split(",") 
     context = {'reports': reports, 'employee': employee, 'report_info': report_info}
     return render(request, 'accounts/approve_ts.html', context)
-    
-def confirmTS(request):
-    
-    return HttpResponse("Success", status=200)
+ 
+@login_required(login_url='/')   
+def confirmTS(request, pk, week, year):
+    employee = Employee.objects.get(employee_id=pk)
+    if (request.user != employee.manager.user):
+        return HttpResponse('Unauthorized', status=401)
+    reports = Report.objects.filter(employee=employee, week=week, year=year)
+    for report in reports:
+        report.approved = True
+        report.save()
+    return redirect('viewTS')
 # Create your views here.

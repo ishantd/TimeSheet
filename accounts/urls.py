@@ -19,4 +19,5 @@ urlpatterns = [
     path('department_assignment/', views.department_assignment),
     path('bool_change/',  views.bool_department),
     path('approve_ts/<str:pk>/<str:week>/<str:year>/', views.approveTimesheet, name='approveTS'),
+    path('confirm_ts/<str:pk>/<str:week>/<str:year>/', views.confirmTS, name='confirmTS')
 ]
