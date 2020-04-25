@@ -30,7 +30,7 @@
               <td> {{report.employee.department_name}} </td>
               <td> <a type="button" class="btn btn-primary" href=" {% url 'approveTS' report.employee.employee_id report.week report.year %} ">View and approve timesheet</a> </td>
               <td> <a type="button" class="btn btn-success" href=" {% url 'confirmTS' report.employee.employee_id report.week report.year %} ">Approve</a> </td>
-              <td> <a type="button" class="btn btn-danger" href="#">Reject</a> </td>        
+              <td> <a type="button" class="btn btn-danger" href="{% url 'rejectTS' report.employee.employee_id report.week report.year %}">Reject</a> </td>        
             </tr>
           {% endif %} 
         {% endfor %}  
@@ -51,9 +51,8 @@
             <th>Week</th>
             <th>Year</th>  
             <th>Department</th> 
-            <th>View and Approve Timesheet</th>
-            <th>Approve</th>
-            <th>Reject</th> 
+            <th>View Timesheet</th>
+            
           </tr>  
         </thead>  
         <tbody>
@@ -65,9 +64,7 @@
               <td> {{report.week}} </td>
               <td> {{report.year}} </td>            
               <td> {{report.employee.department_name}} </td>
-              <td> <a type="button" class="btn btn-primary" href=" {% url 'approveTS' report.employee.employee_id report.week report.year %} ">View and approve timesheet</a> </td>
-              <td> <a type="button" class="btn btn-success" href="">Approve</a> </td>
-              <td> <a type="button" class="btn btn-danger" href="#">Reject</a> </td>        
+              <td> <a type="button" class="btn btn-primary" href=" {% url 'approveTS' report.employee.employee_id report.week report.year %} ">View timesheet</a> </td>       
             </tr> 
           {% endif %}
         {% endfor %}  

@@ -42,15 +42,17 @@
       </table>  
 </div>
 
+<div class="actions">
+  <a type="button" class="btn btn-success" href=" {% url 'confirmTS' employee.employee_id report_info.week report_info.year %} ">Approve</a> 
+  <a type="button" class="btn btn-danger" href="{% url 'rejectTS' employee.employee_id report_info.week report_info.year %}">Reject</a> 
+</div>
+
 <script>
     $(document).ready(function(){
         $('#myTable').dataTable();
     });
 </script>
 
-<script>
-    
-</script>
 
 
 {% endblock %}

@@ -212,4 +212,23 @@ def confirmTS(request, pk, week, year):
         report.approved = True
         report.save()
     return redirect('viewTS')
-# Create your views here.
+
+@login_required(login_url='/')   
+def rejectTS(request, pk, week, year):
+    employee = Employee.objects.get(employee_id=pk)
+    if (request.user != employee.manager.user):
+        return HttpResponse('Unauthorized', status=401)
+    reports = Report.objects.filter(employee=employee, week=week, year=year)
+    for report in reports:
+        report.rejected = True
+        report.approved = False
+        report.save()
+    return redirect('viewTS')
+
+@login_required(login_url='/')
+def mytimesheets(request):
+    
+    context = {}
+    
+    return render(request, 'mytimesheets.html', context)
+
