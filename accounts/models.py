@@ -11,11 +11,18 @@ class Employee(models.Model):
     email = models.CharField(max_length=200, null=True)
     manager = models.ForeignKey('self', on_delete=models.CASCADE, null=True)
     date_created = models.DateTimeField(null=True)
-    department_level = (('Process', 'Process'), ('Structure', 'Structure'), ('Piping', 'Piping'), ('Instrumentation', 'Instrumentation'), 
-                        ('Electrical', 'Electrical'), ('Projects', 'Projects'), ('Mechanical', 'Mechanical'), ('Quality', 'Quality'), ('Documentation', 'Documentation'), ('Planning', 'Planning'))
-    department_name = models.CharField(max_length = 200, null = True, choices=department_level)
+    designation_name = (('Office Boy', 'Office Boy'),('Driver', 'Driver'),('Draftman', 'Draftman'),('Assistant', 'Assistant'),
+    ('Sr Assistant', 'Sr Assistant'),('Secreatary', 'Secreatary'),('Executive', 'Executive'),('Sr Executive', 'Sr Executive'),
+    ('Engineer', 'Engineer'),('Graduate Trainee', 'Graduate Trainee'),('GTE', 'GTE'),('Lead Engineer', 'Lead Engineer'),
+    ('Sr Engineer', 'Sr Engineer'),('Manager', 'Manager'),('Assistant Manager', 'Assistant Manager'),
+    ('Deputy Manager', 'Deputy Manager'),('Sr Manager', 'Sr Manager'),('Chief Manager', 'Chief Manager'),
+    ('General Manager', 'General Manager'),('AVP', 'AVP'),('VP', 'VP'),('DP', 'DP'),('CEO', 'CEO'),('CMD', 'CMD'))  
+    # department_level = (('Process', 'Process'), ('Structure', 'Structure'), ('Piping', 'Piping'), ('Instrumentation', 'Instrumentation'), 
+    #                     ('Electrical', 'Electrical'), ('Projects', 'Projects'), ('Mechanical', 'Mechanical'), ('Quality', 'Quality'), ('Documentation', 'Documentation'), ('Planning', 'Planning'))
+    # department_name = models.CharField(max_length = 200, null = True, choices=department_level)
     def __str__(self):
         return str(self.employee_id)
+ 
     
 class Project(models.Model):
     type_level = (('OH', 'OH'), ('PA', 'PA'))
@@ -58,5 +65,5 @@ class Report(models.Model):
     def __str__(self):
         return (str(self.employee.name) + " - "+str(self.project.name)+ " - "+str(self.hours_reported) + " Hours")
 
- 
+
     
