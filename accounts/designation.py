@@ -1,27 +1,21 @@
-list = """Office Boy
-Driver
-Draftman
-Assistant
-Sr Assistant
-Secreatary
-Executive
-Sr Executive
-Engineer
-Graduate Trainee
-GTE
-Lead Engineer
-Sr Engineer
-Manager
-Assistant Manager
-Deputy Manager
-Sr Manager
-Chief Manager
-General Manager
-AVP
-VP
-DP
-CEO
-CMD
+list = """Corporate
+Finance
+Business Development
+Human Resource
+Library
+Document Control
+Information Technology
+Planning
+Administration
+Process
+Quality
+Mechanical
+Projects
+Instrumentation
+Civil Structural
+Procurement
+Electrical
+Piping
 """
 
 list = list.split("\n")
