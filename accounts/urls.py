@@ -20,5 +20,6 @@ urlpatterns = [
     path('bool_change/',  views.bool_department),
     path('approve_ts/<str:pk>/<str:week>/<str:year>/', views.approveTimesheet, name='approveTS'),
     path('confirm_ts/<str:pk>/<str:week>/<str:year>/', views.confirmTS, name='confirmTS'),
-    path('reject_ts/<str:pk>/<str:week>/<str:year>/', views.rejectTS, name='rejectTS')
+    path('reject_ts/<str:pk>/<str:week>/<str:year>/', views.rejectTS, name='rejectTS'),
+    path('selectEmp/', views.selectEmp, name='selectEmployee')
 ]

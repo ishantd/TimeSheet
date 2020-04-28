@@ -180,12 +180,11 @@ def department_assignment(request):
             time_left=data['time_left']
         )
         
-        # assign_dep.save()
-        print(assign_dep)
-        print("SUCCESS01")
+        assign_dep.save()
+        print("Department wise time saved!")
         
         
-    return HttpResponse(status=200)
+    return redirect("dep_assignment", status=200)
 
 @login_required(login_url='/')
 @csrf_exempt
@@ -194,9 +193,9 @@ def bool_department(request):
         data = request.POST
         ProjectObject = Project.objects.get(project_id=data['project'])
         ProjectObject.department_assigned = True
-        # ProjectObject.save()        
-        # print("SUCCESS02")
-    return HttpResponse('BoolChanged')
+        ProjectObject.save()        
+        print("Bool object in project department changed!")
+    return HttpResponse('BoolChanged', status=200)
 
 @login_required(login_url='/')
 def approveTimesheet(request, pk, week, year):
@@ -239,4 +238,15 @@ def mytimesheets(request):
     context = {}
     
     return render(request, 'mytimesheets.html', context)
+
+@login_required(login_url='/')
+@allowed_users(allowed_roles=['hod'])
+def selectEmp(request):
+
+    context = {}
+
+
+    return render(request, 'accounts/selectEmp', context)
+
+
 
