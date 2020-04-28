@@ -138,9 +138,14 @@ def newProject(request):
 def department(request):
     employee = request.user.employee
     projects = Project.objects.filter(project_manager=employee)
-     
+    deps = DepInfo.objects.all()
+    for dep in deps:
+        dep.department_name = dep.department_name + ',' + (dep.department_name.replace(' ', '')).lower()
+        dep.department_name = dep.department_name.split(",")
+    
+    print(deps)
     # print(projects)   
-    context = {'projects': projects}
+    context = {'projects': projects, 'deps': deps}
     
     
     return render (request, 'accounts/department_assignment.html', context)
@@ -166,18 +171,21 @@ def department_assignment(request):
     if request.method == 'POST':
         data = request.POST
         ProjectObject = Project.objects.get(project_id=data['project_assigned'])
+        depObject = DepInfo.objects.get(department_name=data['department_name'])
+        print("DEBUG", depObject, data['department_name'])
         assign_dep = Department(
-            department_name=data['department_name'],
+            department_name=depObject,
             project_assigned=ProjectObject,
             time_allocated=data['time_allocated'],
             time_left=data['time_left']
         )
         
-        assign_dep.save()
+        # assign_dep.save()
+        print(assign_dep)
         print("SUCCESS01")
         
         
-    return HttpResponse("YESS")
+    return HttpResponse(status=200)
 
 @login_required(login_url='/')
 @csrf_exempt
@@ -186,8 +194,8 @@ def bool_department(request):
         data = request.POST
         ProjectObject = Project.objects.get(project_id=data['project'])
         ProjectObject.department_assigned = True
-        ProjectObject.save()        
-        print("SUCCESS02")
+        # ProjectObject.save()        
+        # print("SUCCESS02")
     return HttpResponse('BoolChanged')
 
 @login_required(login_url='/')

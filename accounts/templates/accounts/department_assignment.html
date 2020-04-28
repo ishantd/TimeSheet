@@ -21,7 +21,7 @@
         <h5 class="project_id">Project ID: {{project.project_id}} </h5>
         <h5 class="name">Name: {{project.name}} </h5>
         <h5 class="date_created">Date Created: {{project.date_created}} </h5>
-        <h5 class="totaltime">Total Time Assigned: {{project.time_assigned}} hours </h5>
+        <h5 class="totaltime">Total Time Assigned: {{project.controlled_manhours}} hours </h5>
         <h5 class="project_manager">Project Manager: Mr. {{project.project_manager.name}} </h5>
     </div>
     {% endfor %}
@@ -37,46 +37,13 @@
                 </tr>
             </thead>
             <tbody id="table-body">
-                <tr id="process">
-                    <td style="width: 50%;">Process</td>
-                    <td style="width: 50%;"><input type="number" class="hour-input form-control" name="Process" id="process-input"></td>
+                {% for dep in deps %}
+                    <tr id=" {{ dep.department_name.1 }} ">
+                    <td style="width: 50%;">{{ dep.department_name.0 }}</td>
+                    <td style="width: 50%;"><input type="number" class="hour-input form-control" name="{{ dep.department_name.0 }}" id="{{ dep.department_name.1 }}-input"></td>
                 </tr>
-                <tr id="structure">
-                    <td style="width: 50%;">structure</td>
-                    <td style="width: 50%;"><input type="number" class="hour-input form-control" name="Structure" id="structure-input"></td>
-                </tr>
-                <tr id="piping">
-                    <td style="width: 50%;">Piping</td>
-                    <td style="width: 50%;"><input type="number" class="hour-input form-control" name="Piping" id="piping-input"></td>
-                </tr>
-                <tr id="instrumentation">
-                    <td style="width: 50%;">instrumentation</td>
-                    <td style="width: 50%;"><input type="number" class="hour-input form-control" name="Instrumentation" id="instrumentation-input"></td>
-                </tr>
-                <tr id="electrical">
-                    <td style="width: 50%;">electrical</td>
-                    <td style="width: 50%;"><input type="number" class="hour-input form-control" name="Electrical" id="elecreadonly="readonly"nput"></td>
-                </tr>
-                <tr id="projects">
-                    <td style="width: 50%;">Projects</td>
-                    <td style="width: 50%;"><input type="number" class="hour-input form-control" name="Projects" id="projects-input"></td>
-                </tr>
-                <tr id="mechanical">
-                    <td style="width: 50%;">mechanical</td>
-                    <td style="width: 50%;"><input type="number" class="hour-input form-control" name="Mechanical" id="mechanical-input"></td>
-                </tr>
-                <tr id="quality">
-                    <td style="width: 50%;">quality</td>
-                    <td style="width: 50%;"><input type="number" class="hour-input form-control"  name="Quality" id="quality-input"></td>
-                </tr>
-                <tr id="documentation">
-                    <td style="width: 50%;">documentation</td>
-                    <td style="width: 50%;"><input type="number" class="hour-input form-control" name="Documentation" id="documentation-input"></td>
-                </tr>
-                <tr id="planning">
-                    <td style="width: 50%;">Planning</td>
-                    <td style="width: 50%;"><input type="number" class="hour-input form-control"  name="Planning" id="planning-input"></td>
-                </tr>
+
+                {% endfor %}
             </tbody>
         </table>
         <button type="submit" id="submitDep" class="btn btn-success">Submit</button>
