@@ -9,7 +9,7 @@ class Employee(models.Model):
     name = models.CharField(max_length=200, null=True)
     phone = models.CharField(max_length=200, null=True)
     email = models.CharField(max_length=200, null=True)
-    manager = models.ForeignKey('self', on_delete=models.CASCADE, null=True)
+    manager = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
     designation_name = (('Office Boy', 'Office Boy'),('Driver', 'Driver'),('Draftman', 'Draftman'),('Assistant', 'Assistant'),
     ('Sr Assistant', 'Sr Assistant'),('Secreatary', 'Secreatary'),('Executive', 'Executive'),('Sr Executive', 'Sr Executive'),
@@ -19,10 +19,10 @@ class Employee(models.Model):
     ('General Manager', 'General Manager'),('AVP', 'AVP'),('VP', 'VP'),('DP', 'DP'),('CEO', 'CEO'),('CMD', 'CMD'))  
     designation = models.CharField(max_length=200, null=True, choices=designation_name)
     location = models.CharField(max_length=200, null=True, choices=(('Delhi', 'Delhi'), ('Offshore', 'Offshore')))
-    department_info = models.ForeignKey('DepInfo', on_delete=models.CASCADE)
+    department_info = models.ForeignKey('DepInfo', on_delete=models.CASCADE, null=True, blank=True)
     service_type = models.CharField(max_length=200, null=True, choices=(('Regular', 'Regular'), ('Contract', 'Contract')))
     def __str__(self):
-        return str(self.employee_id)
+        return str(self.employee_id) + '-' + self.name
  
     
 class Project(models.Model):
@@ -40,13 +40,12 @@ class Project(models.Model):
         return str(self.project_id)
 
 class Department(models.Model):
-    department_level = (('Process', 'Process'), ('Structure', 'Structure'), ('Piping', 'Piping'), ('Instrumentation', 'Instrumentation'), 
-                        ('Electrical', 'Electrical'), ('Projects', 'Projects'), ('Mechanical', 'Mechanical'), ('Quality', 'Quality'), ('Documentation', 'Documentation'),('Planning', 'Planning'))
-    department_name = models.CharField(max_length = 200, null = True, choices=department_level)
+    department_name = models.ForeignKey('DepInfo', on_delete=models.CASCADE, null=True)
     project_assigned = models.ForeignKey(Project, on_delete=models.CASCADE)
     time_allocated = models.IntegerField(null=True)
     time_left = models.IntegerField(null=True)
     assigned_to = models.ManyToManyField(Employee)
+    emp_assigned = models.BooleanField(null=False, default=False)
     def __str__(self):
         return (str(self.department_name) + " - "+str(self.project_assigned))
     # department = models.ForeignKey(Employee, null=True, on_delete=models.SET_NULL)
@@ -74,10 +73,14 @@ class DepInfo(models.Model):
     ('Civil Structural', 'Civil Structural'),('Procurement', 'Procurement'),('Electrical', 'Electrical'),('Piping', 'Piping'))
     department_name = models.CharField(max_length = 200, null = True, choices=department_level)
     department_hod = models.ForeignKey(Employee, on_delete=models.CASCADE)
+    def __str__(self):
+        return (str(self.department_name))
 
 class Activity(models.Model):
     name = models.CharField(max_length = 200, null = True)
-    department_info = models.ForeignKey(DepInfo, on_delete=models.CASCADE, null=True)
+    department_info = models.ForeignKey(DepInfo, on_delete=models.CASCADE, null=True, blank=True)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
+    def __str__(self):
+        return (str(self.name))
 
     
