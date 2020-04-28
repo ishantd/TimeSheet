@@ -246,7 +246,7 @@ def selectEmp(request):
     context = {}
 
 
-    return render(request, 'accounts/selectEmp', context)
+    return render(request, 'accounts/selectEmp.html', context)
 
 
 
