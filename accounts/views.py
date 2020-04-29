@@ -184,7 +184,7 @@ def department_assignment(request):
         print("Department wise time saved!")
         
         
-    return redirect("dep_assignment", status=200)
+    return redirect("dep_assignment")
 
 @login_required(login_url='/')
 @csrf_exempt
@@ -242,10 +242,18 @@ def mytimesheets(request):
 @login_required(login_url='/')
 @allowed_users(allowed_roles=['hod'])
 def selectEmp(request):
-
-    context = {}
-
-
+    
+    
+    dep_info = DepInfo.objects.get(department_name=request.user.employee.department_info.department_name)
+    # print(dep_info)
+    project_deps = Department.objects.filter(department_name = dep_info)
+    # print(project_dep.project_assigned, project_dep.time_allocated)
+    employees = Employee.objects.filter(department_info = dep_info)
+    # print(employees)
+    # print(employee.department_info.department_hod, "HOD")
+    # project_dep.assigned_to.add(employee)
+    # print(project_dep.assigned_to.all())
+    context = {'projects': project_deps, 'employees': employees}
     return render(request, 'accounts/selectEmp.html', context)
 
 

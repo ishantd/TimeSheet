@@ -4,6 +4,52 @@
 {% block content %}
 {% include 'accounts/_navbar.html' %}
 
+    <div class="container">
+    <h2>Select Project</h2>
+    <select name="project" id="project" class="form-control has-error" id="sel0">
+        <option value="none" selected disabled hidden> 
+            Select a project 
+        </option> 
+    {% for project in projects %}
+    {% if project.emp_assigned == False %}
+    <option value=" {{project.project_id}} ">{{project.project_assigned.project_id}} - {{project.project_assigned.name}}</option>
+    {% endif %}
+    {% endfor %}
+    </select>
+    <div id="selectEmployee">
+        <div class="row">
+        <div class="col-5">
+            <select name="from[]" id="multiselect" class="form-control" size="8" multiple="multiple">
+                {% for employee in employees %}
+                <option value=" {employee.name} "> {{employee.name}} - {{employee.employee_id}} </option>
 
 
+                {% endfor %}
+            </select>
+        </div>
+        
+        <div class="col-2">
+            <button type="button" id="multiselect_rightAll" class="btn btn-secondary"><i class="fa fa-forward"></i></button>
+            <button type="button" id="multiselect_rightSelected" class="btn btn-secondary"><i class="fa fa-chevron-right"></i></button>
+            <button type="button" id="multiselect_leftSelected" class="btn btn-secondary"><i class="fa fa-chevron-left"></i></i></button>
+            <button type="button" id="multiselect_leftAll" class="btn btn-secondary"><i class="fa fa-backward"></i></button>
+        </div>
+        
+        <div class="col-5">
+            <select name="to[]" id="multiselect_to" class="form-control" size="8" multiple="multiple"></select>
+        </div>
+    </div>
+    
+    </div>
+
+
+
+    <script src="{% static '/js/multiselect.js' %}"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function($) {
+            $('#multiselect').multiselect();
+        });
+    </script>
+    <script src="{% static '/js/selectemp.js' %}"></script>
+    
 {% endblock %}
