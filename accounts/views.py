@@ -26,8 +26,9 @@ def contact(request):
 @login_required(login_url='/')
 def timesheet(request):
     employee = Employee.objects.get(employee_id=request.user.employee.employee_id)
-    dep_projects = Department.objects.all()
-    projects = dep_projects.filter(department_name=request.user.employee.department_name)
+    # print(employee)
+    projects = employee.department_set.all()
+    # print(projects)
     information = {'employee':employee, 'projects':projects}
     return render(request, 'accounts/report.html', information)
 
