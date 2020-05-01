@@ -6,50 +6,47 @@
 
     <div class="container">
     <h2>Select Project</h2>
-    <select name="project" id="project" class="form-control has-error" id="sel0">
-        <option value="none" selected disabled hidden> 
-            Select a project 
-        </option> 
-    {% for project in projects %}
-    {% if project.emp_assigned == False %}
-    <option value=" {{project.project_id}} ">{{project.project_assigned.project_id}} - {{project.project_assigned.name}}</option>
-    {% endif %}
-    {% endfor %}
-    </select>
-    <div id="selectEmployee">
-        <div class="row">
-        <div class="col-5">
-            <select name="from[]" id="multiselect" class="form-control" size="8" multiple="multiple">
-                {% for employee in employees %}
-                <option value=" {employee.name} "> {{employee.name}} - {{employee.employee_id}} </option>
-
-
+    
+        <form action="" id="emp_form" onsubmit="return confirm('Are you sure you want to submit?')">
+            <select name="project" class="form-control" id="project" >
+                <option value="none" selected disabled>Select a project </option>
+                {% for project in projects%}
+                {% if project.emp_assigned == False %}
+                <option value="{{project.project_assigned}}"> {{project.project_assigned.name}} - {{project.project_assigned.project_id}} </option>
+                {% endif %}
                 {% endfor %}
             </select>
-        </div>
-        
-        <div class="col-2">
-            <button type="button" id="multiselect_rightAll" class="btn btn-secondary"><i class="fa fa-forward"></i></button>
-            <button type="button" id="multiselect_rightSelected" class="btn btn-secondary"><i class="fa fa-chevron-right"></i></button>
-            <button type="button" id="multiselect_leftSelected" class="btn btn-secondary"><i class="fa fa-chevron-left"></i></i></button>
-            <button type="button" id="multiselect_leftAll" class="btn btn-secondary"><i class="fa fa-backward"></i></button>
-        </div>
-        
-        <div class="col-5">
-            <select name="to[]" id="multiselect_to" class="form-control" size="8" multiple="multiple"></select>
-        </div>
+    <div id="selectEmployee" class = "p-3">
+            <a href='#' class="btn btn-info" id='select-all'>select all</a>
+            <a href='#' class="btn btn-info" id='deselect-all'>deselect all</a>
+            <div class='row'>
+                <div class='col-12 p-5'>
+                    <select id='public-methods' multiple='multiple' name='employee'>
+                    {% for employee in employees %}
+                    <option value='{{ employee.employee_id}}' name='{{ employee.employee_id}}'> {{ employee.employee_id}} - {{ employee.name}} </option>
+                    {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <button type="submit" id="submitemp" class="btn btn-success">Submit</button>
+        </form>
     </div>
-    
-    </div>
 
 
 
-    <script src="{% static '/js/multiselect.js' %}"></script>
-    <script type="text/javascript">
-        jQuery(document).ready(function($) {
-            $('#multiselect').multiselect();
+    <script src="{% static '/js/jquery.multi-select.js' %}" type="text/javascript"></script>
+    <script> 
+        $('#public-methods').multiSelect();
+        $('#select-all').click(function(){
+            $('#public-methods').multiSelect('select_all');
+                return false;
         });
-    </script>
+        $('#deselect-all').click(function(){
+            $('#public-methods').multiSelect('deselect_all');
+                return false;
+        });
+        
+    </script>    
     <script src="{% static '/js/selectemp.js' %}"></script>
     
 {% endblock %}

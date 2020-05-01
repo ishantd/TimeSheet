@@ -239,21 +239,33 @@ def mytimesheets(request):
     
     return render(request, 'mytimesheets.html', context)
 
+@csrf_exempt
 @login_required(login_url='/')
 @allowed_users(allowed_roles=['hod'])
 def selectEmp(request):
-    
-    
     dep_info = DepInfo.objects.get(department_name=request.user.employee.department_info.department_name)
-    # print(dep_info)
     project_deps = Department.objects.filter(department_name = dep_info)
-    # print(project_dep.project_assigned, project_dep.time_allocated)
-    employees = Employee.objects.filter(department_info = dep_info)
-    # print(employees)
-    # print(employee.department_info.department_hod, "HOD")
-    # project_dep.assigned_to.add(employee)
-    # print(project_dep.assigned_to.all())
-    context = {'projects': project_deps, 'employees': employees}
+    employees_db = Employee.objects.filter(department_info = dep_info)
+    if request.method == 'POST':
+        data = request.POST
+        employees = data['employees'].split(',')
+        project = ''
+        for dep in project_deps:
+            if dep.project_assigned.project_id == int(data['project']):
+                project = dep
+        for employee in employees:
+            employee = int(employee)
+            for emp in employees_db:
+                if emp.employee_id == employee:
+                    project.assigned_to.add(emp)
+        project.emp_assigned = True
+        project.save()
+
+        return redirect('selectEmployee')
+        
+        
+        
+    context = {'projects': project_deps, 'employees': employees_db}
     return render(request, 'accounts/selectEmp.html', context)
 
 
