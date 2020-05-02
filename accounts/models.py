@@ -21,6 +21,7 @@ class Employee(models.Model):
     location = models.CharField(max_length=200, null=True, choices=(('Delhi', 'Delhi'), ('Offshore', 'Offshore')))
     department_info = models.ForeignKey('DepInfo', on_delete=models.CASCADE, null=True, blank=True)
     service_type = models.CharField(max_length=200, null=True, choices=(('Regular', 'Regular'), ('Contract', 'Contract')))
+    extended_hours = models.BooleanField(null=False, default=False)
     def __str__(self):
         return str(self.employee_id) + '-' + self.name
  
@@ -58,6 +59,8 @@ class Report(models.Model):
     date_created = models.DateTimeField(auto_now_add=True, null=True)
     everyday_hours = models.CharField(validators=[int_list_validator], max_length=100, null=True)
     hours_reported = models.IntegerField(null=True)
+    everyday_hours_ext = models.CharField(validators=[int_list_validator], max_length=100, null=True)
+    hours_reported_ext = models.IntegerField(null=True)
     week = models.IntegerField(null=True)
     year = models.IntegerField(null=True)
     approved = models.BooleanField(default=False)

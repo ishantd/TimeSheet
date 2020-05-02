@@ -13,6 +13,7 @@ from django.forms import inlineformset_factory
 from django.http import QueryDict
 
 
+
 @login_required(login_url='/')
 def home(request):
     projects = Project.objects.all()
@@ -33,7 +34,7 @@ def timesheet(request):
     return render(request, 'accounts/report.html', information)
 
 @login_required(login_url='/')
-@allowed_users(allowed_roles=['planning_dept'])
+# @allowed_users(allowed_roles=['planning_dept'])
 def create(request):
     return render(request, 'accounts/create.html')
 
@@ -269,5 +270,13 @@ def selectEmp(request):
     context = {'projects': project_deps, 'employees': employees_db}
     return render(request, 'accounts/selectEmp.html', context)
 
+
+@csrf_exempt
+@login_required(login_url='/')
+@allowed_users(allowed_roles=['hod'])
+def extended_hours(request):
+    
+
+    return HttpResponse('Extended Hours Changed!', status=200)
 
 
