@@ -68,7 +68,14 @@
                 </select>
             </td>
                 <td style="width: 15%;">
-                    <input class="form-control" name="activity" type="text" placeholder="Activity">
+                    <select name="activity" class="form-control has-error">
+                    <option value="none" selected disabled hidden> 
+                        Select an activity
+                    </option> 
+                {% for activity in activitys %}
+                <option value=" {{activity.name}} ">{{activity.name}}</option>
+                {% endfor %}
+                </select>
                 </td>
                 <td style="width: 8.33%;">
                     <input class="form-control saturdayHours" name="hours" type="text" value=0 placeholder="Hours">

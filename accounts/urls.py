@@ -11,6 +11,7 @@ urlpatterns = [
     path('view_employees/', views.viewEmployees, name='view_employees'),
     path('update_employee/<str:pk>/', views.updateEmployee, name='update_employee'),
     path('timesheetEntry/', views.timesheetEntry),
+    path('timesheetEntry_extended/', views.timesheetEntry_extended),
     path('', views.Login, name='login'),
     path('logout/', views.logoutUser, name='logout'),
     path('new_project/', views.newProject, name='new_project'),

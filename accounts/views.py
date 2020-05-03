@@ -29,8 +29,10 @@ def timesheet(request):
     employee = Employee.objects.get(employee_id=request.user.employee.employee_id)
     # print(employee)
     projects = employee.department_set.all()
+    activitys = Activity.objects.filter(department_info = request.user.employee.department_info)
+    print(activitys)
     # print(projects)
-    information = {'employee':employee, 'projects':projects}
+    information = {'employee':employee, 'projects':projects, 'activitys':activitys}
     return render(request, 'accounts/report.html', information)
 
 @login_required(login_url='/')
@@ -96,7 +98,30 @@ def timesheetEntry(request):
         # create_report.save()
         print(create_report)
                     
-    return HttpResponse("YESY")
+    return HttpResponse("YES", status=200)
+
+@login_required(login_url='/')
+@csrf_exempt
+def timesheetEntry_extended(request):
+    if request.method == 'POST':
+        data = request.POST
+        EmployeeObject = Employee.objects.get(employee_id=data['employee'])
+        ProjectObject = Project.objects.get(project_id=data['project'])
+        dep_info = DepInfo.objects.get(department_name=data['department_name'])
+        DepartmentObject = Department.objects.get(department_name=dep_info, project_assigned=ProjectObject )
+
+        create_report = Report_extended(employee=EmployeeObject,
+                               project=ProjectObject,
+                               activity=data['activity'],
+                               department_name=DepartmentObject,
+                               everyday_hours=data['everyday_hours'],
+                               hours_reported=data['hours_reported'],
+                               week=data['week'],
+                               year=data['year'])
+        # create_report.save()
+        print(create_report)
+                    
+    return HttpResponse("YES", status=200)
 
 @unauthenticated_user
 def Login(request):
