@@ -65,7 +65,7 @@ def createEmployee(request):
 
 @login_required(login_url='/')
 def viewEmployees(request):
-    employees = Employee.objects.all()
+    employees = Employee.objects.filter(department_info = request.user.employee.department_info)
     data = {'employees': employees}
     return render(request, 'accounts/view_employees.html', data)
 
@@ -274,9 +274,16 @@ def selectEmp(request):
 @csrf_exempt
 @login_required(login_url='/')
 @allowed_users(allowed_roles=['hod'])
-def extended_hours(request):
-    
-
-    return HttpResponse('Extended Hours Changed!', status=200)
+def extended_hours(request, pk):
+    employee = Employee.objects.get(employee_id=pk)
+    if request.user.employee.department_info != employee.department_info:
+        return HttpResponse('Unauthorized', status=401)
+    if employee.extended_hours:
+        employee.extended_hours = False
+        employee.save()
+    else:
+        employee.extended_hours = True
+        employee.save()
+    return redirect('view_employees')
 
 

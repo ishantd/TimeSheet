@@ -24,7 +24,13 @@ $(function(){
             activity: {
                required: true
             },
+            activity_extended: {
+                required: true
+             },
             project: {
+                required: true
+            },
+            project_extended: {
                 required: true
             },
             total: {
@@ -34,7 +40,15 @@ $(function(){
             hours: {
                 digits: true,
                 max: 8
-            }
+            },
+            hours_extended: {
+                digits: true,
+                max: 8
+            },
+            total_extended: {
+                required: true,
+                totalHours: true
+            },
         },
         messages: {
             activity: {
@@ -44,6 +58,16 @@ $(function(){
                 required: 'Please select a project'
             },
             hours: {
+                digits: 'You can only enter digits',
+                max: 'Number of working hours cannot exceed 8'
+            },
+            activity_extended: {
+                required: 'Please enter the activity'
+            },
+            project_extended: {
+                required: 'Please select a project'
+            },
+            hours_extended: {
                 digits: 'You can only enter digits',
                 max: 'Number of working hours cannot exceed 8'
             }

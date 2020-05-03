@@ -47,3 +47,53 @@ $(document).on("change", ".fridayHours", function() {
     });
     $("#fridayTotal").val(sum);
 });
+
+$(document).on("change", ".saturdayHours_extended", function() {
+    var sum = 0;
+    $(".saturdayHours_extended").each(function(){
+        sum += +$(this).val();
+    });
+    $("#saturdayTotal_extended").val(sum);
+});
+$(document).on("change", ".sundayHours_extended", function() {
+    var sum = 0;
+    $(".sundayHours_extended").each(function(){
+        sum += +$(this).val();
+    });
+    $("#sundayTotal_extended").val(sum);
+});
+$(document).on("change", ".mondayHours_extended", function() {
+    var sum = 0;
+    $(".mondayHours_extended").each(function(){
+        sum += +$(this).val();
+    });
+    $("#mondayTotal_extended").val(sum);
+});
+$(document).on("change", ".tuesdayHours_extended", function() {
+    var sum = 0;
+    $(".tuesdayHours_extended").each(function(){
+        sum += +$(this).val();
+    });
+    $("#tuesdayTotal_extended").val(sum);
+});
+$(document).on("change", ".wednesdayHours_extended", function() {
+    var sum = 0;
+    $(".wednesdayHours_extended").each(function(){
+        sum += +$(this).val();
+    });
+    $("#wednesdayTotal_extended").val(sum);
+});
+$(document).on("change", ".thursdayHours_extended", function() {
+    var sum = 0;
+    $(".thursdayHours_extended").each(function(){
+        sum += +$(this).val();
+    });
+    $("#thursdayTotal_extended").val(sum);
+});
+$(document).on("change", ".fridayHours_extended", function() {
+    var sum = 0;
+    $(".fridayHours_extended").each(function(){
+        sum += +$(this).val();
+    });
+    $("#fridayTotal_extended").val(sum);
+});

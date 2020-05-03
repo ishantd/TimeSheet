@@ -149,6 +149,90 @@
               </tr>
             </tbody>
       </table>
+      {% if request.user.employee.extended_hours %}
+<button type="button" id="create_extended" class="btn btn-primary">Add Field_extended</button>
+        <h2>Extended Hours</h2>
+      <table class="input-table">
+        <thead>
+          <tr class="d-flex">
+            <th style="width: 5%;">DEL </th>
+            <th scope="col" style="width: 16.67%;">Select Project</th>
+            <th scope="col" style="width: 15%;">Activity</th>
+            <th scope="col" id="saturday" style="width: 8.33%;"></th>
+            <th scope="col" id="sunday" style="width: 8.33%;"></th>
+            <th scope="col" id="monday" style="width: 8.33%;"></th>
+            <th scope="col" id="tuesday" style="width: 8.33%;"></th>
+            <th scope="col" id="wednesday" style="width: 8.33%;"></th>
+            <th scope="col" id="thursday" style="width: 8.33%;"></th>
+            <th scope="col" id="friday" style="width: 8.33%;"></th>
+          </tr>
+        </thead>
+            <tbody id="table-body_extended">
+              <tr class="d-flex" id="input-row0_extended">
+                  <td style="width: 5%;"><a name="" id="delete0" class="btn btn-danger" onclick=remove(this.id) href="#" role="button"><i class="fa fa-minus-square"></i></a></td>
+            <td style="width: 16.67%;">
+                    <select name="project_extended" class="form-control has-error" id="sel0">
+                    <option value="none" selected disabled hidden> 
+                        Select a project 
+                    </option> 
+                {% for project in projects %}
+                <option value=" {{project.project_assigned}} ">{{project.project_assigned}} - {{project.name}}</option>
+                {% endfor %}
+                </select>
+            </td>
+                <td style="width: 15%;">
+                    <input class="form-control" name="activity_extended" type="text" placeholder="Activity">
+                </td>
+                <td style="width: 8.33%;">
+                    <input class="form-control saturdayHours_extended" name="hours_extended" type="text" value=0 placeholder="Hours">
+                </td>
+                <td style="width: 8.33%;">
+                    <input class="form-control sundayHours_extended" name="hours_extended" type="text" value=0 placeholder="Hours">
+                </td>
+                <td style="width: 8.33%;">
+                    <input class="form-control mondayHours_extended" name="hours_extended" type="text" value=0 placeholder="Hours">
+                </td>
+                <td style="width: 8.33%;">
+                    <input class="form-control tuesdayHours_extended" name="hours_extended" type="text" value=0 placeholder="Hours">
+                </td>
+                <td style="width: 8.33%;">
+                    <input class="form-control wednesdayHours_extended" name="hours_extended" type="text" value=0 placeholder="Hours">
+                </td>
+                <td style="width: 8.33%;">
+                    <input class="form-control thursdayHours_extended" name="hours_extended" type="text" value=0 placeholder="Hours">
+                </td>
+                <td style="width: 8.33%;">
+                    <input class="form-control fridayHours_extended" name="hours_extended" type="text" value=0 placeholder="Hours">
+                </td>
+              </tr>
+              <tr class="d-flex" id="totalHours">
+                <td style="width: 36.67%;" class="text-right font-weight-bold">Total Hour(s)</td>
+                
+                    <td style="width: 8.33%;">
+                        <input class="form-control" name="total_extended" id="saturdayTotal_extended" type="text" readonly="readonly" placeholder="Hours">
+                    </td>
+                    <td style="width: 8.33%;">
+                        <input class="form-control" name="total_extended" id="sundayTotal_extended" type="text" readonly="readonly" placeholder="Hours">
+                    </td>
+                    <td style="width: 8.33%;">
+                        <input class="form-control" name="total_extended" id="mondayTotal_extended" type="text" readonly="readonly" placeholder="Hours">
+                    </td>
+                    <td style="width: 8.33%;">
+                        <input class="form-control" name="total_extended" id="tuesdayTotal_extended" type="text" readonly="readonly" placeholder="Hours">
+                    </td>
+                    <td style="width: 8.33%;">
+                        <input class="form-control" name="total_extended" id="wednesdayTotal_extended" type="text" readonly="readonly" placeholder="Hours">
+                    </td>
+                    <td style="width: 8.33%;">
+                        <input class="form-control" name="total_extended" id="thursdayTotal_extended" type="text" readonly="readonly" placeholder="Hours">
+                    </td>
+                    <td style="width: 8.33%;">
+                        <input class="form-control" name="total_extended" id="fridayTotal_extended" type="text" readonly="readonly" placeholder="Hours">
+                    </td>
+              </tr>
+            </tbody>
+      </table>
+      {% endif %}
     </form>
 </div>
 
