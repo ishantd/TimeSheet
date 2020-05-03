@@ -60,16 +60,16 @@ $('#ts_form').submit(function(e){
             };
         }
         
-        ReportData.push(dataObject)
+        ReportData.push(dataObject);
     }
     // console.log(ReportData)
-    ReportData.pop()
+    ReportData.pop();
     
-    for (var i=0; i<ReportData.length; i++){
-        $.post("/timesheetEntry/", ReportData[i], function(){
-            console.log("Data successfully sent")
-        });
-    }
+    // for (var i=0; i<ReportData.length; i++){
+    //     $.post("/timesheetEntry/", ReportData[i], function(){
+    //         console.log("Data successfully sent");
+    //     });
+    // }
     
     return false;
 });

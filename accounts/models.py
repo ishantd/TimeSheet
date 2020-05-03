@@ -59,8 +59,6 @@ class Report(models.Model):
     date_created = models.DateTimeField(auto_now_add=True, null=True)
     everyday_hours = models.CharField(validators=[int_list_validator], max_length=100, null=True)
     hours_reported = models.IntegerField(null=True)
-    everyday_hours_ext = models.CharField(validators=[int_list_validator], max_length=100, null=True)
-    hours_reported_ext = models.IntegerField(null=True)
     week = models.IntegerField(null=True)
     year = models.IntegerField(null=True)
     approved = models.BooleanField(default=False)
@@ -85,5 +83,20 @@ class Activity(models.Model):
     date_created = models.DateTimeField(auto_now_add=True, null=True)
     def __str__(self):
         return (str(self.name))
+
+class Report_extended(models.Model):
+    employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, null=True)
+    activity = models.ForeignKey('Activity', on_delete=models.CASCADE)
+    department_name = models.ForeignKey(Department, on_delete=models.CASCADE)
+    date_created = models.DateTimeField(auto_now_add=True, null=True)
+    everyday_hours = models.CharField(validators=[int_list_validator], max_length=100, null=True)
+    hours_reported = models.IntegerField(null=True)
+    week = models.IntegerField(null=True)
+    year = models.IntegerField(null=True)
+    approved = models.BooleanField(default=False)
+    rejected = models.BooleanField(default=False)
+    def __str__(self):
+        return (str(self.employee.name) + " - "+str(self.project.name)+ " - "+str(self.hours_reported) + " Hours")
 
     
