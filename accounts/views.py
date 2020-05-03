@@ -78,14 +78,12 @@ def updateEmployee(request, pk):
 @login_required(login_url='/')
 @csrf_exempt
 def timesheetEntry(request):
-    # form = ReportForm()
-    ProjectObject = ''
     if request.method == 'POST':
         data = request.POST
-        print(data['project'])
         EmployeeObject = Employee.objects.get(employee_id=data['employee'])
-        ProjectObject = Project.objects.get(project_id=data['project']) 
-        DepartmentObject = Department.objects.get(department_name=data['department_name'])
+        ProjectObject = Project.objects.get(project_id=data['project'])
+        dep_info = DepInfo.objects.get(department_name=data['department_name'])
+        DepartmentObject = Department.objects.get(department_name=dep_info, project_assigned=ProjectObject )
 
         create_report = Report(employee=EmployeeObject,
                                project=ProjectObject,
@@ -95,7 +93,8 @@ def timesheetEntry(request):
                                hours_reported=data['hours_reported'],
                                week=data['week'],
                                year=data['year'])
-        create_report.save()
+        # create_report.save()
+        print(create_report)
                     
     return HttpResponse("YESY")
 
