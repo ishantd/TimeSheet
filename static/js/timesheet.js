@@ -108,7 +108,7 @@ $('#ts_form').submit(function(e){
     }
     for (var i=0; i<ReportData_extended.length; i++){
         $.post("/timesheetEntry_extended/", ReportData_extended[i], function(){
-            console.log("Data successfully sent");
+            console.log("Data successfully sent_extended");
         });
     }
 });

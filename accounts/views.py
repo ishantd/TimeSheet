@@ -27,11 +27,8 @@ def contact(request):
 @login_required(login_url='/')
 def timesheet(request):
     employee = Employee.objects.get(employee_id=request.user.employee.employee_id)
-    # print(employee)
     projects = employee.department_set.all()
     activitys = Activity.objects.filter(department_info = request.user.employee.department_info)
-    print(activitys)
-    # print(projects)
     information = {'employee':employee, 'projects':projects, 'activitys':activitys}
     return render(request, 'accounts/report.html', information)
 
@@ -82,14 +79,16 @@ def updateEmployee(request, pk):
 def timesheetEntry(request):
     if request.method == 'POST':
         data = request.POST
+        print(data)
         EmployeeObject = Employee.objects.get(employee_id=data['employee'])
         ProjectObject = Project.objects.get(project_id=data['project'])
         dep_info = DepInfo.objects.get(department_name=data['department_name'])
+        activityObject = Activity.objects.first()
         DepartmentObject = Department.objects.get(department_name=dep_info, project_assigned=ProjectObject )
 
         create_report = Report(employee=EmployeeObject,
                                project=ProjectObject,
-                               activity=data['activity'],
+                               activity=activityObject,
                                department_name=DepartmentObject,
                                everyday_hours=data['everyday_hours'],
                                hours_reported=data['hours_reported'],
@@ -105,21 +104,23 @@ def timesheetEntry(request):
 def timesheetEntry_extended(request):
     if request.method == 'POST':
         data = request.POST
+        print(data)
         EmployeeObject = Employee.objects.get(employee_id=data['employee'])
         ProjectObject = Project.objects.get(project_id=data['project'])
         dep_info = DepInfo.objects.get(department_name=data['department_name'])
+        activityObject = Activity.objects.get(name=data['activity'])
         DepartmentObject = Department.objects.get(department_name=dep_info, project_assigned=ProjectObject )
 
         create_report = Report_extended(employee=EmployeeObject,
                                project=ProjectObject,
-                               activity=data['activity'],
+                               activity=activityObject,
                                department_name=DepartmentObject,
                                everyday_hours=data['everyday_hours'],
                                hours_reported=data['hours_reported'],
                                week=data['week'],
                                year=data['year'])
         # create_report.save()
-        print(create_report)
+        print(create_report, "EXTENDED")
                     
     return HttpResponse("YES", status=200)
 

@@ -82,7 +82,7 @@ class Activity(models.Model):
     department_info = models.ForeignKey(DepInfo, on_delete=models.CASCADE, null=True, blank=True)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
     def __str__(self):
-        return (str(self.name))
+        return (str(self.name) + str(self.department_info))
 
 class Report_extended(models.Model):
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
