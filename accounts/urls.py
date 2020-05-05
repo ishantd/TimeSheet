@@ -21,6 +21,7 @@ urlpatterns = [
     path('bool_change/',  views.bool_department),
     path('approve_ts/<str:pk>/<str:week>/<str:year>/', views.approveTimesheet, name='approveTS'),
     path('confirm_ts/<str:pk>/<str:week>/<str:year>/', views.confirmTS, name='confirmTS'),
+    path('confirm_ts_ext/<str:pk>/<str:week>/<str:year>/', views.confirmTS_ext, name='confirmTS_ext'),
     path('reject_ts/<str:pk>/<str:week>/<str:year>/', views.rejectTS, name='rejectTS'),
     path('selectEmp/', views.selectEmp, name='selectEmployee'),
     path('extendedhours/<str:pk>/', views.extended_hours, name='extended')

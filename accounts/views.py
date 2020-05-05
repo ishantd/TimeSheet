@@ -94,8 +94,7 @@ def timesheetEntry(request):
                                hours_reported=data['hours_reported'],
                                week=data['week'],
                                year=data['year'])
-        # create_report.save()
-        print(create_report)
+        create_report.save()
                     
     return HttpResponse("YES", status=200)
 
@@ -119,7 +118,7 @@ def timesheetEntry_extended(request):
                                hours_reported=data['hours_reported'],
                                week=data['week'],
                                year=data['year'])
-        # create_report.save()
+        create_report.save()
         print(create_report, "EXTENDED")
                     
     return HttpResponse("YES", status=200)
@@ -230,10 +229,16 @@ def approveTimesheet(request, pk, week, year):
     if (request.user != employee.manager.user):
         return render(request, 'accounts/error.html', status=401)
     reports = Report.objects.filter(employee=employee, week=week, year=year)
+    reports_ext = Report_extended.objects.filter(employee=employee, week=week, year=year)
     report_info = reports[0]
     for report in reports:
-        report.everyday_hours = report.everyday_hours.split(",") 
-    context = {'reports': reports, 'employee': employee, 'report_info': report_info}
+        report.everyday_hours = report.everyday_hours.split(",")
+    if reports_ext:
+        for report in reports_ext:
+            report.everyday_hours = report.everyday_hours.split(",")
+        context = {'reports': reports, 'reports_ext': reports_ext, 'employee': employee, 'report_info': report_info}
+    else:
+        context = {'reports': reports, 'employee': employee, 'report_info': report_info}
     return render(request, 'accounts/approve_ts.html', context)
  
 @login_required(login_url='/')   
@@ -243,6 +248,21 @@ def confirmTS(request, pk, week, year):
         return HttpResponse('Unauthorized', status=401)
     reports = Report.objects.filter(employee=employee, week=week, year=year)
     for report in reports:
+        report.approved = True
+        report.save()
+    return redirect('viewTS')
+
+@login_required(login_url='/')   
+def confirmTS_ext(request, pk, week, year):
+    employee = Employee.objects.get(employee_id=pk)
+    if (request.user != employee.manager.user):
+        return HttpResponse('Unauthorized', status=401)
+    reports = Report.objects.filter(employee=employee, week=week, year=year)
+    reports_ext = Report_ext.objects.filter(employee=employee, week=week, year=year)
+    for report in reports:
+        report.approved = True
+        report.save()
+    for report in reports_ext:
         report.approved = True
         report.save()
     return redirect('viewTS')

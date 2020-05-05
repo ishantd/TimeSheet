@@ -73,7 +73,9 @@
                         Select an activity
                     </option> 
                 {% for activity in activitys %}
-                <option value=" {{activity.name}} ">{{activity.name}}</option>
+                {% if activity.name != "Holiday" %}
+                <option value="{{activity.name}}">{{activity.name}}</option>
+                {% endif %}
                 {% endfor %}
                 </select>
                 </td>
@@ -193,7 +195,7 @@
                         Select an activity
                     </option> 
                 {% for activity in activitys %}
-                <option value=" {{activity.name}} ">{{activity.name}}</option>
+                <option value="{{activity.name}}">{{activity.name}}</option>
                 {% endfor %}
                 </select>
                 </td>

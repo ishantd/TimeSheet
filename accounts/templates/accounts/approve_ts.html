@@ -29,7 +29,7 @@
         </thead>  
         <tbody>
         {% for report in reports %}
-          <tr id=" {{report.id}} ">
+          <tr id="{{report.id}}">
             <td> <strong> {{report.project.project_id}} - {{report.project.name}} </strong> </td>
             <td> {{report.activity}} </td>
             {% for hour in report.everyday_hours %}
@@ -37,19 +37,61 @@
             {% endfor %}
             <td> {{report.hours_reported}} </td>            
           </tr> 
-        {% endfor %}  
+        {% endfor %}
         </tbody>  
       </table>  
 </div>
 
+{% if reports_ext %}
+<h3 class="text-center m-3">Extended Hours</h3>
+<div class="view-ts">
+    <table id="myTable_ext" class="table table-striped">  
+        <thead>  
+          <tr> 
+            <th>Project</th>  
+            <th>Activity</th>
+            <th>Saturday</th>
+            <th>Sunday</th>
+            <th>Monday</th>  
+            <th>Tuesday</th> 
+            <th>Wednesday</th>
+            <th>Thursday</th>
+            <th>Friday</th>
+            <th>Total Hours</th> 
+          </tr>  
+        </thead>  
+        <tbody>
+        {% for report in reports_ext %}
+          <tr id="{{report.id}}">
+            <td> <strong> {{report.project.project_id}} - {{report.project.name}} </strong> </td>
+            <td> {{report.activity}} </td>
+            {% for hour in report.everyday_hours %}
+            <td> {{hour}} </td>
+            {% endfor %}
+            <td> {{report.hours_reported}} </td>            
+          </tr> 
+        {% endfor %}
+        </tbody>  
+      </table>  
+</div>
+
+{% endif %}
+
 <div class="actions">
+  {% if reports_ext %}
+  <a type="button" class="btn btn-success" href=" {% url 'confirmTS_ext' employee.employee_id report_info.week report_info.year %} ">Approve</a>
+  {% else %}
   <a type="button" class="btn btn-success" href=" {% url 'confirmTS' employee.employee_id report_info.week report_info.year %} ">Approve</a> 
+  {% endif %}
   <a type="button" class="btn btn-danger" href="{% url 'rejectTS' employee.employee_id report_info.week report_info.year %}">Reject</a> 
 </div>
 
 <script>
     $(document).ready(function(){
         $('#myTable').dataTable();
+    });
+    $(document).ready(function(){
+        $('#myTable_ext').dataTable();
     });
 </script>
 
