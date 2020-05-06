@@ -1,0 +1,107 @@
+{% extends 'accounts/main.html' %}
+
+{% block content %}
+{% include 'accounts/_navbar.html' %}
+
+
+<style>
+
+#success-msg {
+    height: 100vh;
+}
+
+.msg {
+    max-height: 30%;
+    width: 576px;
+    border: 1px solid black;
+    align-items: center;
+    border-radius: 10px;
+    box-shadow: 0 20px 50px rgba(20.4, 22.7, 25.1, 0.7);
+}
+
+ .circle, .circle-border {
+	 width: 60px;
+	 height: 60px;
+	 border-radius: 50%;
+}
+ .circle {
+	 z-index: 1;
+	 position: relative;
+	 background: white;
+	 transform: scale(1);
+	 animation: success-anim 700ms ease;
+}
+ .circle-border {
+	 z-index: 0;
+	 position: absolute;
+	 background: #8f6;
+	 transform: scale(1.1);
+	 animation: circle-anim 400ms ease;
+}
+ @keyframes success-anim {
+	 0% {
+		 transform: scale(0);
+	}
+	 30% {
+		 transform: scale(0);
+	}
+	 100% {
+		 transform: scale(1);
+	}
+}
+ @keyframes circle-anim {
+	 from {
+		 transform: scale(0);
+	}
+	 to {
+		 transform: scale(1.1);
+	}
+}
+ .success::before, .success::after {
+	 content: "";
+	 display: block;
+	 height: 4px;
+	 background: #8f6;
+	 position: absolute;
+}
+ .success::before {
+	 width: 17px;
+	 top: 58%;
+	 left: 23%;
+	 transform: rotateZ(50deg);
+}
+ .success::after {
+	 width: 30px;
+	 top: 50%;
+	 left: 35%;
+	 transform: rotateZ(-50deg);
+}
+ 
+
+
+</style>
+<div id="success-msg" class="container p-5 d-flex justify-content-center">
+    <div class="msg text-center pt-2">
+        <div class="d-flex justify-content-center m-3">
+            <div class="circle-border"></div>
+                <div class="circle">
+                <div class="success"></div>
+            </div>
+        </div>
+        <h3 class="mt-5 animated flash">Your form is successfully submitted.</h3>
+        <div class="row  text-uppercase m-1 mt-4">
+        <div class="col-sm-6">
+        <a class="btn btn-outline-primary" href="#" role="button">Dashboard</a>
+        </div>
+        <div class="col-sm-6">
+        <a class="btn btn-outline-primary" href="#" role="button">Go back</a>
+        </div>
+        </div>
+    </div>
+</div>
+    
+
+      
+
+
+{% endblock %}

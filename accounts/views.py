@@ -96,7 +96,7 @@ def timesheetEntry(request):
                                year=data['year'])
         create_report.save()
                     
-    return HttpResponse("YES", status=200)
+    return render(request, 'accounts/success.html', status=200)
 
 @login_required(login_url='/')
 @csrf_exempt
@@ -118,10 +118,10 @@ def timesheetEntry_extended(request):
                                hours_reported=data['hours_reported'],
                                week=data['week'],
                                year=data['year'])
-        create_report.save()
+        # create_report.save()
         print(create_report, "EXTENDED")
                     
-    return HttpResponse("YES", status=200)
+    return render(request, 'accounts/success.html', status=200)
 
 @unauthenticated_user
 def Login(request):

@@ -111,6 +111,7 @@ $('#ts_form').submit(function(e){
             console.log("Data successfully sent_extended");
         });
     }
+    $("#overlay").hide();
 });
 
     // for (var i = 0; i < (data.length+1)/9; i++) {

@@ -19,6 +19,6 @@ def allowed_users(allowed_roles=[]):
             if group in allowed_roles:
                 return view_func(request, *args, **kwargs)
             else:
-                return render(request, 'accounts/error.html', status=401)
+                return render(request, 'accounts/error2.html', status=401)
         return wrapper
     return decorator
