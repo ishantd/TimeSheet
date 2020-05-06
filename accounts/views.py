@@ -80,10 +80,10 @@ def timesheetEntry(request):
     if request.method == 'POST':
         data = request.POST
         print(data)
-        EmployeeObject = Employee.objects.get(employee_id=data['employee'])
+        EmployeeObject = Employee.objects.get(employee_id=request.user.employee.employee_id)
         ProjectObject = Project.objects.get(project_id=data['project'])
-        dep_info = DepInfo.objects.get(department_name=data['department_name'])
-        activityObject = Activity.objects.first()
+        dep_info = DepInfo.objects.get(department_name=request.user.employee.department_info.department_name)
+        activityObject = Activity.objects.get(name=data['activity'], department_info = dep_info)
         DepartmentObject = Department.objects.get(department_name=dep_info, project_assigned=ProjectObject )
 
         create_report = Report(employee=EmployeeObject,
@@ -93,9 +93,10 @@ def timesheetEntry(request):
                                everyday_hours=data['everyday_hours'],
                                hours_reported=data['hours_reported'],
                                week=data['week'],
-                               year=data['year'])
+                               year=data['year'],
+                               complete=True)
         create_report.save()
-                    
+        print(create_report)                    
     return render(request, 'accounts/success.html', status=200)
 
 @login_required(login_url='/')
@@ -104,12 +105,12 @@ def timesheetEntry_extended(request):
     if request.method == 'POST':
         data = request.POST
         print(data)
-        EmployeeObject = Employee.objects.get(employee_id=data['employee'])
+        EmployeeObject = Employee.objects.get(employee_id=request.user.employee.employee_id)
         ProjectObject = Project.objects.get(project_id=data['project'])
-        dep_info = DepInfo.objects.get(department_name=data['department_name'])
-        activityObject = Activity.objects.get(name=data['activity'])
+        dep_info = DepInfo.objects.get(department_name=request.user.employee.department_info.department_name)
+        activityObject = Activity.objects.get(name=data['activity'], department_info = dep_info)
         DepartmentObject = Department.objects.get(department_name=dep_info, project_assigned=ProjectObject )
-
+        reports = Report.objects.filter(employee=EmployeeObject, week=data['week'], year=data['year'])
         create_report = Report_extended(employee=EmployeeObject,
                                project=ProjectObject,
                                activity=activityObject,
@@ -118,7 +119,11 @@ def timesheetEntry_extended(request):
                                hours_reported=data['hours_reported'],
                                week=data['week'],
                                year=data['year'])
-        # create_report.save()
+        create_report.save()
+        for report in reports:
+            report.extended_hours = True
+            report.save()
+        # print(reports)    
         print(create_report, "EXTENDED")
                     
     return render(request, 'accounts/success.html', status=200)
@@ -281,10 +286,22 @@ def rejectTS(request, pk, week, year):
 
 @login_required(login_url='/')
 def mytimesheets(request):
+    reports = Report.objects.filter(employee=request.user.employee)
+    reports_ext = Report_extended.objects.filter(employee=request.user.employee)
+    current_week = ''
+    current_year = ''
+    employeeReports = []
+    for i in range(0, reports.count()):
+        if (reports[i].week == current_week and reports[i].year == current_year ):
+            continue
+        else:
+            current_week = reports[i].week
+            current_year = reports[i].year
+            employeeReports.append(reports[i])
+    print(employeeReports)
+    context = {'reports': employeeReports}
     
-    context = {}
-    
-    return render(request, 'mytimesheets.html', context)
+    return render(request, 'accounts/mytimesheets.html', context)
 
 @csrf_exempt
 @login_required(login_url='/')
@@ -309,9 +326,6 @@ def selectEmp(request):
         project.save()
 
         return redirect('selectEmployee')
-        
-        
-        
     context = {'projects': project_deps, 'employees': employees_db}
     return render(request, 'accounts/selectEmp.html', context)
 

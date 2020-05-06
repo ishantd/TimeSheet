@@ -63,8 +63,10 @@ class Report(models.Model):
     hours_reported = models.IntegerField(null=True)
     week = models.IntegerField(null=True)
     year = models.IntegerField(null=True)
-    approved = models.BooleanField(default=False)
-    rejected = models.BooleanField(default=False)
+    extended_hours = models.BooleanField(default=False, null=False)
+    complete = models.BooleanField(null=False, default=False)
+    approved = models.BooleanField(default=False, null=False)
+    rejected = models.BooleanField(default=False, null=False)
     def __str__(self):
         return (str(self.employee.name) + " - "+str(self.project.name)+ " - "+str(self.hours_reported) + " Hours")
 
@@ -96,8 +98,9 @@ class Report_extended(models.Model):
     hours_reported = models.IntegerField(null=True)
     week = models.IntegerField(null=True)
     year = models.IntegerField(null=True)
-    approved = models.BooleanField(default=False)
-    rejected = models.BooleanField(default=False)
+    approved = models.BooleanField(default=False,null=False)
+    complete = models.BooleanField(null=False, default=False)
+    rejected = models.BooleanField(default=False, null=False)
     def __str__(self):
         return (str(self.employee.name) + " - "+str(self.project.name)+ " - "+str(self.hours_reported) + " Hours")
 

@@ -4,6 +4,61 @@
 {% block content %}
 {% include 'accounts/_navbar.html' %}
 
-<h1>TEST</h1>
+<div class="pending">
+    <h3>Pending Timesheets:</h3>
+    <table id="pendingTable" class="table table-striped">  
+        <thead>  
+          <tr>  
+            <th  class="text-center">Employee ID</th>  
+ 
+            <th>Week</th>
+            <th>Year</th>  
+            <th>Extended Hours</th>
+            <th>Status</th>
+            <th>View and Approve Timesheet</th>
+            <th>Approve</th>
+            <th>Reject</th> 
+          </tr>  
+        </thead>  
+        <tbody>
+        {% for report in reports %}
+          {% if report.approved == False %}
+            <tr>
+              <td class="text-center"> {{report.employee.employee_id}} </td>
+              <td> {{report.week}} </td>
+              <td> {{report.year}} </td>            
+              {% if report.extended_hours %}
+              <td> Y </td>
+              {% else %}
+              <td> N </td>
+              {% endif %}
+              {% if report.complete %}
+              <td> Pending for approval </td>
+              {% else %}
+              <td> Not yet submitted, complete timesheet </td>
+              {% endif %}
+              <td> <a type="button" class="btn btn-primary" href=" {% url 'approveTS' report.employee.employee_id report.week report.year %} ">View and approve timesheet</a> </td>
+              <td> <a type="button" class="btn btn-success" href=" {% url 'confirmTS' report.employee.employee_id report.week report.year %} ">Approve</a> </td>
+              <td> <a type="button" class="btn btn-danger" href="{% url 'rejectTS' report.employee.employee_id report.week report.year %}">Reject</a> </td>        
+            </tr>
+          {% endif %} 
+        {% endfor %}  
+        </tbody>  
+      </table>  
+</div>
+
+<div class="rejected">
+</div>
+
+
+<div class="rejected">
+</div>
+
+
+<script>
+    $(document).ready(function(){
+        $('#pendingTable').dataTable();
+    });
+</script>
 
 {% endblock %}

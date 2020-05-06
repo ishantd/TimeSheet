@@ -19,6 +19,7 @@ urlpatterns = [
     path('view_ts/', views.viewTimesheet, name='viewTS'),
     path('department_assignment/', views.department_assignment, name='dep_assignment'),
     path('bool_change/',  views.bool_department),
+    path('mytimesheets/', views.mytimesheets, name='mytimesheet'),
     path('approve_ts/<str:pk>/<str:week>/<str:year>/', views.approveTimesheet, name='approveTS'),
     path('confirm_ts/<str:pk>/<str:week>/<str:year>/', views.confirmTS, name='confirmTS'),
     path('confirm_ts_ext/<str:pk>/<str:week>/<str:year>/', views.confirmTS_ext, name='confirmTS_ext'),
