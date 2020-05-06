@@ -1,16 +1,12 @@
 {% load group_check %}
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">Timesheet</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link" href=" {% url 'dashboard' %} ">Dashboard </a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href=" {% url 'dashboard' %} ">Dashboard </a>
+            </li>
+            <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Timesheet
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -19,8 +15,8 @@
             <a class="dropdown-item" href="{% url 'viewTS' %}">Approve Timesheets</a>
           </div>
         </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Projects
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -30,14 +26,28 @@
             <a class="dropdown-item" href="#">View Projects</a>
           </div>
         </li>
-        {% if request.user|has_group:"hod" or request.user|has_group:"planning_dept" %} 
+            {% if request.user|has_group:"hod" or request.user|has_group:"planning_dept" %} 
           <li class="nav-item">
             <a class="nav-link" href="/create">Activities</a>
           </li>
         {%endif%}
-      </ul>
-      
+        </ul>
     </div>
-    <span> <a name="" id="" class="btn btn-info" href="#" role="button">Hello, {{request.user}} </a> </span>
-    <span> <a name="" id="" class="btn btn-danger" href=" {% url 'logout' %} " role="button">Logout</a> </span>
-  </nav>
+    <div class="mx-auto order-0">
+        <a class="navbar-brand text-uppercase mx-auto" href="#">timesheet</a>
+        
+    </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a name="" id="" class="btn btn-info mr-3" href="#" role="button">Hello, {{request.user}} </a> 
+            </li>
+            <li class="nav-item">
+                <a name="" id="" class="btn btn-danger" href=" {% url 'logout' %} " role="button">Logout</a>
+            </li>
+        </ul>
+    </div>
+</nav>
