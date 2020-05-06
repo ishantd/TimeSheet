@@ -37,6 +37,8 @@ class Project(models.Model):
     completion_date = models.DateTimeField(null=True)
     project_manager = models.ForeignKey(Employee, on_delete=models.CASCADE)
     department_assigned = models.BooleanField(null=False, default=False)
+    active = models.BooleanField(null=False, default=True)
+    finished = models.BooleanField(null=False, default=False)
     def __str__(self):
         return str(self.project_id)
 

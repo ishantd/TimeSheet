@@ -331,4 +331,13 @@ def extended_hours(request, pk):
         employee.save()
     return redirect('view_employees')
 
+def checkweek(request, week, year):
+    employee = Employee.objects.get(employee_id=request.user.employee.employee_id)
+    reports = Report.objects.filter(employee=employee, week=week, year=year)
+    if reports:
+        return HttpResponse('already_filled', status=200)
+    else:
+        return HttpResponse('no_content', status=200)
+    
+
 

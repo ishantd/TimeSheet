@@ -2,6 +2,13 @@ var weekString;
 var week;
 var year;
 
+$('#week_done').hide();
+
+function getBaseUrl() {
+  var re = new RegExp(/^.*\//);
+  return re.exec(window.location.href);
+}
+
 function getSundayFromWeekNum(weekNum, year) {
   var sunday = new Date(year, 0, (1 + (weekNum - 1) * 7));
   while (sunday.getDay() !== 0) {
@@ -18,37 +25,44 @@ function getNumberOfWeek() {
 }
 
 
-$("#overlay").hide()
-$("#selectedWeek").hide()
+$("#overlay").hide();
+$("#selectedWeek").hide();
 
-var cWeek = getNumberOfWeek()
+var cWeek = getNumberOfWeek();
 
 $("#weekButton").click(function(){
   weekString = $("#week").val();
-  year = parseInt(weekString.substring(0, 4))
-  week = parseInt(weekString.replace(year.toString()+'-W', ''))
-  days = ["saturday", "sunday", "monday", "tuesday", "wednesday", "thursday", "friday" ]
-  if (week<=cWeek && (cWeek-week)<=9) {
-    $("#sWeek").text(weekString)
-    $("#chooseWeek").hide()
-    $(".check-info").hide()
-    $("#overlay").show()
-    $("#selectedWeek").show()
-    for (var i = 0; i<days.length; i++) {
-    var x = document.getElementById(days[i])
-    var now = new Date (getSundayFromWeekNum(week, year))
-    var day = now.getDate() - now.getDay(); 
-    var y = day + i
-    temp = new Date(now.setDate(y));
-    y = temp.toUTCString().split(year.toString())[0]
-    // console.log(y)
-    x.innerHTML = y
+  year = parseInt(weekString.substring(0, 4));
+  week = parseInt(weekString.replace(year.toString()+'-W', ''));
+  console.log(year, week);
+  var weekDone;
+  days = ["saturday", "sunday", "monday", "tuesday", "wednesday", "thursday", "friday" ];
+  $.get("../checkweek/" + week + "/" + year, function(data, status){
+    if (data == "no_content") {
+      if (week<=cWeek && (cWeek-week)<=9) {
+        $("#sWeek").text(weekString);
+        $("#chooseWeek").hide();
+        $(".check-info").hide();
+        $("#overlay").show();
+        $("#selectedWeek").show();
+        for (var i = 0; i<days.length; i++) {
+        var x = document.getElementById(days[i]);
+        var now = new Date (getSundayFromWeekNum(week, year));
+        var day = now.getDate() - now.getDay(); 
+        var y = day + i;
+        temp = new Date(now.setDate(y));
+        y = temp.toUTCString().split(year.toString())[0];
+        x.innerHTML = y;
+        }
+      }
+      else {
+        alert("Select week not older than 2 months!")
+      }
     }
-  }
-  else {
-    alert("Select week not older than 2 months!")
-  }
-  
+    else {
+      $('#week_done').show();
+    }
+  });
 
 });
 

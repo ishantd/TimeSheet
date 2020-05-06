@@ -5,28 +5,32 @@
 {% include 'accounts/_navbar.html' %}
 
 
-<h3 id="emp_name">Welcome: {{employee.name}}  </h3>
-<h3 id="emp_id">ID: {{employee.employee_id}} </h3>
-
-<h3>Department: <span id = "emp_dep">{{employee.department_info.department_name}}</span id> </h3>
-
-<button type="button" id="create" class="btn btn-primary">Add Field</button>
-
-<div id="chooseWeek">
-    <label for="week">Select a week:</label>
+<div class="card text-center m-3">
+  <div class="card-header">
+    <h3 id="emp_name">Welcome,{{request.user.employee.name}}! </h3>
+  </div>
+  <div class="card-body">
+    
+    <div id="chooseWeek">
+    <h5>Please select a week to submit timesheet:</h5>
     <input type="week" id="week" name="week">
     <button type="button" class="btn btn-primary" id="weekButton">Submit Week</button>
 </div>
-
-<div id="selectedWeek">
-    <h3>Your Selected Week is:<strong id="sWeek"></strong></h3>
-    <button type="button" class="btn btn-info" onClick="window.location.reload();" id="weekButton">Change Week</button>
+  </div>
+  <div class="card-footer text-muted">
+    <div id="selectedWeek">
+    <h3>Your Selected Week is: <strong id="sWeek"></strong></h3>
+    <button type="button" class="btn btn-info" onClick="window.location.reload();">Change Week</button>
+    
+</div>
+  </div>
 </div>
 
-<div class="row">
-    <div class="col-md-5 text-center">
-        Your Project Details Here:
-    </div>
+
+
+<div id="week_done" class="container text-center">
+    <h5 class="animated flash">Report of selected week is already submitted</h5>
+    <button type="button" class="btn btn-danger animated flash" onClick="window.location.reload();">Change Week</button>
 </div>
 
 <div class="check-info">
@@ -37,6 +41,28 @@
 <div class="container-fluid all-input" id="overlay">
     {% csrf_token %}
     <form id="ts_form" onsubmit="return confirm('Do you really want to submit the form?');">
+    <div class="container">
+    <div class="row m-5 p-3">
+    {% if request.user.employee.extended_hours %}
+    <div class="col-sm-4 text-right">
+    <button type="button" id="create" class="btn btn-primary">Add Field</button>
+    </div>
+    <div class="col-sm-4 text-center">
+    <button type="submit" id="submitTS" class="btn btn-success">Submit Timesheet</button>
+    </div>
+    <div class="col-sm-4 text-left">
+    <button type="button" id="create_extended" class="btn btn-primary">Add Field_extended</button>
+    </div>
+    {% else %}
+    <div class="col-sm-6 text-right">
+    <button type="button" id="create" class="btn btn-primary">Add Field</button>
+    </div>
+    <div class="col-sm-6 text-left">
+    <button type="submit" id="submitTS" class="btn btn-success">Submit Timesheet</button>
+    </div>
+    {% endif %}
+    </div>
+</div>
     <table class="input-table">
         <thead>
           <tr class="d-flex">
@@ -53,7 +79,7 @@
           </tr>
         </thead>
 
-            <button type="submit" id="submitTS" class="btn btn-success">Submit Timesheet</button>
+            
             <tbody id="table-body">
               <tr class="d-flex" id="input-row0">
                   <td style="width: 5%;"><a name="" id="delete0" class="btn btn-danger" onclick=remove(this.id) href="#" role="button"><i class="fa fa-minus-square"></i></a></td>
@@ -159,7 +185,7 @@
             </tbody>
       </table>
       {% if request.user.employee.extended_hours %}
-<button type="button" id="create_extended" class="btn btn-primary">Add Field_extended</button>
+
         <h2>Extended Hours</h2>
       <table class="input-table">
         <thead>
