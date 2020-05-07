@@ -26,5 +26,7 @@ urlpatterns = [
     path('reject_ts/<str:pk>/<str:week>/<str:year>/', views.rejectTS, name='rejectTS'),
     path('selectEmp/', views.selectEmp, name='selectEmployee'),
     path('extendedhours/<str:pk>/', views.extended_hours, name='extended'),
-    path('checkweek/<str:week>/<str:year>/', views.checkweek)
+    path('checkweek/<str:week>/<str:year>/', views.checkweek),
+    path('success/', views.success, name='success'),
+    path('create_activity/', views.create_activity, name='create_activity'),
 ]

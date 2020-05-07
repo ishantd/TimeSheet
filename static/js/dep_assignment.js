@@ -52,6 +52,7 @@ $('#dep_form').submit(function(e){
     $.post("/bool_change/", boolProject, function(){
       console.log("Bool")
   });
+  $("<a href='/success'></a>").click(); 
   }
   else {
     $("#left-hours").addClass("is-invalid")

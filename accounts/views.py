@@ -33,7 +33,7 @@ def timesheet(request):
     return render(request, 'accounts/report.html', information)
 
 @login_required(login_url='/')
-# @allowed_users(allowed_roles=['planning_dept'])
+@allowed_users(allowed_roles=['planning_dept', 'hod'])
 def create(request):
     return render(request, 'accounts/create.html')
 
@@ -352,6 +352,19 @@ def checkweek(request, week, year):
         return HttpResponse('already_filled', status=200)
     else:
         return HttpResponse('no_content', status=200)
+
+@login_required(login_url='/')
+def success(request):
+
+    return render(request, 'accounts/success.html')
+
+
+
+@login_required(login_url='/')
+@allowed_users(allowed_roles=['planning_dept'])
+def create_activity(request):
+
+    return render(request, 'accounts/create_activity.html')
     
 
 
