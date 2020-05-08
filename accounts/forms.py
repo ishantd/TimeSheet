@@ -26,4 +26,13 @@ class ProjectForm(ModelForm):
     class Meta:
         model = Project
         fields = '__all__'
+
+class ActivityForm(ModelForm):
+    class Meta:
+        model = Act
+        fields = '__all__'
+
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control'}), 
+        }
                 

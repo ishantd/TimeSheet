@@ -107,4 +107,6 @@ class Report_extended(models.Model):
 class Act(models.Model):
     name = models.CharField(max_length=200, null=True)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
+    def __str__(self):
+        return str(self.name)
     

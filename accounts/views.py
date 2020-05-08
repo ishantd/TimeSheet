@@ -363,8 +363,26 @@ def success(request):
 @login_required(login_url='/')
 @allowed_users(allowed_roles=['planning_dept'])
 def create_activity(request):
+    form = ActivityForm()
+    acts = Act.objects.all()
+    context = {'form': form, 'acts': acts}
 
-    return render(request, 'accounts/create_activity.html')
+    if request.method == 'POST':
+        form = ActivityForm(request.POST)
+        if form.is_valid():
+            form.save()
+        return redirect('create_activity')
+            
+
+    return render(request, 'accounts/create_activity.html', context)
+    
+@login_required(login_url='/')
+@allowed_users(allowed_roles=['planning_dept'])
+def delete_activity(request, pk):
+    act = Act.objects.get(id=pk)
+    act.delete()
+    return redirect('create_activity')
+    
     
 
 

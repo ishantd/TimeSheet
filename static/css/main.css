@@ -45,3 +45,7 @@ h1{
     text-align: center;
     font-size: 22px;
 }
+
+#create_activity{
+    height: 90vh;
+}

@@ -1,16 +1,67 @@
 {% extends 'accounts/main.html' %}
-
+{% load static %}
 {% block content %}
 {% include 'accounts/_navbar.html' %}
 
-<div class="container" id="create_activity">
-    <form action="">
+<div  id="create_activity">
+    <div class="row h-100">
+    <div class="col-sm-4 my-auto">
+    
+
+    <div class="text-center" style="padding:50px 0">
+	<div class="logo">Hi, {{request.user.employee.name}} </div>
+    <h6 id="act_info">Enter activity here to add it to the pool for HODs to select.</h6>
+	<!-- Main Form -->
+	<div class="login-form-1">
+			<div class="login-form-main-message"></div>
+			<div class="main-login-form">
+				<div class="login-group">
+                    
+                    <form method="POST" action="">
+                        
+                            {% csrf_token %}
+                            <h5 class="text-center">Enter Activity</h5>
+                            {{form}}
+                            
+                          <button type="submit" class="login-button"><i class="fa fa-chevron-right"></i></button> 
+                    </form> 
+				</div>
+				
+			</div>
+			
+	</div>
+</div>
+    </div>
+
+    <div class="col-sm-8" id="act_table">
+            <input id="myInput" type="text" placeholder="Search..">
+       <div class="act-list m-2 p-3">
+            <ul role="menu" class="listItems list-group">
+
+            {% for act in acts%}
+
+            <li class="list-group-item my-auto">
+                {{act.name}}
+                <a href=" {% url 'delete_activity' act.id %} "><button type="button" class="btn btn-danger float-right" id="{{act.id}}"> <i class="fa fa-minus-square"></i></button></a>
+            </li>
+
+            {% endfor %}
+            </ul>
+           
+           
+       </div>
+
+    </div>
     
     
-    <a href="" class="btn btn-primary ">Submit</a>
-    </form>
+    </div>
+    
 </div>
 
-
+<script src=" {% static 'js/createact_form.js' %} "></script>
+<script>
+$(".login-group label").hide()
+</script>
+<script src=" {% static 'js/createact_search.js' %} "></script>
 
 {% endblock %}
