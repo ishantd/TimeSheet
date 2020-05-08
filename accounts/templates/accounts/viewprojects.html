@@ -1,0 +1,51 @@
+{% extends 'accounts/main.html' %}
+
+{% load static %}
+{% block content %}
+{% include 'accounts/_navbar.html' %}
+
+<table id="myTable" class="table table-striped" >  
+    <thead>  
+      <tr>  
+        <th>Project ID</th>  
+        <th>Name</th>  
+        <th>Client</th>  
+        <th>Start Date:</th>
+        <th>Active</th> 
+        <th>Expected Completion</th>
+        <th>Controlled Manhours</th> 
+        <th>Project Manager</th>
+        <th>View Details and Reports</th>
+        <th>Edit Employees</th>
+      </tr>  
+    </thead>  
+    <tbody>
+    {% for project in projects %}
+      <tr>  
+        <td>{{project.project_id}}</td>
+        <td>{{project.name}}</td>
+        <td>{{project.project_client}}</td>
+        <td>{{project.start_date}}</td>
+        <td>{{project.active}}</td>
+        <td>{{project.completion_date}}</td>
+        <td>{{project.controlled_manhours}}</td>
+        <td>{{project.project_manager.name}}</td>
+        <td>
+            <a href="{% url 'project' project.project_id %}"> <button class="btn btn-info">View Details & Reports</button> </a>
+        </td>
+        <td>
+            <a href=""> <button class="btn btn-warning">Edit Employees</button> </a>
+        </td>
+      </tr> 
+    {% endfor %}  
+    </tbody>  
+  </table>  
+
+<script>
+    $(document).ready(function(){
+        $('#myTable').dataTable();
+    });
+</script>
+
+
+{% endblock %}

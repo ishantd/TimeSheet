@@ -1,0 +1,79 @@
+{% extends 'accounts/main.html' %}
+{% load static %}
+{% block content %}
+{% include 'accounts/_navbar.html' %}
+
+<div class="project-info m-4 text-center">
+    <div class="card-deck">
+        <div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
+            <div class="card-header">Project ID</div>
+            <div class="card-body">
+                <h5 class="card-title" id="project_id">{{ project.project_id }}</h5>
+            </div>
+        </div>
+        <div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
+            <div class="card-header">Project Name</div>
+            <div class="card-body">
+                <h5 class="card-title">{{ project.name }}</h5>
+            </div>
+        </div>
+        <div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
+            <div class="card-header">Client</div>
+            <div class="card-body">
+                <h5 class="card-title">{{ project.project_client }}</h5>
+            </div>
+        </div>
+        <div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
+            <div class="card-header">Controlled Manhours</div>
+            <div class="card-body">
+                <h5 class="card-title">{{ project.controlled_manhours }}</h5>
+            </div>
+        </div>
+        <div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
+            <div class="card-header">Project Manager</div>
+            <div class="card-body">
+                <h5 class="card-title">{{ project.project_manager.name }}</h5>
+            </div>
+        </div>
+        {% if project.active and project.finished == False %}
+            <div class="card text-white bg-success mb-3" style="max-width: 18rem;">
+                <div class="card-header">Status</div>
+                <div class="card-body">
+                    <h5 class="card-title">Ongoing</h5>
+                </div>
+            </div>
+        {% elif project.active == False and project.finished == True %}
+            <div class="card text-white bg-info mb-3" style="max-width: 18rem;">
+                <div class="card-header">Status</div>
+                <div class="card-body">
+                    <h5 class="card-title">Complete</h5>
+                </div>
+            </div>
+        {% else %}
+            <div class="card text-white bg-warning mb-3" style="max-width: 18rem;">
+                <div class="card-header">Status</div>
+                <div class="card-body">
+                    <h5 class="card-title">On Hold</h5>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-5">
+            <h3>Department Wise Time Distribution:</h3>
+            <canvas id="myChart" width="500" height="400"></canvas>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
+<script src="{% static '/js/project_charts.js' %}"></script>
+
+{% endblock %}

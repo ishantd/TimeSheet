@@ -11,7 +11,7 @@ from .decorators import *
 from django.contrib.auth.models import User, Group
 from django.forms import inlineformset_factory
 from django.http import QueryDict
-
+import json
 
 
 @login_required(login_url='/')
@@ -326,8 +326,8 @@ def selectEmp(request):
                     project.assigned_to.add(emp)
         project.emp_assigned = True
         project.save()
+        return render(request, 'accounts/success.html')
 
-        return redirect('selectEmployee')
     context = {'projects': project_deps, 'employees': employees_db}
     return render(request, 'accounts/selectEmp.html', context)
 
@@ -385,7 +385,43 @@ def delete_activity(request, pk):
     act = Act.objects.get(id=pk)
     act.delete()
     return redirect('create_activity')
-    
-    
 
 
+@login_required(login_url='/')
+def viewprojects(request): 
+    projects = Project.objects.exclude(name='Holiday/Leave')
+    context = {'projects': projects}
+
+    return render(request, 'accounts/viewprojects.html', context)
+
+@login_required(login_url='/')
+def project(request, pk):
+    project = Project.objects.get(project_id=pk)
+
+    context = {'project': project}
+
+    return render(request, 'accounts/project.html', context)
+
+@login_required(login_url='/')
+def dept_wise(request, pk):
+    project = Project.objects.get(project_id=pk)
+    depts = Department.objects.filter(project_assigned=project)
+    labels = []
+    time_all = []
+    time = []
+    for dept in depts:
+        name = dept.department_name.department_name
+        t1 = dept.time_allocated
+        t2 = dept.time_left
+        time_all.append(t1)
+        time.append(t2-t1) 
+        labels.append(name)
+    x = {
+        "department_names": labels,
+        "time_allocated": time_all,
+        "time_reported": time
+    }
+
+    data = json.dumps(x)
+
+    return HttpResponse(data, status=200)

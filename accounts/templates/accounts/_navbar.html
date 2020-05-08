@@ -24,7 +24,7 @@
             <a class="dropdown-item" href="{% url 'department' %}">Assign to Dept.</a>
             <a class="dropdown-item" href="{% url 'selectEmployee' %}">Select Employees</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">View Projects</a>
+            <a class="dropdown-item" href="{% url 'viewprojects' %}">View Projects</a>
           </div>
         </li>
             {% if request.user|has_group:"hod" or request.user|has_group:"planning_dept" %} 

@@ -29,5 +29,8 @@ urlpatterns = [
     path('checkweek/<str:week>/<str:year>/', views.checkweek),
     path('success/', views.success, name='success'),
     path('create_activity/', views.create_activity, name='create_activity'),
-    path('delete_activity/<str:pk>/', views.delete_activity, name='delete_activity')
+    path('delete_activity/<str:pk>/', views.delete_activity, name='delete_activity'),
+    path('viewprojects/', views.viewprojects, name='viewprojects'),
+    path('project/<str:pk>/', views.project, name='project'),
+    path('dept_wise/<str:pk>/', views.dept_wise, name='deptwise')
 ]
