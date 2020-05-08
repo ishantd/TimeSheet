@@ -11,9 +11,7 @@
             <select name="project" class="form-control" id="project" >
                 <option value="none" selected disabled>Select a project </option>
                 {% for project in projects%}
-                {% if project.emp_assigned == False %}
                 <option value="{{project.project_assigned}}"> {{project.project_assigned.name}} - {{project.project_assigned.project_id}} </option>
-                {% endif %}
                 {% endfor %}
             </select>
     <div id="selectEmployee" class = "p-3">

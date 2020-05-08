@@ -152,6 +152,7 @@ def logoutUser(request):
     logout(request)
     return redirect('login')
 
+@login_required(login_url='/')
 def newProject(request):
     form = ProjectForm()
     context = {'form': form}
@@ -166,21 +167,19 @@ def newProject(request):
             print("ERROR")
     return render (request, 'accounts/newProject.html', context)
 
+@login_required(login_url='/')
 def department(request):
     employee = request.user.employee
-    projects = Project.objects.filter(project_manager=employee)
+    projects = Project.objects.filter(project_manager=employee, department_assigned=False)
     deps = DepInfo.objects.all()
     for dep in deps:
         dep.department_name = dep.department_name + ',' + (dep.department_name.replace(' ', '')).lower()
-        dep.department_name = dep.department_name.split(",")
-    
-    print(deps)
-    # print(projects)   
+        dep.department_name = dep.department_name.split(",")   
     context = {'projects': projects, 'deps': deps}
-    
     
     return render (request, 'accounts/department_assignment.html', context)
 
+@login_required(login_url='/')
 def viewTimesheet(request):
     reports = Report.objects.filter(employee__manager__employee_id=request.user.employee.employee_id)
     current_employee = ''
@@ -213,6 +212,9 @@ def department_assignment(request):
         
         assign_dep.save()
         print("Department wise time saved!")
+
+        return redirect("dep_assignment")
+
         
         
     return redirect("dep_assignment")
@@ -308,7 +310,7 @@ def mytimesheets(request):
 @allowed_users(allowed_roles=['hod'])
 def selectEmp(request):
     dep_info = DepInfo.objects.get(department_name=request.user.employee.department_info.department_name)
-    project_deps = Department.objects.filter(department_name = dep_info)
+    project_deps = Department.objects.filter(department_name = dep_info, emp_assigned=False)
     employees_db = Employee.objects.filter(department_info = dep_info)
     if request.method == 'POST':
         data = request.POST
@@ -345,6 +347,7 @@ def extended_hours(request, pk):
         employee.save()
     return redirect('view_employees')
 
+@login_required(login_url='/')
 def checkweek(request, week, year):
     employee = Employee.objects.get(employee_id=request.user.employee.employee_id)
     reports = Report.objects.filter(employee=employee, week=week, year=year)

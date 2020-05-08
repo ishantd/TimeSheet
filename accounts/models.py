@@ -8,7 +8,6 @@ class Employee(models.Model):
     employee_id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=200, null=True)
     phone = models.CharField(max_length=200, null=True)
-    email = models.CharField(max_length=200, null=True)
     manager = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
     designation_name = (('Office Boy', 'Office Boy'),('Driver', 'Driver'),('Draftman', 'Draftman'),('Assistant', 'Assistant'),
@@ -49,6 +48,7 @@ class Department(models.Model):
     time_left = models.IntegerField(null=True)
     assigned_to = models.ManyToManyField(Employee)
     emp_assigned = models.BooleanField(null=False, default=False)
+    active = models.BooleanField(null=False, default=True)
     def __str__(self):
         return (str(self.department_name) + " - "+str(self.project_assigned))
     # department = models.ForeignKey(Employee, null=True, on_delete=models.SET_NULL)

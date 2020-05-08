@@ -10,9 +10,7 @@
             Select a project 
         </option> 
     {% for project in projects %}
-    {% if project.department_assigned == False %}
     <option value=" {{project.project_id}} ">{{project.project_id}} - {{project.name}}</option>
-    {% endif %}
     {% endfor %}
     </select>
     {% for project in projects %}
@@ -27,7 +25,13 @@
     {% endfor %}
 </div>
 
+
 <div class="container" id="hour-assign">
+    <div class="row">
+    
+    <div class="col-sm-8">
+    
+
     <form action="" id="dep_form" onsubmit="return confirm('Do you really want to submit the form?');">
         <table class="dep-table">
             <thead>
@@ -49,7 +53,13 @@
         <button type="submit" id="submitDep" class="btn btn-success">Submit</button>
     </form>
     <br>
-    <div class="container">
+</div>
+
+
+
+<div class="col-sm-4">
+
+<div class="container">
         <div class="row">
             <div class="col-4">
                 Hours Total:
@@ -74,9 +84,11 @@
                 <input type="text" name="left-hours" class="form-control" id="left-hours" readonly="readonly">
             </div>
         </div>
-    </div>
 </div>
+    </div>
 
+</div>
+</div>
 
 
 
