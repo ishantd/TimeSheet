@@ -34,7 +34,7 @@
             <a href="{% url 'project' project.project_id %}"> <button class="btn btn-info">View Details & Reports</button> </a>
         </td>
         <td>
-            <a href=""> <button class="btn btn-warning">Edit Employees</button> </a>
+            <a href="{% url 'project_employee' project.project_id %}"> <button class="btn btn-warning">Edit Employees</button> </a>
         </td>
       </tr> 
     {% endfor %}  

@@ -83,7 +83,7 @@ class DepInfo(models.Model):
         return (str(self.department_name))
 
 class Activity(models.Model):
-    name = models.CharField(max_length = 200, null = True)
+    name = models.ForeignKey('Act', on_delete=models.CASCADE, null=True, blank=True)
     department_info = models.ForeignKey(DepInfo, on_delete=models.CASCADE, null=True, blank=True)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
     def __str__(self):

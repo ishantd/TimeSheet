@@ -3,6 +3,8 @@
 {% block content %}
 {% include 'accounts/_navbar.html' %}
 
+<img src="{% static '/images/Infinity-1.3s-200px.gif' %}" id="loader" class="center" alt="">
+
 <div class="project-info m-4 text-center">
     <div class="card-deck">
         <div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
@@ -64,7 +66,11 @@
     <div class="row">
         <div class="col-sm-5">
             <h3>Department Wise Time Distribution:</h3>
-            <canvas id="myChart" width="500" height="400"></canvas>
+            <canvas id="department_bar" width="500" height="400"></canvas>
+        </div>
+        <div class="col-sm-5">
+            <h3>Activity Wise Time Distribution:</h3>
+            <canvas id="activity_pie" width="250" height="200"></canvas>
         </div>
     </div>
 </div>
@@ -75,5 +81,20 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
 <script src="{% static '/js/project_charts.js' %}"></script>
+<script> 
+        document.onreadystatechange = function() { 
+            if (document.readyState !== "complete") { 
+                document.querySelector( 
+                  "body").style.visibility = "hidden"; 
+                document.querySelector( 
+                  "#loader").style.visibility = "visible"; 
+            } else { 
+                document.querySelector( 
+                  "#loader").style.display = "none"; 
+                document.querySelector( 
+                  "body").style.visibility = "visible"; 
+            } 
+        }; 
+</script>
 
 {% endblock %}

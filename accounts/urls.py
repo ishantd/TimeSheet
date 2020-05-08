@@ -32,5 +32,7 @@ urlpatterns = [
     path('delete_activity/<str:pk>/', views.delete_activity, name='delete_activity'),
     path('viewprojects/', views.viewprojects, name='viewprojects'),
     path('project/<str:pk>/', views.project, name='project'),
-    path('dept_wise/<str:pk>/', views.dept_wise, name='deptwise')
+    path('dept_wise/<str:pk>/', views.dept_wise, name='deptwise'),
+    path('act_wise/<str:pk>/', views.act_wise, name='actwise'),
+    path('project_employee/<str:pk>/', views.projectEmployee, name='project_employee')
 ]

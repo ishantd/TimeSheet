@@ -1,0 +1,35 @@
+{% extends 'accounts/main.html' %}
+{% load static %}
+{% block content %}
+{% include 'accounts/_navbar.html' %}
+
+<a href='#' class="btn btn-info" id='select-all'>select all</a>
+<a href='#' class="btn btn-info" id='deselect-all'>deselect all</a>
+
+<select id='public-methods' multiple='multiple' name='employee'>
+    {% for employee in employees %}
+        <option value='{{ employee.employee_id}}' name='{{ employee.employee_id}}'> {{ employee.employee_id}} - {{ employee.name}} </option>
+    {% endfor %}
+    {% for as in assigned_employees %}
+        <option value='{{ as.employee_id}}'name='{{ as.employee_id}}' selected>{{ as.employee_id}} - {{ as.name}}</option>
+    {% endfor %}
+</select>
+
+
+
+
+
+<script src="{% static '/js/jquery.multi-select.js' %}" type="text/javascript"></script>
+    <script> 
+        $('#public-methods').multiSelect();
+        $('#select-all').click(function(){
+            $('#public-methods').multiSelect('select_all');
+                return false;
+        });
+        $('#deselect-all').click(function(){
+            $('#public-methods').multiSelect('deselect_all');
+                return false;
+        });
+        
+</script>
+{% endblock %}

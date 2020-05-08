@@ -13,20 +13,20 @@ $.ajax({
 
 
 
-var ctx = document.getElementById('myChart').getContext('2d');
+var ctx = document.getElementById('department_bar').getContext('2d');
+var act_pie = document.getElementById('activity_pie');
+
+
 var chart = new Chart(ctx, {
     type: 'horizontalBar',
     data: {
-       labels: dept_data.department_names, // responsible for how many bars are gonna show on the chart
-       // create 12 datasets, since we have 12 items
-       // data[0] = labels[0] (data for first bar - 'Standing costs') | data[1] = labels[1] (data for second bar - 'Running costs')
-       // put 0, if there is no data for the particular bar
+       labels: dept_data.department_names, 
        datasets: [{
-          label: 'Time Allocated',
+          label: 'Controlled Manhours Left',
           data: dept_data.time_allocated,
           backgroundColor: '#22aa99'
        },{
-           label: 'Time Reported',
+           label: 'Controlled Manhours Reported',
            data: dept_data.time_reported,
            backgroundColor: '#994499'
        }]
@@ -46,3 +46,34 @@ var chart = new Chart(ctx, {
        }
     }
  });
+
+var act_data = null;
+
+$.ajax({
+    async: false,
+    type: 'GET',
+    url: '/act_wise/' + project,
+    success: function(data) {
+        act_data = JSON.parse(data);
+    }
+});
+
+new Chart(act_pie, {
+    type: 'doughnut',
+    data: {
+      labels: act_data.activity_names,
+      datasets: [
+        {
+          label: "Time spent per activity",
+          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+          data: act_data.activity_time
+        }
+      ]
+    },
+    options: {
+      title: {
+        display: true,
+        text: 'Activity Wise Time Distribution for Project'
+      }
+    }
+});

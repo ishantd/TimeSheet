@@ -79,11 +79,12 @@ def updateEmployee(request, pk):
 def timesheetEntry(request):
     if request.method == 'POST':
         data = request.POST
-        print(data)
+        print(data['activity'])
         EmployeeObject = Employee.objects.get(employee_id=request.user.employee.employee_id)
         ProjectObject = Project.objects.get(project_id=data['project'])
         dep_info = DepInfo.objects.get(department_name=request.user.employee.department_info.department_name)
-        activityObject = Activity.objects.get(name=data['activity'], department_info = dep_info)
+        act = Act.objects.get(name=data['activity'])
+        activityObject = Activity.objects.get(name=act, department_info = dep_info)
         DepartmentObject = Department.objects.get(department_name=dep_info, project_assigned=ProjectObject )
 
         create_report = Report(employee=EmployeeObject,
@@ -183,12 +184,14 @@ def department(request):
 def viewTimesheet(request):
     reports = Report.objects.filter(employee__manager__employee_id=request.user.employee.employee_id)
     current_employee = ''
+    current_week = ''
     employeeReports = []
     for i in range(0, reports.count()):
-        if (reports[i].employee == current_employee):
+        if (reports[i].employee == current_employee and reports[i].week == current_week):
             continue
         else:
             current_employee = reports[i].employee
+            current_week = reports[i].week
             employeeReports.append(reports[i])
     context = {'reports': employeeReports}
     
@@ -255,7 +258,10 @@ def confirmTS(request, pk, week, year):
         return HttpResponse('Unauthorized', status=401)
     reports = Report.objects.filter(employee=employee, week=week, year=year)
     for report in reports:
-        report.approved = True
+        dep = Department.objects.get(department_name = employee.department_info, project_assigned=report.project)
+        report.approved = True 
+        dep.time_left = dep.time_left - report.hours_reported
+        dep.save()
         report.save()
     return redirect('viewTS')
 
@@ -267,10 +273,16 @@ def confirmTS_ext(request, pk, week, year):
     reports = Report.objects.filter(employee=employee, week=week, year=year)
     reports_ext = Report_ext.objects.filter(employee=employee, week=week, year=year)
     for report in reports:
-        report.approved = True
+        dep = Department.objects.get(department_name = employee.department_info, project_assigned=report.project)
+        report.approved = True 
+        dep.time_left = dep.time_left - report.hours_reported
+        dep.save()
         report.save()
     for report in reports_ext:
-        report.approved = True
+        dep = Department.objects.get(department_name = employee.department_info, project_assigned=report.project)
+        report.approved = True 
+        dep.time_left = dep.time_left - report.hours_reported
+        dep.save()
         report.save()
     return redirect('viewTS')
 
@@ -413,8 +425,9 @@ def dept_wise(request, pk):
         name = dept.department_name.department_name
         t1 = dept.time_allocated
         t2 = dept.time_left
-        time_all.append(t1)
-        time.append(t2-t1) 
+
+        time_all.append(t2)
+        time.append(t1-t2) 
         labels.append(name)
     x = {
         "department_names": labels,
@@ -425,3 +438,42 @@ def dept_wise(request, pk):
     data = json.dumps(x)
 
     return HttpResponse(data, status=200)
+
+@login_required(login_url='/')
+def act_wise(request, pk):
+    labels = []
+    time = []
+    acts = Activity.objects.filter(department_info=request.user.employee.department_info)
+    
+    dep = Department.objects.get(department_name=request.user.employee.department_info, project_assigned=pk)
+
+    reports = Report.objects.filter(project=pk, department_name=dep)
+    
+    for act in acts:
+        name = act.name.name
+        labels.append(name)
+        act_sum = 0
+        for report in reports:
+            if report.activity == act:
+                act_sum = act_sum + report.hours_reported
+        time.append(act_sum)
+
+    x = {
+        "activity_names": labels,
+        "activity_time": time
+    }
+
+    data = json.dumps(x)
+
+    return HttpResponse(data, status=200)
+
+@login_required(login_url='/')
+@allowed_users(allowed_roles=['hod'])
+def projectEmployee(request, pk):
+    project = Project.objects.get(project_id=pk)
+    dep = Department.objects.get(department_name =request.user.employee.department_info, project_assigned=project)
+    assigned_employees = dep.assigned_to.all()
+    employees = Employee.objects.filter(department_info = request.user.employee.department_info).exclude(employee_id__in=assigned_employees)
+    context = {'employees': employees, 'assigned_employees': assigned_employees}
+
+    return render(request, 'accounts/projectEmployees.html', context)
