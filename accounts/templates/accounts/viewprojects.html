@@ -11,7 +11,7 @@
         <th>Name</th>  
         <th>Client</th>  
         <th>Start Date:</th>
-        <th>Active</th> 
+        <th>Status</th> 
         <th>Expected Completion</th>
         <th>Controlled Manhours</th> 
         <th>Project Manager</th>
@@ -26,7 +26,37 @@
         <td>{{project.name}}</td>
         <td>{{project.project_client}}</td>
         <td>{{project.start_date}}</td>
-        <td>{{project.active}}</td>
+        {% if project.active %}
+            <td class="text-center my-auto">
+              <h6>Active 
+                <span class="badge badge-transparent">
+                  <span class="text-success">
+                    <i class="fa fa-check-circle"></i>
+                  </span>
+                </span>
+              </h6>
+            </td>
+        {%elif project.active == False and project.finished == True%}
+            <td class="text-center my-auto">
+              <h6>Complete
+                <span class="badge badge-transparent">
+                  <span class="text-success">
+                    <i class="fas fa-check-double"></i>
+                  </span>
+                </span>
+              </h6>
+            </td>
+        {% else %}
+            <td class="text-center my-auto">
+              <h6>Something Wrong
+                <span class="badge badge-transparent">
+                  <span class="text-danger text-bold">
+                    <i class="fas fa-exclamation-triangle"></i>
+                  </span>
+                </span>
+              </h6>
+            </td>
+        {%endif%}
         <td>{{project.completion_date}}</td>
         <td>{{project.controlled_manhours}}</td>
         <td>{{project.project_manager.name}}</td>

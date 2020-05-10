@@ -32,6 +32,7 @@ class Project(models.Model):
     project_client = models.CharField(max_length = 200, null = True)
     name = models.CharField(max_length=200, null=True)
     date_created =  models.DateTimeField(auto_now_add=True, null=True)
+    description = models.TextField(null=True)
     start_date = models.DateTimeField(null=True)
     controlled_manhours = models.IntegerField(null=True)
     completion_date = models.DateTimeField(null=True)

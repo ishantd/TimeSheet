@@ -4,15 +4,129 @@
 {% include 'accounts/_navbar.html' %}
 
 
-<form action="" method="post">
-    {% csrf_token %}
 
-    {{form}}
+    
+
+   
 
 
-    <input type="submit" value="Submit" name="submit" class="btn btn-primary">
-</form>
+    
 
+<div class="contact">
+
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-3 bg-dark text-white" id="left-info">
+			<div class="contact-info">
+				<span style="font-size: 5em;" >
+					<i class="fas fa-users-cog"></i>
+				</span>
+				<h2>Create a new project</h2>
+				<h4>Use the form on your right to create an <span class="animated flash text-bold text-info"> awesome </span>new project.</h4>
+			</div>
+		</div>
+		<div class="col-md-6" id="real-form">
+		<form action="" method="POST" autocomplete="off">
+		{% csrf_token %}
+			<div class="contact-form">
+				<div class="row">
+					<div class="col-sm-6">
+						<div class="form-group">
+						  <label class="control-label col-sm-12">Project Type</label>          
+							 {{form.project_type}}
+						</div>
+					</div>
+					<div class="col-sm-6 border-left border-dark">
+						<div class="form-group">
+						  <label class="control-label col-sm-12">Project ID:</label>          
+							 {{form.project_id}}
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-12 p-0">
+						<div class="form-group">
+						  <label class="control-label col-sm-12">Project Client</label>          
+							 {{form.project_client}}
+						</div>
+				</div>
+				<div class="col-sm-12 p-0">
+						<div class="form-group">
+						  <label class="control-label col-sm-12">Project Name</label>          
+							 {{form.name}}
+						</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-6">
+						<div class="form-group">
+						  <label class="control-label col-sm-12">Start Date</label>          
+							 {{form.start_date}}
+						</div>
+					</div>
+					<div class="col-sm-6 border-left border-dark">
+						<div class="form-group">
+						  <label class="control-label col-sm-12">Completion Date</label>          
+							 {{form.completion_date}}
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-12 p-0">
+						<div class="form-group">
+						  <label class="control-label col-sm-12">Controlled Manhours</label>          
+							 {{form.controlled_manhours}}
+						</div>
+				</div>
+				<div class="col-sm-12 p-0">
+						<div class="form-group" id="project-manager">
+						  <label class="control-label col-sm-12">Project Manager</label>          
+							 {{form.project_manager}}
+						</div>
+				</div>
+				<div class="col-sm-12 p-0">
+						<div class="form-group" id="project-manager">
+						  <label class="control-label col-sm-12">Description:</label>          
+							 {{form.description}}
+						</div>
+				</div>
+				
+				<div class="form-group">        
+				  <div class="col-sm-offset-2 col-sm-10">
+					<button type="submit" id="submit-form" class="btn btn-default">Submit</button>
+				  </div>
+				</div>
+			</div>
+				
+			</form>
+		</div>
+		<div class="col-md-3" id="project-help">
+
+			<div class="text-left p-3 text-white text-bold">
+				<h3>Help:</h3>
+				<ul>
+					<li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita, vel!</li>
+					<li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita, vel!</li>
+					<li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita, vel!</li>
+					<li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita, vel!</li>
+					<li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita, vel!</li>
+				</ul>
+				{% if form.errors %}
+  <ul>
+    {% for error in form.errors %} 
+      <li>{{ error }}</li>
+    {% endfor %}
+  </ul>
+{% endif %} 
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+
+<script>
+	$("#project-manager select").addClass('selectpicker')
+	$("#project-manager select").attr("data-live-search", "true")
+	$("textarea").attr('rows', '4')
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.17/dist/js/bootstrap-select.min.js"></script>
 
 
 {% endblock %}

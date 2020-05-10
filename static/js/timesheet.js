@@ -112,4 +112,5 @@ $('#ts_form').submit(function(e){
         });
     }
     $("#overlay").hide();
+    window.location.replace("/success");
 });

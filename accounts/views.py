@@ -163,9 +163,7 @@ def newProject(request):
         form = ProjectForm(request.POST)
         if form.is_valid():
             form.save()
-            print("SUCCESS")
-        else:
-            print("ERROR")
+            return render(request, 'accounts/success.html')
     return render (request, 'accounts/newProject.html', context)
 
 @login_required(login_url='/')

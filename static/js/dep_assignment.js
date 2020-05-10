@@ -52,12 +52,13 @@ $('#dep_form').submit(function(e){
     $.post("/bool_change/", boolProject, function(){
       console.log("Bool")
   });
-  $("<a href='/success'></a>").click(); 
+  window.location.replace("/success"); 
   }
   else {
     $("#left-hours").addClass("is-invalid")
     alert("Please make sure you have assigned all hours.")
   }
+  
 });
 
 

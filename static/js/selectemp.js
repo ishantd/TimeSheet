@@ -27,4 +27,5 @@ $('#project').on('change', function() {
     $.post("/selectEmp/", dataObject, function(){
       console.log("Bool");
     });
+    window.location.replace("/success");
   });

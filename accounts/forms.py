@@ -20,12 +20,25 @@ class ReportForm(ModelForm):
     class Meta:
         model = Report
         fields = '__all__'
+
+class DateInput(forms.DateInput):
+    input_type = 'date'
         
-class ProjectForm(ModelForm):
-    
+class ProjectForm(ModelForm):    
     class Meta:
         model = Project
-        fields = '__all__'
+        fields = ['project_type', 'project_id', 'project_client', 'name', 'start_date', 'controlled_manhours', 'completion_date', 'project_manager', 'description']
+        widgets = {
+            'start_date': DateInput(),
+            'completion_date': DateInput(),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(ProjectForm, self).__init__(*args, **kwargs)
+        for visible in self.visible_fields():
+            visible.field.widget.attrs['class'] = 'form-control'
+    
+    
 
 class ActivityForm(ModelForm):
     class Meta:
