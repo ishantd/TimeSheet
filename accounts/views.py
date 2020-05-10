@@ -475,5 +475,26 @@ def projectEmployee(request, pk):
     assigned_employees = dep.assigned_to.all()
     employees = Employee.objects.filter(department_info = request.user.employee.department_info).exclude(employee_id__in=assigned_employees)
     context = {'employees': employees, 'assigned_employees': assigned_employees}
+    if request.method == "POST":
+        data = request.POST
+        selected = data.getlist('employee')
+        assigned = []
+        final = []
+        for ax in assigned_employees:
+            assigned.append(ax.employee_id) 
+        selected = [int(i) for i in selected]
+        to_add = (set(selected).difference(assigned))
+        to_delete = (set(assigned).difference(selected))
+        if to_add:
+            for emp in to_add:
+                dep.assigned_to.add(emp)
+            dep.save()
 
+        if to_delete:
+            for emp in to_delete:
+                dep.assigned_to.remove(emp)
+            dep.save()
+        return render(request, 'accounts/success.html')
+
+        
     return render(request, 'accounts/projectEmployees.html', context)

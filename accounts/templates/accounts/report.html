@@ -40,7 +40,7 @@
 
 <div class="container-fluid all-input" id="overlay">
     {% csrf_token %}
-    <form id="ts_form" onsubmit="return confirm('Do you really want to submit the form?');">
+    <form id="ts_form" autocomplete="off" onsubmit="return confirm('Do you really want to submit the form?');">
     <div class="container">
     <div class="row m-5 p-3">
     {% if request.user.employee.extended_hours %}

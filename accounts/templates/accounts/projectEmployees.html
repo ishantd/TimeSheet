@@ -3,18 +3,29 @@
 {% block content %}
 {% include 'accounts/_navbar.html' %}
 
-<a href='#' class="btn btn-info" id='select-all'>select all</a>
-<a href='#' class="btn btn-info" id='deselect-all'>deselect all</a>
+<div class="container">
 
-<select id='public-methods' multiple='multiple' name='employee'>
-    {% for employee in employees %}
-        <option value='{{ employee.employee_id}}' name='{{ employee.employee_id}}'> {{ employee.employee_id}} - {{ employee.name}} </option>
-    {% endfor %}
-    {% for as in assigned_employees %}
-        <option value='{{ as.employee_id}}'name='{{ as.employee_id}}' selected>{{ as.employee_id}} - {{ as.name}}</option>
-    {% endfor %}
-</select>
-
+    <div id="select-employees-btns" class="text-center m-2">
+        <a href='#' class="btn btn-info" id='select-all'>select all</a>
+        <a href='#' class="btn btn-info" id='deselect-all'>deselect all</a>
+    </div>
+    
+    <div id="select-employees" class="text-center">
+        <form action="" method="POST" class="ml-auto">
+            {% csrf_token %}
+            <select id='public-methods' multiple='multiple' name='employee'>
+                {% for employee in employees %}
+                    <option value='{{ employee.employee_id}}' name='{{ employee.employee_id}}'> {{ employee.employee_id}} - {{ employee.name}} </option>
+                {% endfor %}
+                {% for as in assigned_employees %}
+                    <option value='{{ as.employee_id}}'name='{{ as.employee_id}}' selected>{{ as.employee_id}} - {{ as.name}}</option>
+                {% endfor %}
+            </select>
+            <button type="submit" class="btn btn-primary m-3">Submit</button>
+        </form>
+    </div>
+    
+</div>
 
 
 
@@ -30,6 +41,7 @@
             $('#public-methods').multiSelect('deselect_all');
                 return false;
         });
+        $('form div').addClass('mx-auto m-3')
         
 </script>
 {% endblock %}
