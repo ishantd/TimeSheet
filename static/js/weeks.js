@@ -2,8 +2,6 @@ var weekString;
 var week;
 var year;
 
-$('#week_done').hide();
-
 function getBaseUrl() {
   var re = new RegExp(/^.*\//);
   return re.exec(window.location.href);
@@ -56,11 +54,11 @@ $("#weekButton").click(function(){
         }
       }
       else {
-        alert("Select week not older than 2 months!")
+        alert("Select week not older than 2 months!");
       }
     }
     else {
-      $('#week_done').show();
+      alert("Report of selected week is already submitted.");
     }
   });
 

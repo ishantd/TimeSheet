@@ -123,8 +123,7 @@ def timesheetEntry_extended(request):
         create_report.save()
         for report in reports:
             report.extended_hours = True
-            report.save()
-        # print(reports)    
+            report.save()    
         print(create_report, "EXTENDED")
                     
     return render(request, 'accounts/success.html', status=200)
