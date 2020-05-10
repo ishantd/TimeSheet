@@ -11,6 +11,7 @@ from .decorators import *
 from django.contrib.auth.models import User, Group
 from django.forms import inlineformset_factory
 from django.http import QueryDict
+from notifications.signals import notify
 import json
 
 
@@ -156,12 +157,12 @@ def logoutUser(request):
 def newProject(request):
     form = ProjectForm()
     context = {'form': form}
-    
     if request.method == 'POST':
         print(request.POST)
         form = ProjectForm(request.POST)
         if form.is_valid():
             form.save()
+            notify.send(request.user, recipient=User.objects.all(), verb='created a project', level='info')
             return render(request, 'accounts/success.html')
     return render (request, 'accounts/newProject.html', context)
 
@@ -495,3 +496,10 @@ def projectEmployee(request, pk):
 
         
     return render(request, 'accounts/projectEmployees.html', context)
+
+def notifications_view(request):
+    notifications = request.user.notifications.all()
+    
+    context = {'notifications': notifications}
+
+    return render(request, 'accounts/notifications.html', context)

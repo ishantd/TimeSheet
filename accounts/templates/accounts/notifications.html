@@ -1,0 +1,16 @@
+{% extends 'accounts/main.html' %}
+
+{% block content%}
+{% load static %}
+{% include 'accounts/_navbar.html' %}
+
+<div class="notifications m-4">
+    <div class="container">
+        <ul class="list-group">
+            <li class="list-group-item list-group-item-secondary"><h3>Notifications</h3></li>
+            <li class="list-group-item">First Notification</li>
+        </ul>
+    </div>
+</div>
+
+{% endblock %}
