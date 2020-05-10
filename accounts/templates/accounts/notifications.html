@@ -4,11 +4,46 @@
 {% load static %}
 {% include 'accounts/_navbar.html' %}
 
+<style>
+    li div {
+        display: inline-flex;
+    }
+</style>
+
 <div class="notifications m-4">
     <div class="container">
         <ul class="list-group">
             <li class="list-group-item list-group-item-secondary"><h3>Notifications</h3></li>
-            <li class="list-group-item">First Notification</li>
+            {% for notification in notifications%}
+                <li class="list-group-item">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                        <label class="form-check-label" for="defaultCheck1">
+                            &zwnj;
+                        </label>
+                    </div>
+                    <span class="actor">
+                        {{notification.actor.employee.name}}
+                    </span>
+                    <span class="verb">
+                        {{notification.verb}}
+                    </span>
+                    <span class="action_object">
+                        {{notification.action_object}}
+                    </span>
+                    <span class="float-right">
+                        <span class="timestamp badge badge-pill badge-dark mr-3">
+                            {{notification.timestamp}}
+                        </span>
+                        <span class="text-danger mr-3">
+                            <i class="far fa-trash-alt"></i>
+                        </span>
+                        <span class="text-success">
+                            <i class="fas fa-check"></i>
+                        </span>
+                    </span>
+                </li>
+            {% endfor %}
         </ul>
     </div>
 </div>

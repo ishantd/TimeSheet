@@ -162,7 +162,8 @@ def newProject(request):
         form = ProjectForm(request.POST)
         if form.is_valid():
             form.save()
-            notify.send(request.user, recipient=User.objects.all(), verb='created a project', level='info')
+            project = Project.objects.last()
+            notify.send(request.user, recipient=User.objects.all(), verb='created a project', level='info', action_object=project)
             return render(request, 'accounts/success.html')
     return render (request, 'accounts/newProject.html', context)
 
@@ -384,6 +385,8 @@ def create_activity(request):
         form = ActivityForm(request.POST)
         if form.is_valid():
             form.save()
+            act = Act.objects.last()
+            notify.send(request.user, recipient=User.objects.all(), verb='created an activity', level='info', action_object=act)
         return redirect('create_activity')
             
 
@@ -497,9 +500,15 @@ def projectEmployee(request, pk):
         
     return render(request, 'accounts/projectEmployees.html', context)
 
+@login_required(login_url='/')
 def notifications_view(request):
-    notifications = request.user.notifications.all()
-    
+    notifications = request.user.notifications.unread()   
     context = {'notifications': notifications}
 
     return render(request, 'accounts/notifications.html', context)
+
+@login_required(login_url='/')
+def report_index(request):
+    context = {}
+
+    return render(request, 'accounts/reports/index.html', context)

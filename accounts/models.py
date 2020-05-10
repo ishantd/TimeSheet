@@ -26,7 +26,7 @@ class Employee(models.Model):
  
     
 class Project(models.Model):
-    type_level = (('OH', 'OH'), ('PA', 'PA'))
+    type_level = (('Overhead', 'Overhead'), ('BD', 'BD'), ('Chargeable','Chargeable'), ('Development','Development'))
     project_type = models.CharField(max_length = 200, null = True, choices=type_level)
     project_id = models.IntegerField(primary_key=True)
     project_client = models.CharField(max_length = 200, null = True)
@@ -40,6 +40,7 @@ class Project(models.Model):
     department_assigned = models.BooleanField(null=False, default=False)
     active = models.BooleanField(null=False, default=True)
     finished = models.BooleanField(null=False, default=False)
+    overrun = models.BooleanField(null=False, default=False)
     def __str__(self):
         return str(self.project_id)
 
