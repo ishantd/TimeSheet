@@ -213,12 +213,8 @@ def department_assignment(request):
         )
         
         assign_dep.save()
-        print("Department wise time saved!")
 
         return redirect("dep_assignment")
-
-        
-        
     return redirect("dep_assignment")
 
 @login_required(login_url='/')
@@ -508,7 +504,19 @@ def notifications_view(request):
     return render(request, 'accounts/notifications.html', context)
 
 @login_required(login_url='/')
-def report_index(request):
+def reports_index(request):
     context = {}
 
     return render(request, 'accounts/reports/index.html', context)
+
+@login_required(login_url='/')
+def create_notification(request):
+
+    return HttpResponse("success", status=200)
+
+@login_required(login_url='/')
+def projects_all(request):
+    projects = Project.objects.all()
+    context = {'projects': projects}
+
+    return render(request, 'accounts/reports/projects/all.html', context)

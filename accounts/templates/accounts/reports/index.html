@@ -3,6 +3,48 @@
 {% load static %}
 {% block content %}
 {% include 'accounts/_navbar.html' %}
+    
+<div class="entry my-auto p-3">
+    <div class="container h-75 bg-dark text-white" id="reports-1">
+        <div class="row h-100 text-center">
+            <div class="col-sm-6 my-auto border-right border-light">
+                <h4 class="m-3 border-light p-3">Projects</h4>
+                <div class="actions">
+                    <a href="{% url 'reports_all' %}" class="btn btn-outline-primary btn-lg btn-block text-white">List of Projects</a>
+                    <div class="row mt-4">
+                        <div class="col-sm-6">
+                            <a href="" class="btn btn-primary btn-lg btn-block">Job performance summary for chargeable jobs</a>
+                        </div>
+                        <div class="col-sm-6">
+                            <a href="" class="btn btn-primary btn-lg btn-block">Job performance individual chargeable jobs</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 my-auto border-left border-light">
+                <h4 class="m-3 border-light p-3">Departments</h4>
+                <div class="actions">
+                    <a href="" class="btn btn-outline-primary btn-lg btn-block text-white">List of Projects</a>
+                    <div class="row mt-4">
+                        <div class="col-sm-6">
+                            <a href="" class="btn btn-primary btn-lg btn-block">Job performance summary for chargeable jobs</a>
+                        </div>
+                        <div class="col-sm-6">
+                            <a href="" class="btn btn-primary btn-lg btn-block">Job performance individual chargeable jobs</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        <div class="container h-25">
+            <div class="row text-center">
+                <div class="col-sm-12">
+                    <h4>Everything else:</h4>
+                </div>
+            </div>
+        </div>
+</div>
 
 
 

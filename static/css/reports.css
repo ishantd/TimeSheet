@@ -1,0 +1,9 @@
+.entry {
+    height: 60vh;
+    /* background-color:yellow; */
+}
+
+.entry #reports-1 {
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}

@@ -35,5 +35,7 @@ urlpatterns = [
     path('dept_wise/<str:pk>/', views.dept_wise, name='deptwise'),
     path('act_wise/<str:pk>/', views.act_wise, name='actwise'),
     path('project_employee/<str:pk>/', views.projectEmployee, name='project_employee'),
-    path('profile/notifications/', views.notifications_view, name='notifications')
+    path('profile/notifications/', views.notifications_view, name='notifications'),
+    path('reports/', views.reports_index, name='reports'),
+    path('reports/projects/all/', views.projects_all, name='reports_all')
 ]
