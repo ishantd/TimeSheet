@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'nk%t8a9(8me+otg5s36@en=(yq&^%t70=%%7c5g^)es286$1in'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -51,8 +51,25 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    
+    'request_logging.middleware.LoggingMiddleware',
 ]
+REQUEST_LOGGING_ENABLE_COLORIZE=True
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django.request': {
+            'handlers': ['console'],
+            'level': 'DEBUG',  # change debug level as appropiate
+            'propagate': False,
+        },
+    },
+}
 
 ROOT_URLCONF = 'timesheet.urls'
 
@@ -122,3 +139,5 @@ STATICFILES_DIRS = [
 INTERNAL_IPS = [
     '127.0.0.1',
 ]
+
+
