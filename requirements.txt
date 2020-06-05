@@ -21,7 +21,7 @@
 # timesheet/asgi.py: 12
 # timesheet/urls.py: 18
 # timesheet/wsgi.py: 12
-Django == 3.0.3
+Django == 3.0.7
 
 # accounts/apps.py: 8
 clutchserver == 0.1.0
