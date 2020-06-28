@@ -38,5 +38,4 @@ urlpatterns = [
     path('profile/notifications/', views.notifications_view, name='notifications'),
     path('reports/', views.reports_index, name='reports'),
     path('reports/projects/all/', views.projects_all, name='reports_all'),
-    path('log/', views.log_test, name='log'),
 ]

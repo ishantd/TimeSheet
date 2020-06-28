@@ -6,7 +6,7 @@ $("#create").click(function(){
     markup = markup.replace('input-row0', 'input-row' + table.toString());
     markup = markup.replace('delete0', 'delete' + table.toString());
     markup = markup.replace('sel0', 'sel' + table.toString());
-    $("#table-body tr:first").after(markup)
+    $("#table-body tr:first").after(markup);
     table++;
 });
 
@@ -17,7 +17,7 @@ function remove(delID) {
         $(deleteThis).remove();
     }
     else {
-        alert("Not allowed to delete all rows")
+        alert("Not allowed to delete all rows");
     }
 }
 
