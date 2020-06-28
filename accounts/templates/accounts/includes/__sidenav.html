@@ -1,0 +1,57 @@
+{% load group_check %}
+<div id="layoutSidenav_nav">
+                <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                    <div class="sb-sidenav-menu">
+                        <div class="nav">
+                            <div class="sb-sidenav-menu-heading">Core</div>
+                            <a class="nav-link" href="{% url 'dashboard' %}">
+                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                Dashboard
+                            </a>
+                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTimesheets" aria-expanded="false" aria-controls="collapseLayouts">
+                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                Timesheets
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="collapseTimesheets" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="{%url 'report'%}">Submit Timesheet</a>
+                                    <a class="nav-link" href="{%url 'mytimesheet'%}">My Timesheets</a>
+                                    <a class="nav-link" href="{% url 'viewTS' %}">Approve Timesheets</a>
+                                </nav>
+                            </div>
+                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProjects" aria-expanded="false" aria-controls="collapseLayouts">
+                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                Projects
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="collapseProjects" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="{% url 'department' %}">Assign to Dept.</a>
+                                    <a class="nav-link" href="{% url 'selectEmployee' %}">Select Employees</a>
+                                    <a class="nav-link" href="{% url 'viewprojects' %}">View Projects</a>
+                                </nav>
+                            </div>
+                            {% if request.user|has_group:"hod" or request.user|has_group:"planning_dept" %}
+                            <a class="nav-link" href="/create">
+                                <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                                Activites
+                            </a>
+                            {% endif %}
+                            <a class="nav-link" href="{% url 'reports' %}">
+                                <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                                Reports
+                            </a>
+                            <a class="nav-link" href="{% url 'logout' %}">
+                                <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                                Logout
+                            </a>
+
+                        </div>
+                    </div>
+                    <div class="sb-sidenav-footer">
+                        <div class="small">Logged in as:</div>
+                        {{request.user}}
+                    </div>
+                </nav>
+            </div>

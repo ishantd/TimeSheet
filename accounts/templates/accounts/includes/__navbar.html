@@ -1,0 +1,17 @@
+<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+            <a class="navbar-brand" href="{%url 'dashboard'%}">Triune</a>
+            <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
+            <!-- Navbar Search-->
+                <a name="" id="" class="btn btn-outline-default" href=" {% url 'notifications' %} " role="button">
+                  <span class="text-white mr-3" style="font-size: 1.3em">
+                    <i class="far fa-bell"></i>
+                  </span>
+                </a>
+            <div class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+                <div class="input-group">
+                    <a class="btn btn-danger" type="button" href="{% url 'logout' %}" >
+                    Logout
+                    </a>
+                </div>
+            </div>
+        </nav>

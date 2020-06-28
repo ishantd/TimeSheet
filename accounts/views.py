@@ -19,11 +19,9 @@ users = User.objects.all()
 for user in users:
     LoggedInUser.objects.get_or_create(user=user)
 
-@login_required(login_url='/')
+# @login_required(login_url='/')
 def home(request):
-    projects = Project.objects.all()
-    department_time = Department.objects.all()
-    return render(request, 'accounts/dashboard.html', {'projects':Project, "department":Department, "employee": Employee} )
+    return render(request, 'accounts/dashboard.html')
 
 @login_required(login_url='/')
 def contact(request):
