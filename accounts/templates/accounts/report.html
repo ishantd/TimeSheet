@@ -4,7 +4,6 @@
 {% block content %}
 
 
-
 <div class="card text-center m-3">
   <div class="card-header">
     <h3 id="emp_name">Welcome,{{request.user.employee.name}}! </h3>
@@ -33,7 +32,7 @@
 <div class="check-info">
     <br>
     <h4 class="text-center" id="info-ts">Please select week to input Timesheet</h4>
-</>
+</div>
 
 <div class="container-fluid all-input" id="overlay">
     {% csrf_token %}

@@ -14,11 +14,6 @@ from django.http import QueryDict
 from notifications.signals import notify
 import json
 
-
-users = User.objects.all()
-for user in users:
-    LoggedInUser.objects.get_or_create(user=user)
-
 # @login_required(login_url='/')
 def home(request):
     return render(request, 'accounts/dashboard.html')
