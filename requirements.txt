@@ -1,5 +1,5 @@
 asgiref==3.2.10
-Django==3.0.7
+Django==3.0.14
 django-model-utils==4.0.0
 django-notifications==0.1.dev0
 django-notifications-hq==1.6.0
